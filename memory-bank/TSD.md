@@ -75,3 +75,14 @@
 │       └── globals.css    # Tailwind 4.1 @theme configurations
 └── next.config.ts         # Native TypeScript config
 ```
+
+## 4. Project Scripts
+
+| Script | Command | Purpose |
+|--------|---------|---------|
+| `dev` | `npm run dev` | Start development server with Turbo |
+| `build` | `npm run build` | Build for production |
+| `sync:ai` | `npm run sync:ai` | Syncs `.agent` and `.github` to `ai/` for agent context |
+| `branch` | `npm run branch` | Create feature branch from linear/jira ID |
+| `lint` | `npm run lint` | Run ESLint |
+

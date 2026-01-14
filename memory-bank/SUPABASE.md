@@ -164,17 +164,18 @@ npx supabase db pull
 npx supabase db reset
 ```
 
-### Current Migration File
+### Migration History
 
-Location: `supabase/migrations/20260113000000_init.sql`
+Migrations are stored in `supabase/migrations/` directory.
 
-This migration:
-1. Creates the `vibe_level` enum
-2. Creates the `tools` table
-3. Creates the `prompts` table
-4. Enables RLS on both tables
-5. Creates public read/insert policies
-6. Seeds initial data (5 tools, 3 prompts)
+| Migration File | Description |
+|----------------|-------------|
+| `20260113000000_init.sql` | Initial schema (tools, prompts), enums, RLS |
+| `20260114000000_auth_profiles.sql` | User profiles and favorites tables |
+| `20260114000001_search_categories.sql` | Full-text search and tagging system |
+| `20260114000002_storage_bucket.sql` | Storage buckets for tool logos |
+| `20260114100000_instructions.sql` | Instructions Hub table and enums |
+| `20260114100001_instructions_seed.sql` | Seed data for instructions |
 
 ---
 
@@ -398,9 +399,9 @@ curl -X POST "https://qlsgscizfvqbdajzqtgb.supabase.co/rest/v1/prompts" \
 
 ## Future Enhancements
 
-- [ ] Add authentication for user-specific data
+- [x] Add authentication for user-specific data
 - [ ] Implement update/delete policies for tool owners
-- [ ] Add categories/tags table for better filtering
+- [x] Add categories/tags table for better filtering
 - [ ] Set up database functions for analytics
-- [ ] Configure storage bucket for tool images
+- [x] Configure storage bucket for tool images
 - [ ] Add real-time subscriptions for live updates
