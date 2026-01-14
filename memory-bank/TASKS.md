@@ -189,6 +189,15 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ## 🔗 Phase 6.11: Deployment Fixes ✅ COMPLETE
 - [x] Exclude `claude-code-config` from `tsconfig.json` to fix build error
 
+---
+
+## 🔗 Phase 6.12: Migrate Claude Config to Antigravity ✅ COMPLETE
+- [x] Analyze and map proper types (Skills vs Workflows)
+- [x] Migrate `skills/` -> `.agent/skills/`
+- [x] Migrate `commands/` -> `.agent/workflows/`
+- [x] Migrate `agents/` -> `.agent/workflows/` (as specialized workflows)
+- [x] Rename content references (Claude -> Antigravity)
+
 
 ---
 ## �📋 Post-Deployment Configuration

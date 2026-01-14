@@ -1,0 +1,2273 @@
+diff --git a/.agent/rules/claude-code-configuration.md b/.agent/rules/claude-code-configuration.md
+deleted file mode 100644
+index 314a9ec..0000000
+--- a/.agent/rules/claude-code-configuration.md
++++ /dev/null
+@@ -1,509 +0,0 @@
+----
+-description: Detailed guide on configuring commands, agents, skills, hooks, and scripts in Claude Code.
+----
+-
+-Detailed guide on configuring commands, agents, skills, hooks, and scripts in Claude Code.
+-
+-## Configuration Structure
+-
+-Claude Code configurations are organized in the `~/.claude/` directory (or `.claude/` in your project):
+-
+-```
+-~/.claude/
+-├── commands/           # Slash commands (/commit, /create-pr, etc.)
+-├── agents/            # Specialized AI agents
+-├── skills/            # Complex workflows with multiple steps
+-├── hooks/             # Event-triggered automation
+-├── scripts/           # Utility scripts and tools
+-└── settings.json      # Main configuration file
+-```
+-
+-## Components
+-
+-### 1\. Commands
+-
+-Slash commands that extend Claude Code functionality. They are simple, single-purpose tasks.
+-
+-#### Available Commands
+-
+-**Git & GitHub:**
+-
+-*   `/commit` - Fast conventional commits with immediate push
+-*   `/create-pull-request` - Auto-generated PR creation
+-*   `/fix-pr-comments` - Systematic PR review resolution
+-
+-**Code Analysis:**
+-
+-*   `/deep-code-analysis` - Comprehensive codebase investigation
+-*   `/explain-architecture` - Pattern analysis with diagrams
+-
+-**Utilities:**
+-
+-*   `/cleanup-context` - Memory optimization
+-*   `/claude-memory` - CLAUDE.md file management
+-*   `/watch-ci` - Automated CI/CD monitoring
+-
+-**Workflows:**
+-
+-*   `/epct` - Explore-Plan-Code-Test methodology
+-
+-#### Command Structure
+-
+-Commands are markdown files with frontmatter and structured content:
+-
+-MARKDOWN
+-
+-```
+----
+-description: Command description
+-argument-hint: <what-to-pass>
+----
+-
+-<objective>
+-What this command does
+-</objective>
+-
+-<process>
+-1. Step one
+-2. Step two
+-3. Step three
+-</process>
+-
+-<rules>
+-- Rule 1
+-- Rule 2
+-</rules>
+-```
+-
+-#### Installing Commands
+-
+-BASH
+-
+-```
+-# Install a specific command
+-bunx aiblueprint-cli@latest claude-code add commands commit
+-
+-# List all available commands
+-bunx aiblueprint-cli@latest claude-code add commands
+-
+-# Install multiple commands
+-bunx aiblueprint-cli@latest claude-code add commands commit create-pr watch-ci
+-```
+-
+-### 2\. Agents
+-
+-Specialized AI agents for specific tasks, launched via the Task tool.
+-
+-#### Available Agents
+-
+-Agent
+-
+-Model
+-
+-Description
+-
+-`action`
+-
+-haiku
+-
+-Conditional action executor - performs actions only when conditions are met
+-
+-`explore-codebase`
+-
+-yellow
+-
+-Comprehensive code discovery and analysis
+-
+-`explore-docs`
+-
+-yellow
+-
+-Documentation research with context gathering
+-
+-`websearch`
+-
+-yellow
+-
+-Quick web research with authoritative sources
+-
+-#### Agent Structure
+-
+-Agents are markdown files with metadata and instructions:
+-
+-MARKDOWN
+-
+-```
+----
+-name: agent-name
+-description: What the agent does
+-color: purple
+-model: haiku
+----
+-
+-Agent instructions and workflow...
+-```
+-
+-#### Usage
+-
+-The main Claude instance automatically uses these agents via the Task tool when appropriate:
+-
+-BASH
+-
+-```
+-# Example: Claude will use explore-codebase agent when needed
+-"Find all authentication-related files in the project"
+-```
+-
+-### 3\. Skills
+-
+-Complex workflows with multiple steps, progressive disclosure, and state management.
+-
+-#### Available Skills
+-
+-Skill
+-
+-Description
+-
+-`claude-memory`
+-
+-Create and optimize CLAUDE.md memory files
+-
+-`create-slash-commands`
+-
+-Create custom slash commands
+-
+-`create-subagents`
+-
+-Create specialized subagents
+-
+-#### Skill Structure
+-
+-Skills are more complex than commands and can include:
+-
+-*   Multiple reference documents
+-*   Progressive step loading
+-*   Interactive decision points
+-*   Bundled resources (scripts, examples)
+-
+-**Directory Structure:**
+-
+-```
+-skills/
+-└── skill-name/
+-    ├── SKILL.md              # Main skill file
+-    └── references/           # Reference documents
+-        ├── patterns.md
+-        ├── examples.md
+-        └── templates.md
+-```
+-
+-#### Installing Skills
+-
+-BASH
+-
+-```
+-# Install a specific skill
+-bunx aiblueprint-cli@latest claude-code add skills claude-memory
+-
+-# List all available skills
+-bunx aiblueprint-cli@latest claude-code add skills
+-```
+-
+-### 4\. Hooks
+-
+-Event-triggered automation that runs at specific points in Claude Code's workflow.
+-
+-#### Available Hook Types
+-
+-Hook Type
+-
+-When It Runs
+-
+-Use Cases
+-
+-`PreToolUse`
+-
+-Before a tool is executed
+-
+-Command validation, security checks
+-
+-`PostToolUse`
+-
+-After a tool completes
+-
+-File processing, formatting
+-
+-`Stop`
+-
+-When session stops
+-
+-Cleanup, logging
+-
+-`SessionStart`
+-
+-When session begins
+-
+-Setup, initialization
+-
+-`UserPromptSubmit`
+-
+-After user submits prompt
+-
+-Input validation, preprocessing
+-
+-#### Hook Configuration
+-
+-Hooks are configured in `~/.claude/settings.json`:
+-
+-JSON
+-
+-```
+-{
+-  "hooks": {
+-    "PreToolUse": [
+-      {
+-        "matcher": "Bash",
+-        "hooks": [
+-          {
+-            "type": "command",
+-            "command": "bun ~/.claude/scripts/validate-command.js"
+-          }
+-        ]
+-      }
+-    ],
+-    "PostToolUse": [
+-      {
+-        "matcher": "Edit|Write|MultiEdit",
+-        "hooks": [
+-          {
+-            "type": "command",
+-            "command": "bun ~/.claude/hooks/hook-post-file.ts"
+-          }
+-        ]
+-      }
+-    ]
+-  }
+-}
+-```
+-
+-#### Installing Hooks
+-
+-BASH
+-
+-```
+-# Install command validation hook
+-bunx aiblueprint-cli@latest claude-code add hook post-edit-typescript
+-
+-# Install all recommended hooks
+-bunx aiblueprint-cli@latest claude-code setup --hooks-only
+-```
+-
+-### 5\. Scripts
+-
+-Utility scripts for various tasks (validation, statusline, notifications).
+-
+-#### Available Scripts
+-
+-Script
+-
+-Purpose
+-
+-Language
+-
+-`validate-command.js`
+-
+-Security validation for bash commands
+-
+-JavaScript/Bun
+-
+-`statusline/`
+-
+-Git status and usage tracking display
+-
+-TypeScript/Bun
+-
+-`command-validator/`
+-
+-700+ line security system
+-
+-TypeScript/Bun
+-
+-#### Statusline Setup
+-
+-BASH
+-
+-```
+-# Install custom statusline
+-bunx aiblueprint-cli@latest claude-code statusline
+-```
+-
+-The statusline shows:
+-
+-*   Git branch and status
+-*   Session costs
+-*   Token usage
+-*   Daily limits
+-
+-#### Statusline Configuration
+-
+-Configure in `~/.claude/settings.json`:
+-
+-JSON
+-
+-```
+-{
+-  "statusLine": {
+-    "type": "command",
+-    "command": "bun ~/.claude/scripts/statusline/src/index.ts",
+-    "padding": 0
+-  }
+-}
+-```
+-
+-## Advanced Configuration
+-
+-### Custom Installation Paths
+-
+-Install to specific directories:
+-
+-BASH
+-
+-```
+-# Project-local installation (creates .claude/ in project root)
+-cd your-project/
+-bunx aiblueprint-cli@latest claude-code setup
+-
+-# Global installation
+-bunx aiblueprint-cli@latest claude-code setup --folder ~/.claude
+-
+-# Custom path
+-bunx aiblueprint-cli@latest claude-code setup --folder /custom/path
+-```
+-
+-### Symlink Management
+-
+-Share configurations between different AI CLI tools:
+-
+-BASH
+-
+-```
+-# Create symlinks between Claude Code, Codex, OpenCode, FactoryAI
+-bunx aiblueprint-cli@latest claude-code symlink
+-
+-# With custom paths
+-bunx aiblueprint-cli@latest claude-code symlink \
+-  --claudeCodeFolder ~/.claude \
+-  --codexFolder ~/.codex \
+-  --factoryAiFolder ~/.factory
+-```
+-
+-### Settings.json Configuration
+-
+-The main configuration file (`~/.claude/settings.json`) manages all Claude Code settings:
+-
+-JSON
+-
+-```
+-{
+-  "statusLine": {
+-    "type": "command",
+-    "command": "bun ~/.claude/scripts/statusline/src/index.ts",
+-    "padding": 0
+-  },
+-  "hooks": {
+-    "PreToolUse": [
+-      {
+-        "matcher": "Bash",
+-        "hooks": [
+-          {
+-            "type": "command",
+-            "command": "bun ~/.claude/scripts/validate-command.js"
+-          }
+-        ]
+-      }
+-    ],
+-    "PostToolUse": [
+-      {
+-        "matcher": "Edit|Write|MultiEdit",
+-        "hooks": [
+-          {
+-            "type": "command",
+-            "command": "bun ~/.claude/hooks/hook-post-file.ts"
+-          }
+-        ]
+-      }
+-    ]
+-  }
+-}
+-```
+-
+-## Usage Examples
+-
+-### Installing Specific Components
+-
+-BASH
+-
+-```
+-# Install only commands
+-bunx aiblueprint-cli@latest claude-code add commands
+-
+-# Install only agents
+-bunx aiblueprint-cli@latest claude-code add agents
+-
+-# Install only hooks
+-bunx aiblueprint-cli@latest claude-code add hooks
+-
+-# Install statusline
+-bunx aiblueprint-cli@latest claude-code statusline
+-```
+-
+-### Creating Custom Components
+-
+-BASH
+-
+-```
+-# Create a custom command
+-bunx aiblueprint-cli@latest claude-code create command my-command
+-
+-# Create a custom agent
+-bunx aiblueprint-cli@latest claude-code create agent my-agent
+-
+-# Create a custom skill
+-bunx aiblueprint-cli@latest claude-code create skill my-skill
+-```
+-
+-## Best Practices
+-
+-### Organization
+-
+-1.  **Keep commands simple** - One task per command
+-2.  **Use agents for complex tasks** - Multi-step workflows
+-3.  **Leverage hooks for automation** - Avoid manual checks
+-4.  **Document your custom components** - Add clear descriptions
+-
+-### Performance
+-
+-1.  **Use appropriate models** - haiku for quick tasks, sonnet for complex ones
+-2.  **Minimize hook overhead** - Keep validation scripts fast
+-3.  **Cache when possible** - Reuse results in statusline scripts
+-
+-### Maintenance
+-
+-1.  **Regular updates** - Keep CLI and configurations updated
+-2.  **Test hooks** - Verify they don't block legitimate commands
+-3.  **Clean up unused components** - Remove obsolete commands/agents
+-
+-## Next Steps
+-
+-*   [Security Guide](/docs/claude-code-security) - Security features and validation
+-*   [Claude Code Pro](/docs/claude-code-pro) - Upgrade to premium features
+-*   [Creating Skills](/docs/claude-code-pro/create-skills-workflow) - Build custom workflows
+-*   [Creating Hooks](/docs/claude-code-pro/create-hooks) - Event-triggered automation
+-
+-## Resources
+-
+-*   **CLI Reference**: `bunx aiblueprint-cli@latest claude-code --help`
+-*   **Repository**: [melvynx/aiblueprint](https://github.com/melvynx/aiblueprint)
+-*   **Examples**: Browse `~/.claude/` after installation
+-
+-[Claude Code Setup](/docs/claude-code-setup)[Claude Code Security](/docs/claude-code-security)
+diff --git a/.agent/rules/claude-code-security.md b/.agent/rules/claude-code-security.md
+deleted file mode 100644
+index d9a0683..0000000
+--- a/.agent/rules/claude-code-security.md
++++ /dev/null
+@@ -1,463 +0,0 @@
+----
+-description: Security features, command validation, and protection against dangerous operations in Claude Code.
+----
+-
+-Security features, command validation, and protection against dangerous operations in Claude Code.
+-
+-## Overview
+-
+-Claude Code includes a comprehensive security system to protect against dangerous operations while maintaining flexibility for legitimate development tasks.
+-
+-## Command Validation System
+-
+-The security system protects against dangerous operations through real-time command analysis and validation.
+-
+-### Blocked Commands
+-
+-The following command patterns are blocked or restricted:
+-
+-#### Destructive Operations
+-
+-**File System Destruction:**
+-
+-*   `rm -rf` with critical paths (/, /usr, /etc, /System, etc.)
+-*   `dd` - Direct disk operations
+-*   `mkfs` - File system creation
+-*   `fdisk` - Disk partitioning
+-
+-**Example blocked commands:**
+-
+-BASH
+-
+-```
+-rm -rf /
+-rm -rf /usr/local
+-dd if=/dev/zero of=/dev/sda
+-```
+-
+-#### Permission Changes
+-
+-**Dangerous Permission Modifications:**
+-
+-*   `chmod 777` - World-writable permissions
+-*   `chmod -R 777` - Recursive world-writable
+-*   `chown -R root` - Recursive ownership changes
+-*   `chgrp -R` - Recursive group changes
+-
+-**Example blocked commands:**
+-
+-BASH
+-
+-```
+-chmod 777 /etc/passwd
+-chmod -R 777 /var
+-chown -R root:root /home
+-```
+-
+-#### Remote Execution
+-
+-**Piped Remote Scripts:**
+-
+-*   `curl | bash` - Download and execute
+-*   `wget | sh` - Download and execute
+-*   `curl | sudo bash` - Execute with privilege
+-
+-**Example blocked commands:**
+-
+-BASH
+-
+-```
+-curl https://example.com/script.sh | bash
+-wget -O - https://example.com/install.sh | sudo sh
+-```
+-
+-#### Privilege Escalation
+-
+-**Sudo Operations:**
+-
+-*   `sudo rm -rf` - Destructive with privilege
+-*   `sudo chmod 777` - Permission changes with privilege
+-*   `sudo dd` - Disk operations with privilege
+-
+-**Example blocked commands:**
+-
+-BASH
+-
+-```
+-sudo rm -rf /var
+-sudo chmod -R 777 /etc
+-```
+-
+-### Safe Paths
+-
+-The following paths are considered safe and allowed:
+-
+-**Relative Paths:**
+-
+-*   `./` - Current directory
+-*   `../` - Parent directory
+-*   `./node_modules/` - Project dependencies
+-
+-**Home Directory:**
+-
+-*   `~/` - User home directory
+-*   `~/.cache/` - User cache
+-*   `~/.local/` - User local files
+-
+-**Common Safe Directories:**
+-
+-*   `node_modules/` - Package dependencies
+-*   `.git/` - Git repository files
+-*   `tmp/` - Temporary files
+-*   `dist/` - Build output
+-*   `build/` - Build output
+-
+-**Example allowed commands:**
+-
+-BASH
+-
+-```
+-rm -rf ./dist
+-rm -rf node_modules/
+-rm -rf ~/.cache/claude-code
+-trash ~/Downloads/old-file.txt
+-```
+-
+-### Alternative Commands
+-
+-Use safer alternatives when available:
+-
+-Dangerous
+-
+-Safe Alternative
+-
+-Description
+-
+-`rm -rf`
+-
+-`trash`
+-
+-Move to trash instead of permanent deletion
+-
+-`sudo`
+-
+-File permissions
+-
+-Adjust file permissions instead
+-
+-`curl | bash`
+-
+-Download then review
+-
+-Download, review, then execute
+-
+-`chmod 777`
+-
+-Specific permissions
+-
+-Use 755, 644, or minimal needed permissions
+-
+-## Security Logging
+-
+-All blocked commands are logged to `~/.claude/security.log` for audit purposes.
+-
+-### Log Format
+-
+-JSON
+-
+-```
+-{
+-  "timestamp": "2024-01-15T10:30:00.000Z",
+-  "command": "rm -rf /",
+-  "severity": "CRITICAL",
+-  "action": "BLOCKED",
+-  "reason": "Destructive command with critical path"
+-}
+-```
+-
+-### Log Levels
+-
+-Severity
+-
+-Description
+-
+-Example
+-
+-`CRITICAL`
+-
+-System-destroying operations
+-
+-`rm -rf /`
+-
+-`HIGH`
+-
+-Dangerous privilege escalation
+-
+-`sudo chmod 777`
+-
+-`MEDIUM`
+-
+-Risky operations
+-
+-`chmod -R 777 ./`
+-
+-`LOW`
+-
+-Suspicious patterns
+-
+-`curl | bash`
+-
+-### Viewing Logs
+-
+-BASH
+-
+-```
+-# View all security logs
+-cat ~/.claude/security.log
+-
+-# View recent logs
+-tail -n 20 ~/.claude/security.log
+-
+-# Search for specific command
+-grep "rm -rf" ~/.claude/security.log
+-
+-# View critical alerts only
+-jq 'select(.severity == "CRITICAL")' ~/.claude/security.log
+-```
+-
+-## Hook-Based Protection
+-
+-Security is enforced through PreToolUse hooks that run before command execution.
+-
+-### How It Works
+-
+-1.  **Command Submission** - User or AI submits a bash command
+-2.  **Hook Trigger** - PreToolUse hook intercepts the command
+-3.  **Validation** - Command validator script analyzes the command
+-4.  **Pattern Matching** - Checks against 50+ security patterns
+-5.  **Path Analysis** - Validates target paths
+-6.  **Decision** - ALLOW, BLOCK, or REQUEST CONFIRMATION
+-7.  **Execution** - Command runs only if approved
+-
+-### Configuration
+-
+-Security hooks are configured in `~/.claude/settings.json`:
+-
+-JSON
+-
+-```
+-{
+-  "hooks": {
+-    "PreToolUse": [
+-      {
+-        "matcher": "Bash",
+-        "hooks": [
+-          {
+-            "type": "command",
+-            "command": "bun ~/.claude/scripts/validate-command.js"
+-          }
+-        ]
+-      }
+-    ]
+-  }
+-}
+-```
+-
+-### Validation Script
+-
+-The command validator (`~/.claude/scripts/validate-command.js`) is a 700+ line security system that:
+-
+-*   Parses bash commands and arguments
+-*   Detects dangerous patterns
+-*   Validates file paths
+-*   Checks for privilege escalation
+-*   Logs security events
+-*   Provides user confirmations
+-
+-## User Confirmation
+-
+-For questionable commands, the system requests user confirmation:
+-
+-### Interactive Prompts
+-
+-BASH
+-
+-```
+-⚠️  WARNING: Potentially dangerous command detected
+-
+-Command: rm -rf ./important-folder/
+-
+-Reason: Recursive deletion in current directory
+-Risk Level: MEDIUM
+-
+-Do you want to proceed? (y/N):
+-```
+-
+-### Bypass Options
+-
+-For legitimate operations, you can:
+-
+-1.  **Confirm the prompt** - Type 'y' to proceed
+-2.  **Use safer alternatives** - Use `trash` instead of `rm -rf`
+-3.  **Adjust the command** - Make the command more specific
+-4.  **Disable temporarily** - (Not recommended in production)
+-
+-## Security Best Practices
+-
+-### Command Safety
+-
+-1.  **Use trash instead of rm -rf** - Recoverable deletion
+-2.  **Specify exact paths** - Avoid wildcards in destructive commands
+-3.  **Test in safe environments** - Use Docker or VMs for risky operations
+-4.  **Review before executing** - Read commands before confirming
+-5.  **Limit sudo usage** - Use only when absolutely necessary
+-
+-### File Permissions
+-
+-1.  **Use minimal permissions** - 644 for files, 755 for directories
+-2.  **Avoid world-writable** - Never use 777
+-3.  **Check ownership** - Ensure correct user/group ownership
+-4.  **Use umask** - Set default permissions appropriately
+-
+-### Remote Scripts
+-
+-1.  **Download first** - Never pipe directly to bash
+-2.  **Review code** - Read scripts before executing
+-3.  **Verify source** - Use HTTPS and trusted sources
+-4.  **Use checksums** - Verify file integrity
+-5.  **Sandbox execution** - Test in containers first
+-
+-## Advanced Security
+-
+-### Custom Security Rules
+-
+-You can add custom security rules to the validator:
+-
+-JAVASCRIPT
+-
+-```
+-// ~/.claude/scripts/custom-security.js
+-export const customRules = [
+-  {
+-    pattern: /dangerous-command/,
+-    severity: 'HIGH',
+-    reason: 'Custom dangerous command detected'
+-  }
+-];
+-```
+-
+-### Whitelist Patterns
+-
+-For commands you frequently use:
+-
+-JAVASCRIPT
+-
+-```
+-// ~/.claude/scripts/whitelist.js
+-export const whitelist = [
+-  /^npm install/,
+-  /^git push/,
+-  /^docker run/
+-];
+-```
+-
+-### Security Notifications
+-
+-Set up notifications for blocked commands:
+-
+-JSON
+-
+-```
+-{
+-  "security": {
+-    "notifications": {
+-      "enabled": true,
+-      "sound": "~/.claude/sounds/alert.mp3",
+-      "slack": "https://hooks.slack.com/..."
+-    }
+-  }
+-}
+-```
+-
+-## Troubleshooting
+-
+-### Legitimate Commands Blocked
+-
+-If a safe command is blocked:
+-
+-1.  **Check the path** - Ensure it's not targeting system directories
+-2.  **Use absolute paths** - Be explicit about the target
+-3.  **Review the pattern** - Understand why it was flagged
+-4.  **Contact support** - Report false positives
+-
+-### Security Hook Not Working
+-
+-Verify the hook is active:
+-
+-BASH
+-
+-```
+-# Check settings
+-cat ~/.claude/settings.json | jq '.hooks.PreToolUse'
+-
+-# Test the validator
+-bun ~/.claude/scripts/validate-command.js "rm -rf test"
+-
+-# Reinstall hooks
+-bunx aiblueprint-cli@latest claude-code add hook command-validator
+-```
+-
+-### Disabling Security (Not Recommended)
+-
+-Only for development environments:
+-
+-JSON
+-
+-```
+-{
+-  "hooks": {
+-    "PreToolUse": []
+-  }
+-}
+-```
+-
+-**Warning:** Disabling security removes all protections. Use with extreme caution.
+-
+-## Security Updates
+-
+-The security system is regularly updated with:
+-
+-*   New dangerous command patterns
+-*   Improved path validation
+-*   Enhanced detection algorithms
+-*   Additional security rules
+-
+-### Keeping Updated
+-
+-BASH
+-
+-```
+-# Update CLI
+-npm update -g aiblueprint-cli
+-
+-# Update security scripts
+-bunx aiblueprint-cli@latest claude-code update --security-only
+-
+-# Check for updates
+-bunx aiblueprint-cli@latest claude-code version
+-```
+-
+-## Next Steps
+-
+-*   [Configuration Guide](/docs/claude-code-configuration) - Configure hooks and scripts
+-*   [Command Validator Script](/docs/claude-code-pro/script-command-validator) - Deep dive into validation
+-*   [Creating Hooks](/docs/claude-code-pro/create-hooks) - Build custom security hooks
+-*   [Claude Code Pro](/docs/claude-code-pro) - Advanced security features
+-
+-## Resources
+-
+-*   **Security Log**: `~/.claude/security.log`
+-*   **Validator Script**: `~/.claude/scripts/validate-command.js`
+-*   **Issue Reporting**: [GitHub Issues](https://github.com/melvynx/aiblueprint/issues)
+-
+-[Claude Code Configuration](/docs/claude-code-configuration)[Cheatsheet](/docs/claude-code-pro/cheatsheet)
+diff --git a/.agent/rules/claude-code-setup.md b/.agent/rules/claude-code-setup.md
+deleted file mode 100644
+index 02c8318..0000000
+--- a/.agent/rules/claude-code-setup.md
++++ /dev/null
+@@ -1,321 +0,0 @@
+----
+-description: Quick start guide to install and configure Claude Code with AIBlueprint.
+----
+-
+-Quick start guide to install and configure Claude Code with AIBlueprint.
+-
+-## Quick Start
+-
+-The fastest way to set up Claude Code with pre-configured commands, agents, and security features:
+-
+-BASH
+-
+-```
+-# Install using aiblueprint-cli
+-bunx aiblueprint-cli@latest claude-code setup
+-```
+-
+-This interactive setup will install all necessary configurations to enhance your Claude Code experience.
+-
+-## Installation Methods
+-
+-### Option 1: Plugin Installation (Recommended)
+-
+-Install AIBlueprint as a Claude Code plugin:
+-
+-BASH
+-
+-```
+-# Add the AIBlueprint marketplace
+-/plugin marketplace add melvynx/aiblueprint
+-
+-# Install the base plugin
+-/plugin install aibp-base@AIBlueprint
+-
+-# Or install directly from GitHub
+-/plugin install github:melvynx/aiblueprint
+-```
+-
+-**What you get:**
+-
+-*   16 Custom Commands
+-*   3 Specialized Agents
+-*   Security Hooks
+-*   Custom Statusline
+-*   Notification Sounds
+-
+-### Option 2: CLI Tool Installation
+-
+-For more control over installation:
+-
+-BASH
+-
+-```
+-# Run immediately without installation
+-bunx aiblueprint-cli@latest claude-code setup
+-
+-# Or install globally
+-npm install -g aiblueprint-cli
+-aiblueprint claude-code setup
+-```
+-
+-**CLI Options:**
+-
+-*   `--skip`: Install all features without prompts
+-*   `--folder <path>`: Install to custom directory
+-*   `--claudeCodeFolder <path>`: Specify Claude Code config folder
+-
+-## What Gets Installed
+-
+-### Directory Structure
+-
+-Claude Code configurations are organized in the `~/.claude/` directory:
+-
+-```
+-~/.claude/
+-├── commands/           # Slash commands (/commit, /create-pr, etc.)
+-├── agents/            # Specialized AI agents
+-├── skills/            # Complex workflows with multiple steps
+-├── hooks/             # Event-triggered automation
+-├── scripts/           # Utility scripts and tools
+-└── settings.json      # Main configuration file
+-```
+-
+-### Base Features
+-
+-**Commands** - Quick slash commands for common tasks:
+-
+-*   `/commit` - Fast conventional commits with immediate push
+-*   `/create-pull-request` - Auto-generated PR creation
+-*   `/fix-pr-comments` - Systematic PR review resolution
+-*   More available in the [Configuration Guide](/docs/claude-code-configuration)
+-
+-**Agents** - Specialized AI for specific tasks:
+-
+-*   `action` - Conditional action executor
+-*   `explore-codebase` - Comprehensive code discovery
+-*   `explore-docs` - Documentation research
+-*   `websearch` - Quick web research
+-
+-**Security** - Protection against dangerous operations:
+-
+-*   Command validation before execution
+-*   Safe path verification
+-*   Real-time security logging
+-*   Learn more in the [Security Guide](/docs/claude-code-security)
+-
+-## Plugin Management
+-
+-If you installed via plugin marketplace:
+-
+-BASH
+-
+-```
+-# List installed plugins
+-/plugin list
+-
+-# Update plugin to latest version
+-/plugin update aibp-base
+-
+-# Remove plugin
+-/plugin uninstall aibp-base
+-
+-# View marketplace plugins
+-/plugin marketplace list
+-```
+-
+-## Shell Shortcuts
+-
+-Add convenient shortcuts to your shell:
+-
+-BASH
+-
+-```
+-# cc - Claude Code with permissions skipped
+-cc
+-
+-# ccc - Claude Code with continue mode
+-ccc
+-```
+-
+-These are automatically added to:
+-
+-*   macOS: `.zshenv`
+-*   Linux: `.bashrc` or `.zshrc`
+-
+-## Claude Code Pro
+-
+-Unlock advanced features with **Claude Code Pro** for enhanced productivity and exclusive content.
+-
+-### Premium Features
+-
+-*   ✨ **Advanced Statusline** - Enhanced git info, real-time costs, and token usage tracking
+-*   🚀 **Premium Commands** - Exclusive workflow automation templates (42 commands)
+-*   🤖 **Premium Agents** - Specialized AI agents for complex tasks (8 agents)
+-*   🎯 **Premium Skills** - Advanced workflows and methodologies (12 skills)
+-*   📦 **Priority Updates** - Get new features first
+-*   💬 **Priority Support** - Direct help when you need it
+-
+-### Quick Start
+-
+-BASH
+-
+-```
+-# 1. Get your token at https://mlv.sh/claude-cli
+-
+-# 2. Activate your subscription
+-aiblueprint claude-code pro activate YOUR_TOKEN
+-
+-# 3. Install premium configurations
+-aiblueprint claude-code pro setup
+-
+-# 4. Keep updated (use weekly)
+-aiblueprint claude-code pro sync
+-```
+-
+-[Learn more about Claude Code Pro →](/docs/claude-code-pro)
+-
+-## Usage Examples
+-
+-### Example 1: Quick Commit and Push
+-
+-BASH
+-
+-```
+-# In Claude Code chat
+-/commit
+-```
+-
+-This will:
+-
+-1.  Run `git status` and `git diff`
+-2.  Analyze changes
+-3.  Create a conventional commit message
+-4.  Add files and commit
+-5.  Push to remote
+-
+-### Example 2: Create Pull Request
+-
+-BASH
+-
+-```
+-# In Claude Code chat
+-/create-pull-request
+-```
+-
+-This will:
+-
+-1.  Check branch status
+-2.  Analyze all commits
+-3.  Generate PR title and description
+-4.  Push branch if needed
+-5.  Create PR via `gh` CLI
+-
+-### Example 3: Watch CI Pipeline
+-
+-BASH
+-
+-```
+-# In Claude Code chat
+-/watch-ci
+-```
+-
+-This will:
+-
+-1.  Monitor CI pipeline status
+-2.  Detect failures
+-3.  Pull logs and analyze errors
+-4.  Fix issues locally
+-5.  Commit and push fixes
+-6.  Repeat until CI passes
+-
+-## Troubleshooting
+-
+-### Commands Not Found
+-
+-Ensure configurations are installed:
+-
+-BASH
+-
+-```
+-# Check if .claude directory exists
+-ls ~/.claude/commands
+-
+-# Reinstall if needed
+-bunx aiblueprint-cli@latest claude-code setup
+-```
+-
+-### Hooks Not Working
+-
+-Verify hooks are registered in `settings.json`:
+-
+-BASH
+-
+-```
+-# Check settings
+-cat ~/.claude/settings.json
+-
+-# Reinstall hooks
+-bunx aiblueprint-cli@latest claude-code add hook post-edit-typescript
+-```
+-
+-### Statusline Not Showing
+-
+-Check statusline configuration:
+-
+-BASH
+-
+-```
+-# Reinstall statusline
+-bunx aiblueprint-cli@latest claude-code statusline
+-
+-# Test statusline script
+-bun ~/.claude/scripts/statusline/src/index.ts
+-```
+-
+-### Permission Errors
+-
+-Some commands may require elevated permissions:
+-
+-BASH
+-
+-```
+-# Add sudo if needed
+-sudo bunx aiblueprint-cli@latest claude-code setup
+-```
+-
+-## Requirements
+-
+-### System Requirements
+-
+-*   **Runtime**: Node.js 16+ or Bun
+-*   **Platform**: macOS (full support), Linux (partial), Windows (limited)
+-*   **Dependencies**: Git (for repository detection)
+-
+-### Claude Code Requirements
+-
+-*   **Claude Code**: Latest version installed
+-*   **Permissions**: Ability to modify `~/.claude/settings.json`
+-
+-### Optional Dependencies
+-
+-*   **bun**: Enhanced script execution and hooks
+-*   **ccusage**: Advanced statusline with cost tracking
+-*   **gh CLI**: GitHub integration for PR/issue commands
+-*   **prettier**, **eslint**: TypeScript hook functionality
+-
+-## Next Steps
+-
+-*   [Configuration Guide](/docs/claude-code-configuration) - Detailed component configuration
+-*   [Security Guide](/docs/claude-code-security) - Security features and validation
+-*   [Claude Code Pro](/docs/claude-code-pro) - Upgrade to premium features
+-*   [Creating Skills](/docs/claude-code-pro/create-skills-workflow) - Build custom workflows
+-
+-## Resources
+-
+-*   **Repository**: [melvynx/aiblueprint](https://github.com/melvynx/aiblueprint)
+-*   **Documentation**: [AIBlueprint Docs](https://docs.aiblueprint.dev)
+-*   **Issues**: [GitHub Issues](https://github.com/melvynx/aiblueprint/issues)
+-*   **Premium**: [Upgrade to Premium](https://mlv.sh/claude-cli)
+-
+-[Documentation](/docs)[Claude Code Configuration](/docs/claude-code-configuration)
+diff --git a/.agent/rules/claude-memory.md b/.agent/rules/claude-memory.md
+deleted file mode 100644
+index 0953fa9..0000000
+--- a/.agent/rules/claude-memory.md
++++ /dev/null
+@@ -1,125 +0,0 @@
+----
+-description: Create and optimize CLAUDE.md memory files or .claude/rules/ modular rules for Claude Code projects.
+----
+-
+-Create and optimize CLAUDE.md memory files or .claude/rules/ modular rules for Claude Code projects.
+-
+-The `/claude-memory` skill helps you create and optimize Claude Code memory systems.
+-
+-## Usage
+-
+-BASH
+-
+-```
+-/claude-memory create a CLAUDE.md for my Next.js project
+-/claude-memory optimize my existing memory file
+-/claude-memory migrate to .claude/rules/
+-```
+-
+-## What It Does
+-
+-*   Creates new CLAUDE.md or .claude/rules/ files
+-*   Optimizes existing memory files for token efficiency
+-*   Migrates from single file to modular rules
+-*   Applies best practices and emphasis techniques
+-
+-## Two Storage Approaches
+-
+-Approach
+-
+-Best For
+-
+-**CLAUDE.md**
+-
+-Small projects, single file
+-
+-**.claude/rules/**
+-
+-Large projects, modular files with path-scoping
+-
+-## Quick Commands
+-
+-Action
+-
+-Command
+-
+-Create new
+-
+-`/claude-memory create for [project type]`
+-
+-Optimize
+-
+-`/claude-memory optimize`
+-
+-Migrate
+-
+-`/claude-memory migrate to rules`
+-
+-Add rule
+-
+-Press `#` during session
+-
+-Edit file
+-
+-`/memory`
+-
+-## File Hierarchy
+-
+-Priority
+-
+-Location
+-
+-Scope
+-
+-1
+-
+-Enterprise policy
+-
+-All org users
+-
+-2
+-
+-`./CLAUDE.md`
+-
+-Team via git
+-
+-2
+-
+-`./.claude/rules/*.md`
+-
+-Team via git
+-
+-3
+-
+-`~/.claude/CLAUDE.md`
+-
+-All your projects
+-
+-4
+-
+-`./CLAUDE.local.md`
+-
+-Just you
+-
+-## Path-Scoped Rules
+-
+-Rules can target specific files:
+-
+-YAML
+-
+-```
+----
+-paths: src/api/**/*.ts
+----
+-# API Rules
+-- All endpoints must validate input
+-```
+-
+-## Best Practices Applied
+-
+-*   WHAT-WHY-HOW framework
+-*   Emphasis keywords (CRITICAL, NEVER, ALWAYS)
+-*   Token-efficient content (~150 instruction slots)
+-*   No secrets, no code style rules (use linters)
+-
+-[/ci-fixer](/docs/claude-code-pro/ci-fixer)[/create-prompt](/docs/claude-code-pro/create-prompt)
+diff --git a/.agent/skills/apex/SKILL.md b/.agent/skills/apex/SKILL.md
+deleted file mode 100644
+index 0759ada..0000000
+--- a/.agent/skills/apex/SKILL.md
++++ /dev/null
+@@ -1,408 +0,0 @@
+----
+-name: apex
+-description: Systematic implementation using APEX methodology (Analyze-Plan-Execute-eXamine) with parallel agents, self-validation, and optional adversarial review.
+----
+-
+-# /apex
+-
+-Systematic implementation using APEX methodology (Analyze-Plan-Execute-eXamine) with parallel agents, self-validation, and optional adversarial review.
+-
+-The `/apex` command is a powerful skill that helps you implement features systematically using the APEX methodology.
+-
+-## Usage
+-
+-BASH
+-
+-```
+-/apex [-a] [-x] [-s] [-t] [-b] [-pr] [-i] [-r <task-id>] <task description>
+-```
+-
+-## What is APEX?
+-
+-APEX stands for **A**nalyze, **P**lan, **E**xecute, e**X**amine. It's a structured approach to implementing features that ensures:
+-
+-*   **Thorough context gathering** before writing code
+-*   **Clear implementation plans** with file-by-file strategies
+-*   **Systematic execution** with progress tracking
+-*   **Self-validation** to catch issues early
+-*   **Optional adversarial review** for critical code
+-
+-## Basic Usage
+-
+-BASH
+-
+-```
+-/apex add user authentication
+-```
+-
+-This will start the APEX workflow for adding user authentication to your project.
+-
+-## Flags
+-
+-### Enable Flags (turn ON)
+-
+-Short
+-
+-Long
+-
+-Description
+-
+-`-a`
+-
+-`--auto`
+-
+-Autonomous mode: skip confirmations, auto-approve plans
+-
+-`-x`
+-
+-`--examine`
+-
+-Auto-examine mode: proceed to adversarial review
+-
+-`-s`
+-
+-`--save`
+-
+-Save mode: output each step to `.claude/output/apex/`
+-
+-`-t`
+-
+-`--test`
+-
+-Test mode: include test creation and runner steps
+-
+-`-e`
+-
+-`--economy`
+-
+-Economy mode: no subagents, save tokens (for limited plans)
+-
+-`-r`
+-
+-`--resume`
+-
+-Resume mode: continue from a previous task
+-
+-`-b`
+-
+-`--branch`
+-
+-Branch mode: verify not on main, create branch if needed
+-
+-`-pr`
+-
+-`--pull-request`
+-
+-PR mode: create pull request at end (enables -b)
+-
+-`-i`
+-
+-`--interactive`
+-
+-Interactive mode: configure flags via AskUserQuestion
+-
+-### Disable Flags (turn OFF)
+-
+-Short
+-
+-Long
+-
+-Description
+-
+-`-A`
+-
+-`--no-auto`
+-
+-Disable auto mode
+-
+-`-X`
+-
+-`--no-examine`
+-
+-Disable examine mode
+-
+-`-S`
+-
+-`--no-save`
+-
+-Disable save mode
+-
+-`-T`
+-
+-`--no-test`
+-
+-Disable test mode
+-
+-`-E`
+-
+-`--no-economy`
+-
+-Disable economy mode
+-
+-`-B`
+-
+-`--no-branch`
+-
+-Disable branch mode
+-
+-`-PR`
+-
+-`--no-pull-request`
+-
+-Disable PR mode
+-
+-## Examples
+-
+-### Basic usage
+-
+-BASH
+-
+-```
+-/apex add auth middleware
+-```
+-
+-### Autonomous mode (no confirmations)
+-
+-BASH
+-
+-```
+-/apex -a add auth middleware
+-```
+-
+-### Save outputs for review
+-
+-BASH
+-
+-```
+-/apex -s add auth middleware
+-```
+-
+-### With adversarial review
+-
+-BASH
+-
+-```
+-/apex -x add auth middleware
+-```
+-
+-### Full autonomous with examine and save
+-
+-BASH
+-
+-```
+-/apex -a -x -s add auth middleware
+-```
+-
+-### Include test creation and runner
+-
+-BASH
+-
+-```
+-/apex -t add auth middleware
+-```
+-
+-### Resume a previous task
+-
+-BASH
+-
+-```
+-/apex -r 01-auth-middleware
+-/apex -r 01  # Partial match supported
+-```
+-
+-### Economy mode (save tokens, no subagents)
+-
+-BASH
+-
+-```
+-/apex -e add auth middleware
+-/apex -a -e add auth middleware  # Auto + economy
+-```
+-
+-### Branch mode (ensure not on main)
+-
+-BASH
+-
+-```
+-/apex -b add auth middleware
+-```
+-
+-### Create PR at end
+-
+-BASH
+-
+-```
+-/apex -pr add auth middleware
+-/apex -a -pr add auth middleware  # Auto + PR mode
+-```
+-
+-### Interactive mode (configure flags via menu)
+-
+-BASH
+-
+-```
+-/apex -i add auth middleware
+-```
+-
+-## Workflow Steps
+-
+-The APEX workflow uses progressive step loading for efficient context usage:
+-
+-Step
+-
+-Name
+-
+-Purpose
+-
+-00
+-
+-Init
+-
+-Parse flags, create output folder, initialize state
+-
+-01
+-
+-Analyze
+-
+-Pure context gathering (what exists, not what to do)
+-
+-02
+-
+-Plan
+-
+-File-by-file implementation strategy
+-
+-03
+-
+-Execute
+-
+-Todo-driven implementation
+-
+-04
+-
+-Validate
+-
+-Self-check and validation
+-
+-05
+-
+-Examine
+-
+-Adversarial code review (optional, with `-x`)
+-
+-06
+-
+-Resolve
+-
+-Finding resolution (optional, if issues found)
+-
+-07
+-
+-Tests
+-
+-Test analysis and creation (with `-t`)
+-
+-08
+-
+-Run Tests
+-
+-Test runner loop until green (with `-t`)
+-
+-09
+-
+-Finish
+-
+-Create pull request (with `-pr`)
+-
+-### Step Details
+-
+-**Analyze**: The agent explores your codebase to understand existing patterns, conventions, related files, dependencies, and current architecture.
+-
+-**Plan**: Creates a file-by-file implementation strategy including which files to create or modify, specific changes for each file, and order of implementation.
+-
+-**Execute**: Todo-driven implementation phase where each change is tracked as a todo item with real-time progress visibility.
+-
+-**Validate**: Self-check phase to verify changes compile, check for obvious issues, and run basic sanity checks.
+-
+-**Examine** (optional): Adversarial code review with critical analysis of changes, security review, and performance considerations.
+-
+-**Resolve** (optional): Fixes any issues found during examination phase.
+-
+-**Tests** (optional): When `-t` flag is used, analyzes and creates appropriate tests, then runs them until all pass.
+-
+-## Output Structure
+-
+-When using `-s` (save mode), outputs are saved to `.claude/output/apex/{task-id}/`:
+-
+-File
+-
+-Description
+-
+-`00-context.md`
+-
+-Params, user request, timestamp
+-
+-`01-analyze.md`
+-
+-Analysis findings
+-
+-`02-plan.md`
+-
+-Implementation plan
+-
+-`03-execute.md`
+-
+-Execution log
+-
+-`04-validate.md`
+-
+-Validation results
+-
+-`05-examine.md`
+-
+-Review findings (if -x)
+-
+-`06-resolve.md`
+-
+-Resolution log (if -x)
+-
+-`07-tests.md`
+-
+-Test analysis and creation (if -t)
+-
+-`08-run-tests.md`
+-
+-Test runner log (if -t)
+-
+-`09-finish.md`
+-
+-Workflow finish and PR creation (if -pr)
+-
+-## Resume Mode
+-
+-You can resume a previous task using the `-r` flag:
+-
+-BASH
+-
+-```
+-/apex -r 01-add-auth-middleware
+-/apex -r 01  # Partial match supported
+-```
+-
+-The agent will:
+-
+-1.  Locate the task folder in `.claude/output/apex/`
+-2.  Read `00-context.md` to restore original task description, flags, and acceptance criteria
+-3.  Scan existing step files to determine the highest completed step
+-4.  Continue from the next step or current incomplete step
+-
+-Partial matching is supported, so `/apex -r 01` will find `01-add-auth-middleware`. If multiple matches are found, you'll be asked to specify.
+-
+-## Best Practices
+-
+-1.  **Use save mode for complex tasks** - It helps you review the analysis and plan before execution
+-2.  **Use examine mode for critical code** - Security-sensitive or complex business logic benefits from adversarial review
+-3.  **Use economy mode when token-limited** - Still effective but uses fewer resources
+-4.  **Resume interrupted tasks** - Don't start over, use `-r` to continue
+-
+-[Cheatsheet](/docs/claude-code-pro/cheatsheet)[/brainstorm](/docs/claude-code-pro/brainstorm)
+diff --git a/.agent/skills/create-skills-workflow/SKILL.md b/.agent/skills/create-skills-workflow/SKILL.md
+deleted file mode 100644
+index 83e113c..0000000
+--- a/.agent/skills/create-skills-workflow/SKILL.md
++++ /dev/null
+@@ -1,296 +0,0 @@
+----
+-name: create-skills-workflow
+-description: Create multi-step workflow skills with progressive step loading, state management, and interactive decisions.
+----
+-
+-# /create-skills-workflow
+-
+-Create multi-step workflow skills with progressive step loading, state management, and interactive decisions.
+-
+-The `/create-skills-workflow` skill guides the creation of professional multi-step workflow skills like APEX.
+-
+-**Usage:** `/create-skills-workflow <workflow name> [description]`
+-
+-## What are Workflow Skills?
+-
+-Workflow skills use:
+-
+-*   **Progressive step loading** to minimize context usage
+-*   **State persistence** across steps via frontmatter
+-*   **Interactive decision points** with AskUserQuestion
+-*   **Optional/conditional steps** for flexibility
+-
+-## When to Use
+-
+-**Use this skill when building:**
+-
+-*   Multi-phase workflows (3+ distinct steps)
+-*   Skills that need state persistence across steps
+-*   Interactive workflows with user decision points
+-*   Skills with optional/conditional steps
+-*   Workflows that save outputs for review
+-
+-**Don't use for:**
+-
+-*   Simple single-action skills
+-*   Skills that complete in one step
+-*   Pure research/exploration skills
+-
+-## Quick Start
+-
+-1.  Define your steps and their dependencies
+-2.  Create the folder structure
+-3.  Copy and customize SKILL.md template
+-4.  Create step-00-init.md for initialization
+-5.  Create each step using the step template
+-6.  Test the workflow end-to-end
+-
+-## Workflow Creation Process
+-
+-### Phase 1: Design the Workflow
+-
+-**1.1 Identify Workflow Steps**
+-
+-*   What are the distinct phases of this workflow?
+-*   What must complete before the next step can start?
+-*   Which steps are optional or conditional?
+-*   Where do users need to make decisions?
+-
+-**1.2 Map Dependencies**
+-
+-```
+-Step 1 ──► Step 2 ──► Step 3 ──┬──► Step 4a (if condition)
+-                               └──► Step 4b (else)
+-```
+-
+-**1.3 Define State Variables**
+-
+-YAML
+-
+-```
+-state_variables:
+-  - task_description: string   # What to do
+-  - task_id: string            # Unique identifier
+-  - auto_mode: boolean         # Skip confirmations
+-  - results: object            # Accumulated results
+-```
+-
+-### Phase 2: Create Structure
+-
+-**Folder Structure**
+-
+-Path
+-
+-Purpose
+-
+-`SKILL.md`
+-
+-Main entry point with state variables
+-
+-`steps/step-00-init.md`
+-
+-Initialization (parse flags, setup)
+-
+-`steps/step-01-{name}.md`
+-
+-First step
+-
+-`steps/step-02-{name}.md`
+-
+-Second step
+-
+-`references/`
+-
+-Optional: templates, patterns
+-
+-**Naming Conventions**
+-
+-*   Steps: `step-NN-{descriptive-name}.md`
+-*   NN = two-digit number (00, 01, 02...)
+-*   Use kebab-case for names
+-*   Keep names short but descriptive
+-
+-## Critical Patterns (BMAD-Inspired)
+-
+-### 1\. Micro-File Architecture
+-
+-*   ✅ ALWAYS: Each step is a self-contained file
+-*   ✅ ALWAYS: Load one step at a time (progressive loading)
+-*   ❌ NEVER: Load all steps upfront
+-*   ❌ NEVER: Assume knowledge from future steps
+-
+-### 2\. Every Step Must Have
+-
+-Section
+-
+-Purpose
+-
+-**MANDATORY EXECUTION RULES**
+-
+-Critical boundaries with 🛑✅📋💬🚫 emojis
+-
+-**EXECUTION PROTOCOLS**
+-
+-How to execute this step
+-
+-**CONTEXT BOUNDARIES**
+-
+-What's in scope, what's not
+-
+-**YOUR TASK**
+-
+-One clear sentence describing purpose
+-
+-**EXECUTION SEQUENCE**
+-
+-Numbered list of actions
+-
+-**SUCCESS METRICS**
+-
+-✅ What success looks like
+-
+-**FAILURE MODES**
+-
+-❌ What to avoid
+-
+-**NEXT STEP**
+-
+-Where to go next
+-
+-### 3\. User Decisions with AskUserQuestion
+-
+-**CRITICAL:** Never use plain text prompts like "\[C\] Continue". Always use AskUserQuestion tool.
+-
+-YAML
+-
+-```
+-questions:
+-  - header: "Continue"
+-    question: "Ready to proceed to the next step?"
+-    options:
+-      - label: "Continue (Recommended)"
+-        description: "Proceed to next phase"
+-      - label: "Review first"
+-        description: "I want to review before continuing"
+-    multiSelect: false
+-```
+-
+-**Auto Mode:** Check `auto_mode` before ANY AskUserQuestion call to skip user interaction.
+-
+-### 4\. Frontmatter State Tracking
+-
+-Track progress in document frontmatter:
+-
+-YAML
+-
+-```
+----
+-stepsCompleted: [1, 2, 3]
+-task_description: "Add auth middleware"
+-selected_approach: "jwt"
+----
+-```
+-
+-### 5\. Critical Tags
+-
+-Use `<critical>` tags for essential reminders:
+-
+-MARKDOWN
+-
+-```
+-<critical>
+-Remember: This step is ONLY about analysis - don't plan or implement!
+-</critical>
+-```
+-
+-## Common Mistakes to Avoid
+-
+-Mistake
+-
+-Solution
+-
+-Loading all steps at once
+-
+-Use micro-file architecture, one step at a time
+-
+-Plain text prompts "\[C\] Continue"
+-
+-ALWAYS use AskUserQuestion tool
+-
+-Missing MANDATORY EXECUTION RULES
+-
+-Every step MUST start with rules using emojis
+-
+-No CONTEXT BOUNDARIES section
+-
+-Always define what's in scope and what's not
+-
+-Vague YOUR TASK statement
+-
+-Must be ONE clear sentence
+-
+-Forgetting state handoff
+-
+-Document available variables from previous steps
+-
+-Missing SUCCESS METRICS
+-
+-Every step needs ✅ success criteria and ❌ failure modes
+-
+-Not handling auto\_mode
+-
+-Check auto\_mode before ANY AskUserQuestion call
+-
+-No frontmatter state tracking
+-
+-Track `stepsCompleted` array in document
+-
+-Hardcoding paths
+-
+-Use relative paths and state variables
+-
+-## Success Criteria
+-
+-**A well-designed workflow skill has:**
+-
+-**Structure:**
+-
+-*   Micro-file architecture - each step self-contained
+-*   Clear step progression with dependencies
+-*   State variables documented and persisted in frontmatter
+-
+-**Each Step Has:**
+-
+-*   MANDATORY EXECUTION RULES section with emojis
+-*   EXECUTION PROTOCOLS section
+-*   CONTEXT BOUNDARIES section
+-*   YOUR TASK - one clear sentence
+-*   Numbered EXECUTION SEQUENCE
+-*   SUCCESS METRICS with ✅ checkmarks
+-*   FAILURE MODES with ❌ marks
+-*   NEXT STEP routing section
+-*   `<critical>` reminder at the end
+-
+-**User Interaction:**
+-
+-*   ALL user decisions use AskUserQuestion (never plain text)
+-*   Auto mode skips AskUserQuestion calls
+-*   Save mode outputs to files with frontmatter
+-
+-**State Management:**
+-
+-*   `stepsCompleted` array tracked in frontmatter
+-*   Resume detection checks existing documents
+-*   State variables passed between steps
+-
+-## Templates
+-
+-The skill includes reference templates:
+-
+-*   Step Template - Base structure for any step
+-*   Ask Patterns - AskUserQuestion patterns
+-*   State Management - Persisting data across steps
+-*   Workflow Patterns - Common workflow designs
+-*   Prompt Engineering - Best practices for prompts
+-
+-[/create-meta-prompts](/docs/claude-code-pro/create-meta-prompts)[/create-agent](/docs/claude-code-pro/create-agent-skills)
+diff --git a/memory-bank/TASKS.md b/memory-bank/TASKS.md
+index 2976a7c..6781cd1 100644
+--- a/memory-bank/TASKS.md
++++ b/memory-bank/TASKS.md
+@@ -189,6 +189,15 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
+ ## 🔗 Phase 6.11: Deployment Fixes ✅ COMPLETE
+ - [x] Exclude `claude-code-config` from `tsconfig.json` to fix build error
+ 
++---
++
++## 🔗 Phase 6.12: Migrate Claude Config to Antigravity ✅ COMPLETE
++- [x] Analyze and map proper types (Skills vs Workflows)
++- [x] Migrate `skills/` -> `.agent/skills/`
++- [x] Migrate `commands/` -> `.agent/workflows/`
++- [x] Migrate `agents/` -> `.agent/workflows/` (as specialized workflows)
++- [x] Rename content references (Claude -> Antigravity)
++
+ 
+ ---
+ ## �📋 Post-Deployment Configuration
+diff --git a/scripts/create-branch.js b/scripts/create-branch.js
+index a0032b6..8d6f13e 100644
+--- a/scripts/create-branch.js
++++ b/scripts/create-branch.js
+@@ -16,6 +16,16 @@ const rl = readline.createInterface({
+     output: process.stdout
+ });
+ 
++// CLI Argument Parsing
++const args = process.argv.slice(2).reduce((acc, arg, index, arr) => {
++    if (arg.startsWith('--')) {
++        const key = arg.replace(/^--/, '');
++        const value = arr[index + 1] && !arr[index + 1].startsWith('--') ? arr[index + 1] : true;
++        acc[key] = value;
++    }
++    return acc;
++}, {});
++
+ // Branch types with descriptions
+ const BRANCH_TYPES = {
+     '1': { type: 'feature', description: 'New feature or enhancement', emoji: '✨' },
+@@ -186,7 +196,9 @@ async function main () {
+ 
+     // Get username
+     let username = getGitUsername();
+-    if (!username) {
++    if (args.username) {
++        username = args.username;
++    } else if (!username) {
+         username = await ask('👤 Enter your username: ');
+     } else {
+         print(`👤 Detected username: ${username}`, 'dim');
+@@ -198,23 +210,44 @@ async function main () {
+         process.exit(1);
+     }
+ 
+-    // Show branch types
+-    printBranchTypes();
+-
+     // Get branch type
+-    let typeChoice = await ask('Enter your choice [1-8]: ');
++    let typeChoice = null;
++    let selectedType = null;
++
++    if (args.type) {
++        // Allow passing type by name or number
++        if (BRANCH_TYPES[args.type]) {
++            typeChoice = args.type;
++        } else {
++            const entry = Object.entries(BRANCH_TYPES).find(([_, val]) => val.type === args.type);
++            if (entry) typeChoice = entry[0];
++        }
++    }
+ 
+-    while (!BRANCH_TYPES[typeChoice]) {
+-        print('❌ Invalid choice. Please enter a number between 1 and 8.', 'red');
++    if (typeChoice) {
++        selectedType = BRANCH_TYPES[typeChoice];
++    } else {
++        // Show branch types
++        printBranchTypes();
+         typeChoice = await ask('Enter your choice [1-8]: ');
++
++        while (!BRANCH_TYPES[typeChoice]) {
++            print('❌ Invalid choice. Please enter a number between 1 and 8.', 'red');
++            typeChoice = await ask('Enter your choice [1-8]: ');
++        }
++        selectedType = BRANCH_TYPES[typeChoice];
+     }
+ 
+-    const selectedType = BRANCH_TYPES[typeChoice];
++    const selectedType = BRANCH_TYPES[typeChoice]; // Redundant if already set, but safe
+     print(`\n${selectedType.emoji} Selected: ${selectedType.type}`, 'green');
+ 
+     // Get branch description
+-    console.log('\n');
+-    const description = await ask('📝 Describe your branch (e.g., "add user authentication"): ');
++    let description = args.desc || args.description;
++
++    if (!description) {
++        console.log('\n');
++        description = await ask('📝 Describe your branch (e.g., "add user authentication"): ');
++    }
+ 
+     if (!description) {
+         print('❌ Error: Description is required.', 'red');
+@@ -231,7 +264,7 @@ async function main () {
+     print('─────────────────────────────────────────────────────────', 'dim');
+     console.log('\n');
+ 
+-    const confirm = await ask('Proceed? [Y/n]: ');
++    const confirm = args.yes ? 'y' : await ask('Proceed? [Y/n]: ');
+ 
+     if (confirm.toLowerCase() === 'n') {
+         print('❌ Cancelled.', 'red');

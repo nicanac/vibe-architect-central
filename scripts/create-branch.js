@@ -16,6 +16,16 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+// CLI Argument Parsing
+const args = process.argv.slice(2).reduce((acc, arg, index, arr) => {
+    if (arg.startsWith('--')) {
+        const key = arg.replace(/^--/, '');
+        const value = arr[index + 1] && !arr[index + 1].startsWith('--') ? arr[index + 1] : true;
+        acc[key] = value;
+    }
+    return acc;
+}, {});
+
 // Branch types with descriptions
 const BRANCH_TYPES = {
     '1': { type: 'feature', description: 'New feature or enhancement', emoji: '✨' },
@@ -186,7 +196,9 @@ async function main () {
 
     // Get username
     let username = getGitUsername();
-    if (!username) {
+    if (args.username) {
+        username = args.username;
+    } else if (!username) {
         username = await ask('👤 Enter your username: ');
     } else {
         print(`👤 Detected username: ${username}`, 'dim');
@@ -198,23 +210,44 @@ async function main () {
         process.exit(1);
     }
 
-    // Show branch types
-    printBranchTypes();
-
     // Get branch type
-    let typeChoice = await ask('Enter your choice [1-8]: ');
+    let typeChoice = null;
+    let selectedType = null;
 
-    while (!BRANCH_TYPES[typeChoice]) {
-        print('❌ Invalid choice. Please enter a number between 1 and 8.', 'red');
-        typeChoice = await ask('Enter your choice [1-8]: ');
+    if (args.type) {
+        // Allow passing type by name or number
+        if (BRANCH_TYPES[args.type]) {
+            typeChoice = args.type;
+        } else {
+            const entry = Object.entries(BRANCH_TYPES).find(([_, val]) => val.type === args.type);
+            if (entry) typeChoice = entry[0];
+        }
     }
 
-    const selectedType = BRANCH_TYPES[typeChoice];
+    if (typeChoice) {
+        selectedType = BRANCH_TYPES[typeChoice];
+    } else {
+        // Show branch types
+        printBranchTypes();
+        typeChoice = await ask('Enter your choice [1-8]: ');
+
+        while (!BRANCH_TYPES[typeChoice]) {
+            print('❌ Invalid choice. Please enter a number between 1 and 8.', 'red');
+            typeChoice = await ask('Enter your choice [1-8]: ');
+        }
+        selectedType = BRANCH_TYPES[typeChoice];
+    }
+
+    const selectedType = BRANCH_TYPES[typeChoice]; // Redundant if already set, but safe
     print(`\n${selectedType.emoji} Selected: ${selectedType.type}`, 'green');
 
     // Get branch description
-    console.log('\n');
-    const description = await ask('📝 Describe your branch (e.g., "add user authentication"): ');
+    let description = args.desc || args.description;
+
+    if (!description) {
+        console.log('\n');
+        description = await ask('📝 Describe your branch (e.g., "add user authentication"): ');
+    }
 
     if (!description) {
         print('❌ Error: Description is required.', 'red');
@@ -231,7 +264,7 @@ async function main () {
     print('─────────────────────────────────────────────────────────', 'dim');
     console.log('\n');
 
-    const confirm = await ask('Proceed? [Y/n]: ');
+    const confirm = args.yes ? 'y' : await ask('Proceed? [Y/n]: ');
 
     if (confirm.toLowerCase() === 'n') {
         print('❌ Cancelled.', 'red');

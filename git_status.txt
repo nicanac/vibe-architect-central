@@ -1,0 +1,33 @@
+On branch nicanac/feature/migrate-new-tool-from-claude-code
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	deleted:    .agent/rules/claude-code-configuration.md
+	deleted:    .agent/rules/claude-code-security.md
+	deleted:    .agent/rules/claude-code-setup.md
+	deleted:    .agent/rules/claude-memory.md
+	deleted:    .agent/skills/apex/SKILL.md
+	deleted:    .agent/skills/create-skills-workflow/SKILL.md
+	modified:   memory-bank/TASKS.md
+	modified:   scripts/create-branch.js
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.agent/AI_USAGE_GUIDE.md
+	.agent/rules/MEMORY.md
+	.agent/skills/claude-memory/
+	.agent/skills/create-slash-commands/
+	.agent/skills/create-subagents/
+	.agent/skills/create-workflow/
+	.agent/skills/setup-ralph/
+	.agent/workflows/agent-action.md
+	.agent/workflows/agent-explore-codebase.md
+	.agent/workflows/agent-explore-docs.md
+	.agent/workflows/agent-websearch.md
+	.agent/workflows/create-branch.md
+	.agent/workflows/explore.md
+	.agent/workflows/oneshot.md
+	git_status.txt
+	scripts/migrate-claude-config.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
