@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "branch": "node scripts/create-branch.js",
-    "sync:ai": "tsx scripts/sync-ai-folder.ts"
+    "sync:ai": "tsx scripts/sync-ai-folder.ts",
+    "convert:skills": "tsx scripts/convert-claude-to-antigravity.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -32,6 +33,8 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "turndown": "^7.2.2",
