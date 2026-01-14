@@ -35,24 +35,42 @@
 - `category`: enum ('command', 'agent', 'skill', 'hook', 'rule', 'prompt')
 - `agent_types`: enum[] ('claude', 'cursor', etc.)
 - `difficulty`: enum ('beginner', 'intermediate', 'advanced')
+- `file_format`: enum ('markdown', 'json', 'yaml', 'toml')
 - `tags`: text[]
 - `search_vector`: tsvector
+
+#### `profiles`
+- `id`: uuid (pk, references auth.users)
+- `email`: text
+- `full_name`: text
+- `avatar_url`: text
+- `updated_at`: timestamptz
+
+#### `favorites`
+- `id`: uuid (pk)
+- `user_id`: uuid (references profiles)
+- `item_id`: uuid (polymorphic: tools/prompts/instructions)
+- `item_type`: text ('tool', 'prompt', 'instruction')
+- `created_at`: timestamptz
 
 ## 3. Folder Structure (Next.js 16.1)
 ```text
 /
+├── .agent/                # Antigravity Agent Skills & Workflows
 ├── .cursor/               # MCP and Agent-specific context
 ├── supabase/              # SQL Migrations & Seed data
 ├── src/
 │   ├── app/               # App Router with "use cache" directives
 │   │   ├── (directory)/   # Tools & Prompts routes
-│   │   └── proxy.ts       # 2026 replacement for complex middleware.ts
+│   │   ├── auth/          # Authentication routes
+│   │   └── instructions/  # Instructions Hub
 │   ├── components/
 │   │   ├── ui/            # shadcn components (v3.6)
 │   │   └── vibe/          # Custom Architect components
 │   ├── lib/
 │   │   ├── supabase/      # Supabase client (v2.90+)
 │   │   └── actions/       # Server Actions for prompt copying/execution
+│   ├── middleware.ts      # Auth protection & routing
 │   └── styles/
 │       └── globals.css    # Tailwind 4.1 @theme configurations
 └── next.config.ts         # Native TypeScript config

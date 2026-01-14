@@ -77,12 +77,38 @@ CREATE TYPE vibe_level AS ENUM (
 | `id` | UUID | Primary key |
 | `title` | TEXT | Instruction title |
 | `slug` | TEXT | URL-friendly slug (unique) |
-| `code` | TEXT | The instruction content (markdown) |
+| `description` | TEXT | Short description |
+| `content` | TEXT | The instruction content (markdown) |
 | `category` | ENUM | command, agent, skill, hook, rule, prompt |
 | `agent_types` | ENUM[] | Supported agents (claude, cursor, etc.) |
 | `difficulty` | ENUM | beginner, intermediate, advanced |
+| `file_format` | ENUM | markdown, json, yaml, toml |
 | `tags` | TEXT[] | Search tags |
 | `search_vector` | TSVECTOR | Full-text search index |
+
+#### `profiles` - User Profiles
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID | PK (references auth.users) |
+| `email` | TEXT | User email |
+| `full_name` | TEXT | User's display name |
+| `avatar_url` | TEXT | Profile picture URL |
+| `updated_at` | TIMESTAMPTZ | Last update timestamp |
+
+#### `favorites` - User Favorites
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID | PK |
+| `user_id` | UUID | FK to profiles.id |
+| `item_id` | UUID | FK to tools/prompts/instructions |
+| `item_type` | TEXT | 'tool', 'prompt', 'instruction' |
+| `created_at` | TIMESTAMPTZ | Creation timestamp |
+
+### Storage Buckets
+- `tool-logos`: Public bucket for uploading tool images.
+- `avatars` (Optional): Public bucket for user avatars.
 
 ### Row Level Security (RLS)
 
