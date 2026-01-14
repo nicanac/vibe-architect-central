@@ -12,7 +12,8 @@ import {
   Ruler,
   MessageSquare,
   ArrowRight,
-  Copy
+  Copy,
+  Workflow
 } from 'lucide-react';
 
 interface InstructionCardProps {
@@ -22,6 +23,7 @@ interface InstructionCardProps {
 
 const CATEGORY_ICONS = {
   command: Terminal,
+  workflow: Workflow,
   agent: Bot,
   skill: Zap,
   hook: Anchor,
