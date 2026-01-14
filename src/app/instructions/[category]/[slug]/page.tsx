@@ -27,6 +27,10 @@ export default async function InstructionDetailPage({ params }: InstructionDetai
     notFound();
   }
 
+  if (!instruction) {
+    notFound();
+  }
+
   // Format date
   const date = new Date(instruction.created_at).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -34,10 +38,7 @@ export default async function InstructionDetailPage({ params }: InstructionDetai
     day: 'numeric'
   });
 
-
-
   const categoryLabel = INSTRUCTION_CATEGORIES[category as InstructionCategory]?.label || category;
-
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-12">
