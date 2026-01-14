@@ -1,15 +1,27 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Wrench, BookOpen } from 'lucide-react'
+import { ArrowLeft, Wrench, BookOpen, FileCode2 } from 'lucide-react'
 import { ToolSubmissionForm } from '@/components/vibe/ToolSubmissionForm'
 import { PromptSubmissionForm } from '@/components/vibe/PromptSubmissionForm'
+import { InstructionForm } from '@/components/vibe/InstructionForm'
 
-type SubmissionType = 'tool' | 'prompt'
+type SubmissionType = 'tool' | 'prompt' | 'instruction'
 
 export default function SubmitPage() {
+  const searchParams = useSearchParams()
   const [activeType, setActiveType] = useState<SubmissionType>('tool')
+
+  useEffect(() => {
+    const type = searchParams.get('type')
+    if (type === 'instruction') {
+      setActiveType('instruction')
+    } else if (type === 'prompt') {
+      setActiveType('prompt')
+    }
+  }, [searchParams])
 
   return (
     <div className="min-h-screen bg-background">
@@ -29,7 +41,7 @@ export default function SubmitPage() {
             Submit to Vibe Architect Central
           </h1>
           <p className="text-muted-foreground mt-1">
-            Share your favorite tools or orchestration prompts with the community
+            Share your favorite tools, prompts, or agent instructions with the community
           </p>
         </div>
       </header>
@@ -49,7 +61,7 @@ export default function SubmitPage() {
             `}
           >
             <Wrench className="w-4 h-4" />
-            Submit a Tool
+            Tool
           </button>
           <button
             onClick={() => setActiveType('prompt')}
@@ -62,7 +74,20 @@ export default function SubmitPage() {
             `}
           >
             <BookOpen className="w-4 h-4" />
-            Submit a Prompt
+            Prompt
+          </button>
+          <button
+            onClick={() => setActiveType('instruction')}
+            className={`
+              flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium rounded-industrial transition-all
+              ${activeType === 'instruction'
+                ? 'bg-yellow-500 text-white'
+                : 'text-muted-foreground hover:text-foreground hover:bg-surface/80'
+              }
+            `}
+          >
+            <FileCode2 className="w-4 h-4" />
+            Instruction
           </button>
         </div>
 
@@ -78,7 +103,7 @@ export default function SubmitPage() {
               </div>
               <ToolSubmissionForm />
             </>
-          ) : (
+          ) : activeType === 'prompt' ? (
             <>
               <div className="mb-6">
                 <h2 className="text-lg font-semibold text-foreground">Prompt Submission</h2>
@@ -87,6 +112,16 @@ export default function SubmitPage() {
                 </p>
               </div>
               <PromptSubmissionForm />
+            </>
+          ) : (
+            <>
+              <div className="mb-6">
+                <h2 className="text-lg font-semibold text-foreground">Instruction Submission</h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Share agent instructions, commands, skills, hooks, or rules for AI tools.
+                </p>
+              </div>
+              <InstructionForm />
             </>
           )}
         </div>

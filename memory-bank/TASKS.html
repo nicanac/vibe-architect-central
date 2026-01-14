@@ -424,6 +424,306 @@
 </ul>
 <hr>
 <h2 id="-phase-6-future-enhancements-next">🚀 Phase 6: Future Enhancements (NEXT)</h2>
+<h3 id="phase-60-agent-instructions-hub--priority">Phase 6.0: Agent Instructions Hub ⭐ PRIORITY</h3>
+<blockquote>
+<p>New section: &quot;Instructions&quot; - A comprehensive directory for AI agent configurations, commands, skills, and workflows.
+<strong>Inspired by:</strong> <a href="https://codelynx.dev/docs/">CodeLynx Docs</a> structure</p>
+</blockquote>
+<h4 id="content-categories-like-codelynx">Content Categories (like CodeLynx)</h4>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Commands</strong></td>
+<td>Slash commands for quick tasks</td>
+<td><code>/commit</code>, <code>/create-pr</code>, <code>/review</code></td>
+</tr>
+<tr>
+<td><strong>Agents</strong></td>
+<td>Specialized AI personas for specific domains</td>
+<td><code>explore-codebase</code>, <code>code-reviewer</code>, <code>security-auditor</code></td>
+</tr>
+<tr>
+<td><strong>Skills</strong></td>
+<td>Complex multi-step workflows (<a href="http://SKILL.html">SKILL.md</a>)</td>
+<td>APEX methodology, debugging workflow</td>
+</tr>
+<tr>
+<td><strong>Hooks</strong></td>
+<td>Event-driven automation triggers</td>
+<td><code>pre-commit</code>, <code>post-edit</code>, <code>on-file-save</code></td>
+</tr>
+<tr>
+<td><strong>Rules</strong></td>
+<td>Project-wide instructions (.cursorrules, <a href="http://CLAUDE.html">CLAUDE.md</a>)</td>
+<td>Architecture patterns, coding standards</td>
+</tr>
+<tr>
+<td><strong>Prompts</strong></td>
+<td>System prompts &amp; persona definitions</td>
+<td>Expert personas, role definitions</td>
+</tr>
+</tbody>
+</table>
+<h4 id="database-schema">Database Schema</h4>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>instructions</code> table in Supabase<pre><code class="language-sql"><span class="hljs-operator">-</span> id, title, slug, description, content (markdown<span class="hljs-operator">/</span>code)
+<span class="hljs-operator">-</span> category: enum (command, agent, skill, hook, rule, prompt)
+<span class="hljs-operator">-</span> agent_type: enum (copilot, claude, claude<span class="hljs-operator">-</span>code, chatgpt, gemini, <span class="hljs-keyword">cursor</span>, windsurf, other)
+<span class="hljs-operator">-</span> difficulty: enum (beginner, intermediate, advanced)
+<span class="hljs-operator">-</span> tags: text[] (<span class="hljs-keyword">array</span> <span class="hljs-keyword">of</span> tags <span class="hljs-keyword">for</span> filtering)
+<span class="hljs-operator">-</span> usage_example: text (how <span class="hljs-keyword">to</span> use it)
+<span class="hljs-operator">-</span> file_format: enum (markdown, json, yaml, toml)
+<span class="hljs-operator">-</span> submitted_by, created_at, updated_at, view_count
+</code></pre>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create migration file with RLS policies</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Add full-text search with tsvector</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Add GIN index for tags array</li>
+</ul>
+<h4 id="documentation-style-ui-like-codelynx">Documentation-Style UI (like CodeLynx)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>/instructions</code> landing page
+<ul>
+<li>Hero section with search bar</li>
+<li>Category cards (Commands, Agents, Skills, Hooks, Rules, Prompts)</li>
+<li>&quot;Getting Started&quot; section</li>
+<li>Featured/Popular instructions</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>/instructions/[category]</code> pages
+<ul>
+<li>Sidebar navigation with all items in category</li>
+<li>Grid or list view toggle</li>
+<li>Filter by agent type, difficulty, tags</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>/instructions/[category]/[slug]</code> detail pages
+<ul>
+<li>Full documentation view with syntax highlighting</li>
+<li>Code blocks with copy button</li>
+<li>Usage examples section</li>
+<li>Related instructions sidebar</li>
+<li>&quot;Try it&quot; deep links (for supported agents)</li>
+<li>Download as file button</li>
+</ul>
+</li>
+</ul>
+<h4 id="ui-components">UI Components</h4>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>InstructionCard.tsx</code>
+<ul>
+<li>Category icon/badge (Command 🔧, Agent 🤖, Skill ⚡, Hook 🪝, Rule 📏, Prompt 💬)</li>
+<li>Agent type badge (Copilot, Claude, Cursor, etc.)</li>
+<li>Difficulty indicator</li>
+<li>Tags display</li>
+<li>Copy/Download actions</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>InstructionSidebar.tsx</code> - Category navigation</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>CodeBlock.tsx</code> - Syntax highlighted code with copy</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>UsageExample.tsx</code> - Interactive usage examples</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>InstructionSearch.tsx</code> - Search with filters</li>
+</ul>
+<h4 id="filtering--discovery">Filtering &amp; Discovery</h4>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Filter by category (Commands, Agents, Skills, Hooks, Rules, Prompts)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Filter by agent/tool (Copilot, Claude, Claude Code, Cursor, Windsurf, ChatGPT, Gemini)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Filter by difficulty (Beginner, Intermediate, Advanced)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Filter by tags (git, testing, security, performance, etc.)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Full-text search across title, description, content</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Sort by: newest, popular, alphabetical</li>
+</ul>
+<h4 id="submission--management">Submission &amp; Management</h4>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create <code>/submit/instruction</code> form
+<ul>
+<li>Category selector with descriptions</li>
+<li>Agent type multi-select</li>
+<li>Monaco code editor for content</li>
+<li>Live preview panel</li>
+<li>Tags input with suggestions</li>
+<li>Usage example editor</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> File upload support (.md, .json, .yaml, .toml)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Edit/delete functionality for own submissions</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Draft/publish workflow</li>
+</ul>
+<h4 id="navigation-integration">Navigation Integration</h4>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Add &quot;Instructions&quot; to Header (Tools | Prompts | <strong>Instructions</strong>)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Update home page with 3-tab layout</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Add instruction count badge</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> CMD+K search integration</li>
+</ul>
+<h4 id="seed-data">Seed Data</h4>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Import <code>.github/skills/code-review/</code> → Skills category</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Import <code>.github/skills/commit-message/</code> → Skills category</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create sample commands (commit, review, debug)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create sample agents (codebase-explorer, security-auditor)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create sample hooks (pre-commit, post-edit)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create sample rules (Next.js patterns, TypeScript strict)</li>
+</ul>
+<h4 id="data-migration-from-codelynx">Data Migration from CodeLynx</h4>
+<blockquote>
+<p>Migrate all existing content from <a href="https://codelynx.dev/docs/">https://codelynx.dev/docs/</a> to the new database</p>
+</blockquote>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create migration script <code>scripts/migrate-codelynx.ts</code></li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Scrape/fetch all documentation pages:
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Claude Code Setup guide</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> All Claude Code PRO commands (<code>/apex</code>, <code>/brainstorm</code>, <code>/debug</code>, <code>/clean-code</code>, etc.)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> All agents documentation</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> All skills documentation</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> All hooks documentation</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Parse and transform content:
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Extract title, description, content (markdown)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Identify category (command, agent, skill, hook, rule, prompt)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Extract usage examples and code blocks</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Parse flags/options tables</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Extract related links</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Map to new database schema:
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Set agent_type = 'claude-code' for Claude Code content</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Set appropriate difficulty levels</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Generate slugs from titles</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create tags from content analysis</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Insert into Supabase <code>instructions</code> table</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Verify data integrity and completeness</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Update view counts and metadata</li>
+</ul>
+<h4 id="content-to-migrate-from-codelynx">Content to Migrate from CodeLynx</h4>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Items</th>
+<th>Source URL Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup Guide</td>
+<td>1</td>
+<td><code>/docs/claude-code-setup</code></td>
+</tr>
+<tr>
+<td>Commands</td>
+<td>15+</td>
+<td><code>/docs/claude-code-pro/*</code></td>
+</tr>
+<tr>
+<td>- /apex</td>
+<td>APEX methodology</td>
+<td><code>/docs/claude-code-pro/apex-skills</code></td>
+</tr>
+<tr>
+<td>- /brainstorm</td>
+<td>Deep research</td>
+<td><code>/docs/claude-code-pro/brainstorm</code></td>
+</tr>
+<tr>
+<td>- /debug</td>
+<td>Error debugging</td>
+<td><code>/docs/claude-code-pro/debug</code></td>
+</tr>
+<tr>
+<td>- /clean-code</td>
+<td>Best practices</td>
+<td><code>/docs/claude-code-pro/clean-code</code></td>
+</tr>
+<tr>
+<td>- /review-code</td>
+<td>Code review</td>
+<td><code>/docs/claude-code-pro/review-code</code></td>
+</tr>
+<tr>
+<td>- /ci-experts</td>
+<td>CI/CD debugging</td>
+<td><code>/docs/claude-code-pro/ci-experts</code></td>
+</tr>
+<tr>
+<td>- /claude-memory</td>
+<td>Memory files</td>
+<td><code>/docs/claude-code-pro/claude-memory</code></td>
+</tr>
+<tr>
+<td>- /create-prompt</td>
+<td>Prompt engineering</td>
+<td><code>/docs/claude-code-pro/create-prompt</code></td>
+</tr>
+<tr>
+<td>- /create-meta-prompts</td>
+<td>Meta prompts</td>
+<td><code>/docs/claude-code-pro/create-meta-prompts</code></td>
+</tr>
+<tr>
+<td>- /create-slash-commands</td>
+<td>Custom commands</td>
+<td><code>/docs/claude-code-pro/create-slash-commands</code></td>
+</tr>
+<tr>
+<td>- /create-skills-workflow</td>
+<td>Workflow skills</td>
+<td><code>/docs/claude-code-pro/create-skills-workflow</code></td>
+</tr>
+<tr>
+<td>- /create-agent-skills</td>
+<td><a href="http://SKILL.html">SKILL.md</a> files</td>
+<td><code>/docs/claude-code-pro/create-agent-skills</code></td>
+</tr>
+<tr>
+<td>- /create-hooks</td>
+<td>Automation hooks</td>
+<td><code>/docs/claude-code-pro/create-hooks</code></td>
+</tr>
+<tr>
+<td>- /create-subagents</td>
+<td>Subagents</td>
+<td><code>/docs/claude-code-pro/create-subagents</code></td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>4+</td>
+<td>Base agents (action, explore-codebase, explore-docs, websearch)</td>
+</tr>
+<tr>
+<td>Configuration</td>
+<td>1</td>
+<td><code>/docs/claude-code-configuration</code></td>
+</tr>
+<tr>
+<td>Security</td>
+<td>1</td>
+<td><code>/docs/claude-code-security</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="advanced-features-phase-601">Advanced Features (Phase 6.0.1)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> &quot;Collections&quot; - Curated sets of instructions (e.g., &quot;Full Claude Code Setup&quot;)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Version history for instructions</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Fork/remix functionality</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Installation CLI command generator</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> GitHub Gist export</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> One-click install to <code>~/.claude/</code> or <code>.cursor/</code></li>
+</ul>
 <h3 id="phase-61-advanced-features">Phase 6.1: Advanced Features</h3>
 <ul class="contains-task-list">
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Implement voting/rating system for tools and prompts</li>
@@ -433,9 +733,9 @@
 </ul>
 <h3 id="phase-62-analytics--insights">Phase 6.2: Analytics &amp; Insights</h3>
 <ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Track tool/prompt views</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Track tool/prompt/instruction views</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> User activity dashboard</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Popular tools leaderboard</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Popular items leaderboard</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Usage analytics with Vercel Analytics</li>
 </ul>
 <h3 id="phase-63-community-features">Phase 6.3: Community Features</h3>
@@ -450,7 +750,7 @@
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Public API for tool data</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Webhooks for new submissions</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Integration with IDE extensions</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> RSS feed for new tools/prompts</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> RSS feed for new tools/prompts/instructions</li>
 </ul>
 
             
