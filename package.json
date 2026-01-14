@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "branch": "node scripts/create-branch.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

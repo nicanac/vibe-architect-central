@@ -141,7 +141,7 @@
             <h1 id="project-vibe-architect-central---implementation-tasks">Project: Vibe Architect Central - Implementation Tasks</h1>
 <blockquote>
 <p><strong>Last Updated:</strong> January 14, 2026<br>
-<strong>Status:</strong> ✅ Phase 5 Complete - Ready for Deployment</p>
+<strong>Status:</strong> ✅ Phase 5 Complete - Deployed to Vercel</p>
 </blockquote>
 <hr>
 <h2 id="phase-41-foundation--high-speed-setup--complete">Phase 4.1: Foundation &amp; High-Speed Setup ✅ COMPLETE</h2>
@@ -280,18 +280,42 @@
 <li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Created <code>vercel.json</code> with headers and caching</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Created <code>.env.example</code> template</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Security headers configured</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Fixed vercel.json (removed secret references for env vars)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Build verification passed ✓</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Deployed to Vercel via <code>npx vercel</code></li>
 </ul>
 <hr>
-<h2 id="-pre-deployment-checklist">📋 Pre-Deployment Checklist</h2>
-<h3 id="database-migrations-to-push">Database Migrations to Push</h3>
-<pre><code class="language-bash">npx supabase db push --include-all
-</code></pre>
-<p>Migrations pending:</p>
+<h2 id="-phase-56-github-repository-setup--complete">🔗 Phase 5.6: GitHub Repository Setup ✅ COMPLETE</h2>
+<h3 id="connect-to-github">Connect to GitHub</h3>
+<p>Repository: <code>https://github.com/nicanac/vibe-architect-central.git</code></p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Initialize git repository locally</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Connect to remote repository</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Push to main branch</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Link Vercel to GitHub for automatic deployments (optional)</li>
+</ul>
+<hr>
+<h2 id="-post-deployment-configuration">�📋 Post-Deployment Configuration</h2>
+<h3 id="vercel-dashboard-setup">Vercel Dashboard Setup</h3>
+<p>Add environment variables in Vercel Project Settings:</p>
+<ul>
+<li><code>NEXT_PUBLIC_SUPABASE_URL</code> = <code>https://qlsgscizfvqbdajzqtgb.supabase.co</code></li>
+<li><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> = (your anon key)</li>
+</ul>
+<h3 id="database-migrations-pushed">Database Migrations Pushed</h3>
+<p>Via <code>npx supabase db push --include-all</code>:</p>
 <ol>
-<li><code>20260114000000_auth_profiles.sql</code> - Profiles &amp; favorites tables</li>
-<li><code>20260114000001_search_categories.sql</code> - Full-text search &amp; categories</li>
-<li><code>20260114000002_storage_bucket.sql</code> - Tool logos storage bucket</li>
+<li>✅ <code>20260114000000_auth_profiles.sql</code> - Profiles &amp; favorites tables</li>
+<li>✅ <code>20260114000001_search_categories.sql</code> - Full-text search &amp; categories</li>
+<li>⚠️ <code>20260114000002_storage_bucket.sql</code> - Needs manual setup in Supabase Dashboard</li>
 </ol>
+<h3 id="storage-bucket-setup-manual">Storage Bucket Setup (Manual)</h3>
+<p>Create in Supabase Dashboard → Storage:</p>
+<ul>
+<li>Bucket name: <code>tool-logos</code></li>
+<li>Set as public bucket</li>
+<li>Add RLS policies for authenticated uploads</li>
+</ul>
 <h3 id="vercel-environment-variables">Vercel Environment Variables</h3>
 <ul>
 <li><code>NEXT_PUBLIC_SUPABASE_URL</code></li>
@@ -319,11 +343,11 @@
 <tbody>
 <tr>
 <td>Tools in DB</td>
-<td>5</td>
+<td>6</td>
 </tr>
 <tr>
 <td>Prompts in DB</td>
-<td>3</td>
+<td>4</td>
 </tr>
 <tr>
 <td>React Components</td>

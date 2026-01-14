@@ -1,3 +1,8 @@
+---
+name: skill-commit-message
+description: Generate conventional commit messages by analyzing repository changes following conventionalcommits.org specification
+---
+
 # Commit Message Generator Skill
 
 Generate conventional commit messages by analyzing repository changes.
