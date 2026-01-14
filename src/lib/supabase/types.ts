@@ -60,27 +60,32 @@ export interface FavoritePrompt {
 // Instructions Types
 // ============================================
 
-export type InstructionCategory = 
-  | "command"   // Slash commands (/commit, /review)
-  | "agent"     // Specialized AI personas
-  | "skill"     // Multi-step workflows (SKILL.md)
-  | "hook"      // Event-driven automation
-  | "rule"      // Project-wide instructions (.cursorrules, CLAUDE.md)
-  | "prompt";   // System prompts & persona definitions
+export type InstructionCategory =
+  | "command" // Slash commands (/commit, /review)
+  | "agent" // Specialized AI personas
+  | "skill" // Multi-step workflows (SKILL.md)
+  | "hook" // Event-driven automation
+  | "rule" // Project-wide instructions (.cursorrules, CLAUDE.md)
+  | "prompt"; // System prompts & persona definitions
 
-export type InstructionAgentType = 
-  | "copilot"     // GitHub Copilot
-  | "claude"      // Claude (Anthropic)
+export type InstructionAgentType =
+  | "copilot" // GitHub Copilot
+  | "claude" // Claude (Anthropic)
   | "claude-code" // Claude Code CLI
-  | "chatgpt"     // ChatGPT (OpenAI)
-  | "gemini"      // Gemini (Google)
-  | "cursor"      // Cursor IDE
-  | "windsurf"    // Windsurf IDE
-  | "other";      // Other AI tools
+  | "chatgpt" // ChatGPT (OpenAI)
+  | "gemini" // Gemini (Google)
+  | "cursor" // Cursor IDE
+  | "windsurf" // Windsurf IDE
+  | "other"; // Other AI tools
 
 export type InstructionDifficulty = "beginner" | "intermediate" | "advanced";
 
-export type InstructionFileFormat = "markdown" | "json" | "yaml" | "toml" | "text";
+export type InstructionFileFormat =
+  | "markdown"
+  | "json"
+  | "yaml"
+  | "toml"
+  | "text";
 
 export interface Instruction {
   id: string;
@@ -111,56 +116,62 @@ export interface InstructionFavorite {
 }
 
 // Category metadata for UI
-export const INSTRUCTION_CATEGORIES: Record<InstructionCategory, {
-  label: string;
-  icon: string;
-  description: string;
-  color: string;
-}> = {
+export const INSTRUCTION_CATEGORIES: Record<
+  InstructionCategory,
+  {
+    label: string;
+    icon: string;
+    description: string;
+    color: string;
+  }
+> = {
   command: {
     label: "Commands",
     icon: "🔧",
     description: "Slash commands for quick tasks",
-    color: "text-blue-400"
+    color: "text-blue-400",
   },
   agent: {
     label: "Agents",
     icon: "🤖",
     description: "Specialized AI personas for specific domains",
-    color: "text-purple-400"
+    color: "text-purple-400",
   },
   skill: {
     label: "Skills",
     icon: "⚡",
     description: "Complex multi-step workflows",
-    color: "text-yellow-400"
+    color: "text-yellow-400",
   },
   hook: {
     label: "Hooks",
     icon: "🪝",
     description: "Event-driven automation triggers",
-    color: "text-green-400"
+    color: "text-green-400",
   },
   rule: {
     label: "Rules",
     icon: "📏",
     description: "Project-wide instructions and standards",
-    color: "text-orange-400"
+    color: "text-orange-400",
   },
   prompt: {
     label: "Prompts",
     icon: "💬",
     description: "System prompts and persona definitions",
-    color: "text-pink-400"
-  }
+    color: "text-pink-400",
+  },
 };
 
 // Agent type metadata for UI
-export const INSTRUCTION_AGENT_TYPES: Record<InstructionAgentType, {
-  label: string;
-  icon: string;
-  color: string;
-}> = {
+export const INSTRUCTION_AGENT_TYPES: Record<
+  InstructionAgentType,
+  {
+    label: string;
+    icon: string;
+    color: string;
+  }
+> = {
   copilot: { label: "GitHub Copilot", icon: "🐙", color: "bg-gray-700" },
   claude: { label: "Claude", icon: "🟠", color: "bg-orange-600" },
   "claude-code": { label: "Claude Code", icon: "🟠", color: "bg-orange-500" },
@@ -168,17 +179,20 @@ export const INSTRUCTION_AGENT_TYPES: Record<InstructionAgentType, {
   gemini: { label: "Gemini", icon: "🔵", color: "bg-blue-600" },
   cursor: { label: "Cursor", icon: "⬛", color: "bg-slate-700" },
   windsurf: { label: "Windsurf", icon: "🌊", color: "bg-cyan-600" },
-  other: { label: "Other", icon: "🔷", color: "bg-zinc-600" }
+  other: { label: "Other", icon: "🔷", color: "bg-zinc-600" },
 };
 
 // Difficulty metadata for UI
-export const INSTRUCTION_DIFFICULTIES: Record<InstructionDifficulty, {
-  label: string;
-  color: string;
-}> = {
+export const INSTRUCTION_DIFFICULTIES: Record<
+  InstructionDifficulty,
+  {
+    label: string;
+    color: string;
+  }
+> = {
   beginner: { label: "Beginner", color: "text-green-400" },
   intermediate: { label: "Intermediate", color: "text-yellow-400" },
-  advanced: { label: "Advanced", color: "text-red-400" }
+  advanced: { label: "Advanced", color: "text-red-400" },
 };
 
 export interface Database {
@@ -211,8 +225,13 @@ export interface Database {
       };
       instructions: {
         Row: Instruction;
-        Insert: Omit<Instruction, "id" | "created_at" | "updated_at" | "view_count" | "copy_count">;
-        Update: Partial<Omit<Instruction, "id" | "created_at" | "view_count" | "copy_count">>;
+        Insert: Omit<
+          Instruction,
+          "id" | "created_at" | "updated_at" | "view_count" | "copy_count"
+        >;
+        Update: Partial<
+          Omit<Instruction, "id" | "created_at" | "view_count" | "copy_count">
+        >;
       };
       instruction_favorites: {
         Row: InstructionFavorite;
