@@ -18,8 +18,7 @@ import {
 
 const CATEGORY_ICONS = {
     command: Terminal,
-    workflow: Workflow, // Add workflow icon mapping
-    agent: Bot,
+    workflow: Workflow,
     agent: Bot,
     skill: Zap,
     hook: Anchor,
