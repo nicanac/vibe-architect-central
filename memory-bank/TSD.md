@@ -26,6 +26,18 @@
 - `technique`: text (CoT, ReAct, etc.)
 - `created_by`: uuid (auth.users link)
 
+#### `instructions`
+- `id`: uuid (pk)
+- `title`: text
+- `slug`: text (unique)
+- `description`: text
+- `content`: text
+- `category`: enum ('command', 'agent', 'skill', 'hook', 'rule', 'prompt')
+- `agent_types`: enum[] ('claude', 'cursor', etc.)
+- `difficulty`: enum ('beginner', 'intermediate', 'advanced')
+- `tags`: text[]
+- `search_vector`: tsvector
+
 ## 3. Folder Structure (Next.js 16.1)
 ```text
 /

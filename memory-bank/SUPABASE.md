@@ -70,6 +70,20 @@ CREATE TYPE vibe_level AS ENUM (
 | `created_by` | UUID | FK to auth.users (nullable) |
 | `created_at` | TIMESTAMPTZ | Auto-set on creation |
 
+#### `instructions` - Agent Instructions Hub
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID | Primary key |
+| `title` | TEXT | Instruction title |
+| `slug` | TEXT | URL-friendly slug (unique) |
+| `code` | TEXT | The instruction content (markdown) |
+| `category` | ENUM | command, agent, skill, hook, rule, prompt |
+| `agent_types` | ENUM[] | Supported agents (claude, cursor, etc.) |
+| `difficulty` | ENUM | beginner, intermediate, advanced |
+| `tags` | TEXT[] | Search tags |
+| `search_vector` | TSVECTOR | Full-text search index |
+
 ### Row Level Security (RLS)
 
 Both tables have RLS enabled with the following policies:

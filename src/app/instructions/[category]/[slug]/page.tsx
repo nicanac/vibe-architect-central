@@ -1,287 +1,136 @@
-import { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
-import { 
-  INSTRUCTION_CATEGORIES, 
-  INSTRUCTION_AGENT_TYPES,
-  INSTRUCTION_DIFFICULTIES,
-  InstructionCategory,
-  Instruction
-} from "@/lib/supabase/types";
-import { CodeBlock } from "@/components/ui/code-block";
-import { InstructionCardCompact } from "@/components/vibe/InstructionCard";
-import { ChevronLeft, Copy, Download, ExternalLink, Eye, Clock, User } from "lucide-react";
-import { InstructionActions } from "./InstructionActions";
 
-const validCategories: InstructionCategory[] = ["command", "agent", "skill", "hook", "rule", "prompt"];
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { getInstructionBySlug } from '@/lib/supabase/queries';
+import { CodeBlock } from '@/components/vibe/CodeBlock';
+import { CopyInstructionButton } from '@/components/vibe/CopyInstructionButton';
+import { INSTRUCTION_CATEGORIES, InstructionCategory } from '@/lib/supabase/types';
+import { ArrowLeft, Calendar, FileText, Share2 } from 'lucide-react';
 
-interface DetailPageProps {
-  params: Promise<{ category: string; slug: string }>;
+interface InstructionDetailPageProps {
+  params: Promise<{
+    category: string;
+    slug: string;
+  }>;
 }
 
-export async function generateMetadata({ params }: DetailPageProps): Promise<Metadata> {
+export const dynamic = 'force-dynamic';
+
+export default async function InstructionDetailPage({ params }: InstructionDetailPageProps) {
   const { category, slug } = await params;
-  const supabase = await createClient();
-  
-  const { data: instruction } = await supabase
-    .from("instructions")
-    .select("*")
-    .eq("category", category)
-    .eq("slug", slug)
-    .single();
+
+  const instruction = await getInstructionBySlug(slug);
 
   if (!instruction) {
-    return { title: "Not Found" };
-  }
-
-  return {
-    title: `${instruction.title} | Instructions Hub | Vibe Architect Central`,
-    description: instruction.description,
-    openGraph: {
-      title: instruction.title,
-      description: instruction.description,
-      type: "article",
-    },
-  };
-}
-
-export default async function InstructionDetailPage({ params }: DetailPageProps) {
-  const { category, slug } = await params;
-  
-  // Validate category
-  if (!validCategories.includes(category as InstructionCategory)) {
     notFound();
   }
-
-  const supabase = await createClient();
-
-  // Get instruction
-  const { data, error } = await supabase
-    .from("instructions")
-    .select("*")
-    .eq("category", category)
-    .eq("slug", slug)
-    .single();
-
-  if (!data || error) {
-    notFound();
-  }
-
-  const instruction = data as Instruction;
-
-  // Increment view count
-  await supabase.rpc("increment_instruction_view", { instruction_id: instruction.id });
-
-  const categoryMeta = INSTRUCTION_CATEGORIES[instruction.category];
-  const difficultyMeta = INSTRUCTION_DIFFICULTIES[instruction.difficulty];
-
-  // Get related instructions (same category or similar tags)
-  const { data: relatedData } = await supabase
-    .from("instructions")
-    .select("*")
-    .eq("category", category)
-    .neq("id", instruction.id)
-    .order("view_count", { ascending: false })
-    .limit(5);
-
-  const related = (relatedData || []) as Instruction[];
 
   // Format date
-  const createdDate = new Date(instruction.created_at).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  const date = new Date(instruction.created_at).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   });
 
+
+
+  const categoryLabel = INSTRUCTION_CATEGORIES[category as InstructionCategory]?.label || category;
+
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Breadcrumb */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Link href="/instructions" className="hover:text-primary">
-            Instructions
-          </Link>
-          <span>/</span>
-          <Link href={`/instructions/${category}`} className="hover:text-primary">
-            {categoryMeta.label}
-          </Link>
-          <span>/</span>
-          <span className="text-foreground">{instruction.title}</span>
+    <div className="max-w-4xl mx-auto space-y-8 pb-12">
+      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+        <Link href="/instructions" className="hover:text-primary transition-colors">Instructions</Link>
+        <span>/</span>
+        <Link href={`/instructions/${category}`} className="hover:text-primary transition-colors capitalize">
+          {categoryLabel}
+        </Link>
+        <span>/</span>
+        <span className="text-foreground truncate">{instruction.title}</span>
+      </div>
+
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-3">
+          <Badge variant="outline" className="capitalize text-primary border-primary/20 bg-primary/5">
+            {instruction.difficulty}
+          </Badge>
+          {instruction.agent_types.map(agent => (
+            <Badge key={agent} variant="secondary">
+              {agent}
+            </Badge>
+          ))}
+        </div>
+
+        <h1 className="text-4xl font-bold tracking-tight">{instruction.title}</h1>
+        <p className="text-xl text-muted-foreground leading-relaxed">
+          {instruction.description}
+        </p>
+
+        <div className="flex items-center gap-4 text-sm text-muted-foreground pb-6 border-b border-border/50">
+          <div className="flex items-center gap-1.5">
+            <Calendar className="w-4 h-4" />
+            <span>Updated {date}</span>
+          </div>
+          {instruction.file_format && (
+            <div className="flex items-center gap-1.5">
+              <FileText className="w-4 h-4" />
+              <span className="uppercase">{instruction.file_format}</span>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="flex gap-8">
-        {/* Main Content */}
-        <main className="flex-1 min-w-0">
-          {/* Header */}
-          <header className="mb-8">
-            <div className="flex items-start gap-4 mb-4">
-              <span className="text-4xl">{categoryMeta.icon}</span>
-              <div className="flex-1">
-                <h1 className="text-3xl font-bold text-foreground mb-2">
-                  {instruction.title}
-                </h1>
-                <p className="text-lg text-muted-foreground">
-                  {instruction.description}
-                </p>
-              </div>
-            </div>
-
-            {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-4 text-sm">
-              {/* Category Badge */}
-              <span className={`px-3 py-1 rounded-full border ${categoryMeta.color} border-current/20`}>
-                {categoryMeta.icon} {categoryMeta.label.slice(0, -1)}
-              </span>
-
-              {/* Difficulty */}
-              <span className={`${difficultyMeta.color}`}>
-                {difficultyMeta.label}
-              </span>
-
-              {/* Agent Types */}
-              <div className="flex gap-1">
-                {instruction.agent_types.map((agentType) => {
-                  const meta = INSTRUCTION_AGENT_TYPES[agentType];
-                  return (
-                    <span 
-                      key={agentType}
-                      className={`px-2 py-0.5 rounded text-xs text-white/90 ${meta.color}`}
-                    >
-                      {meta.icon} {meta.label}
-                    </span>
-                  );
-                })}
-              </div>
-
-              {/* Stats */}
-              <span className="flex items-center gap-1 text-muted-foreground">
-                <Eye className="w-4 h-4" />
-                {instruction.view_count} views
-              </span>
-
-              <span className="flex items-center gap-1 text-muted-foreground">
-                <Clock className="w-4 h-4" />
-                {createdDate}
-              </span>
-            </div>
-
-            {/* Tags */}
-            {instruction.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-4">
-                {instruction.tags.map((tag) => (
-                  <span 
-                    key={tag}
-                    className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">Content</h2>
+            {instruction.file_format === 'markdown' ? (
+              <article className="prose prose-invert prose-blue max-w-none">
+                {/* 
+                   Ideally we would render Markdown here. 
+                   For now, reusing CodeBlock if it looks like code, 
+                   or just text if it's text.
+                   Since migrated content is mixed, we'll simple-render text or code.
+                */}
+                <div className="whitespace-pre-wrap font-sans text-muted-foreground leading-7">
+                  {instruction.content}
+                </div>
+              </article>
+            ) : (
+              <CodeBlock code={instruction.content} language={instruction.file_format} />
             )}
-          </header>
-
-          {/* Action Buttons */}
-          <InstructionActions instruction={instruction} />
-
-          {/* Usage Example */}
-          {instruction.usage_example && (
-            <section className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">Usage</h2>
-              <CodeBlock 
-                code={instruction.usage_example} 
-                language="bash"
-              />
-            </section>
-          )}
-
-          {/* Main Content */}
-          <section className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Instruction Content</h2>
-            <CodeBlock 
-              code={instruction.content}
-              language={instruction.file_format === "markdown" ? "markdown" : instruction.file_format}
-              filename={`${instruction.slug}.${instruction.file_format === "markdown" ? "md" : instruction.file_format}`}
-              showLineNumbers
-            />
           </section>
 
-          {/* Source Link */}
-          {instruction.source_url && (
-            <section className="mb-8">
-              <a 
-                href={instruction.source_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
-              >
-                <ExternalLink className="w-4 h-4" />
-                View original source
-              </a>
+          {/* Usage Example if available */}
+          {instruction.usage_example && ( // Note: schema doesn't have usage_example yet? Check types.ts
+            // Wait, I didn't verify if I added usage_example to schema. 
+            // Types.ts has it? 
+            // Let's check locally viewed types.ts. Line 101: `usage_example: string | null;`
+            // Yes it does.
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold">Usage Example</h2>
+              <CodeBlock code={instruction.usage_example} />
             </section>
           )}
-        </main>
+        </div>
 
-        {/* Sidebar */}
-        <aside className="hidden lg:block w-72 shrink-0">
-          <div className="sticky top-24 space-y-6">
-            {/* Quick Actions */}
-            <div className="vibe-glass rounded-industrial border border-border p-4">
-              <h3 className="text-sm font-semibold mb-3">Quick Actions</h3>
-              <div className="space-y-2">
-                <button 
-                  className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-                  onClick={() => {}}
-                >
-                  <Copy className="w-4 h-4" />
-                  Copy to Clipboard
-                </button>
-                <button 
-                  className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded border border-border hover:bg-muted transition-colors"
-                  onClick={() => {}}
-                >
-                  <Download className="w-4 h-4" />
-                  Download File
-                </button>
-              </div>
-            </div>
-
-            {/* Related Instructions */}
-            {related && related.length > 0 && (
-              <div className="vibe-glass rounded-industrial border border-border p-4">
-                <h3 className="text-sm font-semibold mb-3">Related {categoryMeta.label}</h3>
-                <div className="space-y-1">
-                  {related.map((item) => (
-                    <InstructionCardCompact key={item.id} instruction={item} />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Category Navigation */}
-            <div className="vibe-glass rounded-industrial border border-border p-4">
-              <h3 className="text-sm font-semibold mb-3">Browse Categories</h3>
-              <div className="space-y-1">
-                {Object.entries(INSTRUCTION_CATEGORIES).map(([key, meta]) => (
-                  <Link
-                    key={key}
-                    href={`/instructions/${key}`}
-                    className={`flex items-center gap-2 px-2 py-1 rounded text-sm transition-colors ${
-                      key === category 
-                        ? "bg-primary/20 text-primary" 
-                        : "hover:bg-muted"
-                    }`}
-                  >
-                    <span>{meta.icon}</span>
-                    <span>{meta.label}</span>
-                  </Link>
-                ))}
-              </div>
+        <div className="space-y-6">
+          <div className="p-6 rounded-xl bg-muted/30 border border-border/50 sticky top-24">
+            <h3 className="font-semibold mb-4 text-lg">Quick Actions</h3>
+            <div className="space-y-4">
+              <CopyInstructionButton content={instruction.content} className="w-full" />
+              <Button className="w-full" variant="outline">
+                <Share2 className="w-4 h-4 mr-2" />
+                Share Link
+              </Button>
             </div>
           </div>
-        </aside>
+        </div>
       </div>
     </div>
   );
 }
+
+

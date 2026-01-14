@@ -202,3 +202,93 @@ export async function getUniqueTechniques(): Promise<string[]> {
   const unique = [...new Set(data.map((p) => p.technique))].filter(Boolean);
   return unique.sort();
 }
+// Instructions Queries
+import { Instruction, InstructionCategory } from "@/lib/supabase/types";
+
+export interface PaginatedInstructionsResult {
+  data: Instruction[];
+  count: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
+export async function getInstructionsPaginated(
+  page: number = 1,
+  pageSize: number = 12,
+  category?: InstructionCategory,
+  search?: string,
+  agent?: string,
+  difficulty?: string
+): Promise<PaginatedInstructionsResult> {
+  const supabase = await createClient();
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  let query = supabase.from("instructions").select("*", { count: "exact" });
+
+  if (category) {
+    query = query.eq("category", category);
+  }
+
+  if (difficulty) {
+    query = query.eq("difficulty", difficulty);
+  }
+
+  if (agent) {
+    query = query.contains("agent_types", [agent]);
+  }
+
+  if (search) {
+    // Use the search_vector if available, or fallback to ilike
+    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+  }
+
+  const { data, error, count } = await query
+    .order("created_at", { ascending: false })
+    .range(from, to);
+
+  if (error) {
+    console.error("Error fetching instructions:", error);
+    return { data: [], count: 0, page, pageSize, totalPages: 0 };
+  }
+
+  return {
+    data: data || [],
+    count: count || 0,
+    page,
+    pageSize,
+    totalPages: Math.ceil((count || 0) / pageSize),
+  };
+}
+
+export async function getInstructionBySlug(slug: string): Promise<Instruction | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("instructions")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (error) {
+    console.error("Error fetching instruction by slug:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getRecentInstructions(limit: number = 5): Promise<Instruction[]> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+        .from('instructions')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+    if (error) {
+        console.error('Error fetching recent instructions:', error);
+        return [];
+    }
+    return data || [];
+}

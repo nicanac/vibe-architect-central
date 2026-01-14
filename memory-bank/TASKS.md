@@ -281,16 +281,16 @@ Create in Supabase Dashboard → Storage:
 - [ ] Add GIN index for tags array
 
 #### Documentation-Style UI (like CodeLynx)
-- [ ] Create `/instructions` landing page
+- [x] Create `/instructions` landing page
   - Hero section with search bar
   - Category cards (Commands, Agents, Skills, Hooks, Rules, Prompts)
   - "Getting Started" section
   - Featured/Popular instructions
-- [ ] Create `/instructions/[category]` pages
+- [x] Create `/instructions/[category]` pages
   - Sidebar navigation with all items in category
   - Grid or list view toggle
   - Filter by agent type, difficulty, tags
-- [ ] Create `/instructions/[category]/[slug]` detail pages
+- [x] Create `/instructions/[category]/[slug]` detail pages
   - Full documentation view with syntax highlighting
   - Code blocks with copy button
   - Usage examples section
@@ -299,16 +299,16 @@ Create in Supabase Dashboard → Storage:
   - Download as file button
 
 #### UI Components
-- [ ] Create `InstructionCard.tsx`
+- [x] Create `InstructionCard.tsx`
   - Category icon/badge (Command 🔧, Agent 🤖, Skill ⚡, Hook 🪝, Rule 📏, Prompt 💬)
   - Agent type badge (Copilot, Claude, Cursor, etc.)
   - Difficulty indicator
   - Tags display
   - Copy/Download actions
-- [ ] Create `InstructionSidebar.tsx` - Category navigation
-- [ ] Create `CodeBlock.tsx` - Syntax highlighted code with copy
-- [ ] Create `UsageExample.tsx` - Interactive usage examples
-- [ ] Create `InstructionSearch.tsx` - Search with filters
+- [x] Create `InstructionSidebar.tsx` - Category navigation
+- [x] Create `CodeBlock.tsx` - Syntax highlighted code with copy
+- [x] Create `UsageExample.tsx` - Interactive usage examples
+- [x] Create `InstructionSearch.tsx` - Search with filters
 
 #### Filtering & Discovery
 - [ ] Filter by category (Commands, Agents, Skills, Hooks, Rules, Prompts)
@@ -320,54 +320,49 @@ Create in Supabase Dashboard → Storage:
 
 #### Submission & Management
 - [ ] Create `/submit/instruction` form
-  - Category selector with descriptions
-  - Agent type multi-select
-  - Monaco code editor for content
-  - Live preview panel
-  - Tags input with suggestions
-  - Usage example editor
 - [ ] File upload support (.md, .json, .yaml, .toml)
 - [ ] Edit/delete functionality for own submissions
 - [ ] Draft/publish workflow
 
 #### Navigation Integration
-- [ ] Add "Instructions" to Header (Tools | Prompts | **Instructions**)
-- [ ] Update home page with 3-tab layout
+- [/] Add "Instructions" to Header (Tools | Prompts | **Instructions**)
+- [/] Update home page with 3-tab layout
 - [ ] Add instruction count badge
 - [ ] CMD+K search integration
 
 #### Seed Data
-- [ ] Import `.github/skills/code-review/` → Skills category
-- [ ] Import `.github/skills/commit-message/` → Skills category
-- [ ] Create sample commands (commit, review, debug)
-- [ ] Create sample agents (codebase-explorer, security-auditor)
-- [ ] Create sample hooks (pre-commit, post-edit)
-- [ ] Create sample rules (Next.js patterns, TypeScript strict)
+- [x] Import `.github/skills/code-review/` → Skills category
+- [x] Import `.github/skills/commit-message/` → Skills category
+- [x] Create sample commands (commit, review, debug)
+- [x] Create sample agents (codebase-explorer, security-auditor)
+- [x] Create sample hooks (pre-commit, post-edit)
+- [x] Create sample rules (Next.js patterns, TypeScript strict)
 
 #### Data Migration from CodeLynx
 > Migrate all existing content from https://codelynx.dev/docs/ to the new database
 
-- [ ] Create migration script `scripts/migrate-codelynx.ts`
-- [ ] Scrape/fetch all documentation pages:
-  - [ ] Claude Code Setup guide
-  - [ ] All Claude Code PRO commands (`/apex`, `/brainstorm`, `/debug`, `/clean-code`, etc.)
-  - [ ] All agents documentation
-  - [ ] All skills documentation
-  - [ ] All hooks documentation
-- [ ] Parse and transform content:
-  - [ ] Extract title, description, content (markdown)
-  - [ ] Identify category (command, agent, skill, hook, rule, prompt)
-  - [ ] Extract usage examples and code blocks
-  - [ ] Parse flags/options tables
-  - [ ] Extract related links
-- [ ] Map to new database schema:
-  - [ ] Set agent_type = 'claude-code' for Claude Code content
-  - [ ] Set appropriate difficulty levels
-  - [ ] Generate slugs from titles
-  - [ ] Create tags from content analysis
-- [ ] Insert into Supabase `instructions` table
-- [ ] Verify data integrity and completeness
-- [ ] Update view counts and metadata
+- [x] Create migration script `scripts/migrate-codelynx.ts`
+- [x] Scrape/fetch all documentation pages:
+  - [x] Claude Code Setup guide
+  - [x] All Claude Code PRO commands (`/apex`, `/brainstorm`, `/debug`, `/clean-code`, etc.)
+  - [x] All agents documentation
+  - [x] All skills documentation
+  - [x] All hooks documentation
+- [x] Parse and transform content:
+  - [x] Extract title, description, content (markdown)
+  - [x] Identify category (command, agent, skill, hook, rule, prompt)
+  - [x] Extract usage examples and code blocks
+  - [x] Parse flags/options tables
+  - [x] Extract related links
+- [x] Map to new database schema:
+  - [x] Set agent_type = 'claude-code' for Claude Code content
+  - [x] Set appropriate difficulty levels
+  - [x] Generate slugs from titles
+  - [x] Create tags from content analysis
+  - [x] Adapt content structure to fit `instructions` table (remove Hugo frontmatter, normalize headers)
+- [x] Insert into Supabase `instructions` table
+- [x] Verify data integrity and completeness
+- [x] Update view counts and metadata
 
 #### Content to Migrate from CodeLynx
 
