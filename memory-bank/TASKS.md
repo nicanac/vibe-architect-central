@@ -164,6 +164,28 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 - [x] Execute sync script to populate `.agent` directory
 
 ---
+
+## 🔗 Phase 6.8: Claude to Antigravity Skill Converter ✅ COMPLETE
+- [x] Brainstorm and design converter logic
+- [x] Create `scripts/convert-claude-to-antigravity.ts`
+- [x] Implement Claude skill parsing logic
+- [x] Implement Antigravity `SKILL.md` generation
+- [x] Verify conversion with sample data
+
+---
+
+## 🔗 Phase 6.9: Bug Fixes & UI Polish ✅ COMPLETE
+- [x] Fix Markdown rendering in Instructions Detail page (implemented react-markdown)
+- [x] Verify `tsx` script execution environment (user notified)
+- [x] Improve UX/UI of Instructions Detail page (widened layout, premium typography, custom components)
+
+---
+
+## 🔗 Phase 6.10: External Configuration Import ✅ COMPLETE
+- [x] Import `claude-code-config` from `Melvynx/aiblueprint`
+
+
+---
 ## �📋 Post-Deployment Configuration
 
 ### Vercel Dashboard Setup
