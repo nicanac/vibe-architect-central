@@ -238,7 +238,7 @@ async function main () {
         selectedType = BRANCH_TYPES[typeChoice];
     }
 
-    const selectedType = BRANCH_TYPES[typeChoice]; // Redundant if already set, but safe
+    // selectedType is already set above
     print(`\n${selectedType.emoji} Selected: ${selectedType.type}`, 'green');
 
     // Get branch description
