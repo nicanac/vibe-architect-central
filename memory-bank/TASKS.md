@@ -211,6 +211,24 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
   - [x] Analyze latest vs previous code
   - [x] Detect reusable patterns
   - [x] Merge/Refactor logic
+- [x] Create New Feature Workflow (`/new-feature`)
+
+---
+
+## 🔗 Phase 7.1: Seed Database with .agent Content
+- [x] Analyze `.agent` folder structure
+- [x] Map content to `instructions` table schema
+- [x] Create/Run seed script (`scripts/seed-agent-content.ts`)
+
+---
+
+## 🔗 Phase 7.2: UI Polish (Sidebar)
+- [x] Add "Workflows" to Side Navigation
+- [x] Ensure "Workflows" links to correct category
+
+## 🐛 Bug Fixes
+- [x] Fix "Element type is invalid" error on /instructions/workflow page
+
 
 
 ---
