@@ -198,6 +198,20 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 - [x] Migrate `agents/` -> `.agent/workflows/` (as specialized workflows)
 - [x] Rename content references (Claude -> Antigravity)
 
+---
+
+## 🔗 Phase 6.13: Route Protection ✅ COMPLETE
+- [x] Protect `/instructions` route (Middleware)
+- [x] Add Top Navigation to `/instructions` pages
+
+---
+
+## 🔗 Phase 7.0: Dev Experience & Workflows (Current)
+- [x] Create Refactor/Cleanup Workflow (`/refactor`, `/cleanup`)
+  - [x] Analyze latest vs previous code
+  - [x] Detect reusable patterns
+  - [x] Merge/Refactor logic
+
 
 ---
 ## �📋 Post-Deployment Configuration
