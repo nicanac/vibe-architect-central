@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Project&colon; Vibe Architect Central - Implementation Tasks</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 18px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="project-vibe-architect-central---implementation-tasks">Project: Vibe Architect Central - Implementation Tasks</h1>
+<blockquote>
+<p><strong>Last Updated:</strong> January 14, 2026<br>
+<strong>Status:</strong> ✅ Phase 5 Complete - Ready for Deployment</p>
+</blockquote>
+<hr>
+<h2 id="phase-41-foundation--high-speed-setup--complete">Phase 4.1: Foundation &amp; High-Speed Setup ✅ COMPLETE</h2>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Initialize project: <code>npx create-next-app@latest . --ts --tailwind --app --src-dir</code> (Next.js 16.1.1 ✓)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Install Supabase: <code>npm install @supabase/ssr @supabase/supabase-js</code> (v2.90 ✓)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Configure Tailwind 4.1: Implemented &quot;Cyber-Industrial&quot; <code>@theme</code> in globals.css</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Initialize shadcn/ui 3.6: Components initialized with custom theming</li>
+</ul>
+<h2 id="phase-42-slice-1---core-directory-infrastructure--complete">Phase 4.2: Slice 1 - Core Directory Infrastructure ✅ COMPLETE</h2>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Setup Supabase Client: Created <code>src/lib/supabase/server.ts</code> and <code>client.ts</code> using @supabase/ssr pattern</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Database Sync: Created <code>supabase/migrations/20260113000000_init.sql</code> and pushed via CLI</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Build <code>ToolCard.tsx</code>: High-fidelity card with vibe level badges, pricing, external links</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Layout Shell: <code>DirectoryLayout.tsx</code> with responsive grid and <code>vibe-glass</code> utility</li>
+</ul>
+<h2 id="phase-43-slice-2---the-prompt-vault--interactivity--complete">Phase 4.3: Slice 2 - The Prompt Vault &amp; Interactivity ✅ COMPLETE</h2>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Build <code>PromptCard.tsx</code>: Monospace code block with syntax styling</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Implement &quot;Copy to Clipboard&quot;: <code>useVibeClipboard</code> hook with Sonner toast notifications</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Deep Link Engine: <code>aiLinks.ts</code> utility generating Claude/ChatGPT/Gemini deep links</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Directory Filter: <code>VibeLevelFilter.tsx</code> for filtering tools by skill level</li>
+</ul>
+<h2 id="phase-44-slice-3---contribution--security--complete">Phase 4.4: Slice 3 - Contribution &amp; Security ✅ COMPLETE</h2>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Submission Form: <code>/submit</code> page with <code>ToolSubmissionForm</code> and <code>PromptSubmissionForm</code></li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Server Action: <code>submissions.ts</code> with Zod 4 validation and Supabase insert</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Success State: Toast notifications on successful submission</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Validation: Zod 4 schemas in <code>src/lib/validations/</code></li>
+</ul>
+<h2 id="phase-45-slice-4---orchestration-wizard-the-vibe-feature--complete">Phase 4.5: Slice 4 - Orchestration Wizard (The &quot;Vibe&quot; Feature) ✅ COMPLETE</h2>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Wizard UI: <code>PromptWizard.tsx</code> - 4-step wizard (Persona → Context → Task → Preview)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> CMD+K Search: <code>CommandSearch.tsx</code> using cmdk with keyboard shortcuts</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Final Polish: Neon button styling with <code>vibe-neon-*</code> utility classes</li>
+</ul>
+<h2 id="phase-46-database--deployment--complete">Phase 4.6: Database &amp; Deployment ✅ COMPLETE</h2>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Environment Setup: <code>.env.local</code> configured with Supabase credentials</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Supabase CLI: Initialized, logged in, linked to project <code>qlsgscizfvqbdajzqtgb</code></li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Migration Pushed: Schema with <code>tools</code> and <code>prompts</code> tables + RLS policies</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Seed Data: 5 tools (Cursor, Bolt.new, v0.dev, Claude, Replit Agent) + 3 prompts</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Live Connection: Server Components fetching real data from Supabase</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Documentation: Created <code>SUPABASE.md</code> with complete database documentation</li>
+</ul>
+<hr>
+<h2 id="-phase-5-enhancement--production--complete">🚀 Phase 5: Enhancement &amp; Production ✅ COMPLETE</h2>
+<h3 id="phase-51-authentication--user-features--complete">Phase 5.1: Authentication &amp; User Features ✅ COMPLETE</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Implement Supabase Auth (Email/OAuth providers)
+<ul>
+<li>Created <code>src/middleware.ts</code> for route protection</li>
+<li>Created <code>src/app/auth/callback/route.ts</code> for OAuth callbacks</li>
+<li>Created <code>src/app/auth/error/page.tsx</code> for auth errors</li>
+<li>Created <code>src/lib/supabase/auth.ts</code> with server actions</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Add user profile page showing submitted tools/prompts
+<ul>
+<li>Created <code>/profile</code> with stats, submitted content, favorites</li>
+<li>Created <code>/profile/edit</code> with profile editing form</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Created profiles migration with auto-profile trigger</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Add &quot;Favorites&quot; feature for logged-in users
+<ul>
+<li>Created <code>FavoriteButton.tsx</code> component</li>
+<li>Created <code>src/app/actions/favorites.ts</code> server actions</li>
+<li>Integrated into ToolCard and PromptCard</li>
+</ul>
+</li>
+</ul>
+<h3 id="phase-52-search--discovery--complete">Phase 5.2: Search &amp; Discovery ✅ COMPLETE</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Implement full-text search using Supabase <code>textsearch</code>
+<ul>
+<li>Created tsvector columns and GIN indexes</li>
+<li>Created <code>search_tools()</code> and <code>search_prompts()</code> functions</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Add categories/tags system in migration</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Create dedicated <code>/tools</code> and <code>/prompts</code> pages with pagination
+<ul>
+<li>Created <code>SearchInput.tsx</code> with debounce</li>
+<li>Created <code>Pagination.tsx</code> component</li>
+<li>Filter by technique/target_ai</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Updated Header with navigation links</li>
+</ul>
+<h3 id="phase-53-content-management--complete">Phase 5.3: Content Management ✅ COMPLETE</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Edit/Delete functionality for submitted content
+<ul>
+<li>Created <code>src/app/actions/content.ts</code> (updateTool, deleteTool, updatePrompt, deletePrompt)</li>
+<li>Created <code>/tools/[id]/edit</code> page with form</li>
+<li>Created <code>/prompts/[id]/edit</code> page with form</li>
+<li>Added AlertDialog for delete confirmations</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Image upload for tool logos via Supabase Storage
+<ul>
+<li>Created storage bucket migration</li>
+<li>Implemented <code>uploadImage()</code> server action</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Added edit buttons to profile page</li>
+</ul>
+<h3 id="phase-54-performance--seo--complete">Phase 5.4: Performance &amp; SEO ✅ COMPLETE</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Add OpenGraph meta tags for social sharing
+<ul>
+<li>Enhanced <code>layout.tsx</code> with full Metadata config</li>
+<li>Added Twitter cards, viewport, keywords</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Implement sitemap.xml generation
+<ul>
+<li>Created <code>src/app/sitemap.ts</code> with dynamic routes</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Implement robots.txt
+<ul>
+<li>Created <code>src/app/robots.ts</code></li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Add loading skeletons for better UX
+<ul>
+<li>Created loading.tsx for root, tools, prompts, profile</li>
+</ul>
+</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Created <code>public/manifest.json</code> for PWA support</li>
+</ul>
+<h3 id="phase-55-deployment--complete">Phase 5.5: Deployment ✅ COMPLETE</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Created <code>vercel.json</code> with headers and caching</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Created <code>.env.example</code> template</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked=""type="checkbox"> Security headers configured</li>
+</ul>
+<hr>
+<h2 id="-pre-deployment-checklist">📋 Pre-Deployment Checklist</h2>
+<h3 id="database-migrations-to-push">Database Migrations to Push</h3>
+<pre><code class="language-bash">npx supabase db push --include-all
+</code></pre>
+<p>Migrations pending:</p>
+<ol>
+<li><code>20260114000000_auth_profiles.sql</code> - Profiles &amp; favorites tables</li>
+<li><code>20260114000001_search_categories.sql</code> - Full-text search &amp; categories</li>
+<li><code>20260114000002_storage_bucket.sql</code> - Tool logos storage bucket</li>
+</ol>
+<h3 id="vercel-environment-variables">Vercel Environment Variables</h3>
+<ul>
+<li><code>NEXT_PUBLIC_SUPABASE_URL</code></li>
+<li><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></li>
+</ul>
+<h3 id="supabase-dashboard-configuration">Supabase Dashboard Configuration</h3>
+<ol>
+<li>Enable Email auth provider</li>
+<li>Add OAuth providers (GitHub, Google) with redirect URLs:
+<ul>
+<li><code>https://your-domain.vercel.app/auth/callback</code></li>
+</ul>
+</li>
+<li>Configure storage bucket public access</li>
+</ol>
+<hr>
+<h2 id="-final-stats">📊 Final Stats</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tools in DB</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Prompts in DB</td>
+<td>3</td>
+</tr>
+<tr>
+<td>React Components</td>
+<td>20+</td>
+</tr>
+<tr>
+<td>Server Actions</td>
+<td>6+</td>
+</tr>
+<tr>
+<td>Database Migrations</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Pages Created</td>
+<td>15+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="️-new-files-created-in-phase-5">🗂️ New Files Created in Phase 5</h2>
+<h3 id="authentication">Authentication</h3>
+<ul>
+<li><code>src/middleware.ts</code></li>
+<li><code>src/app/auth/callback/route.ts</code></li>
+<li><code>src/app/auth/error/page.tsx</code></li>
+<li><code>src/lib/supabase/auth.ts</code></li>
+<li><code>src/app/login/page.tsx</code></li>
+<li><code>src/app/signup/page.tsx</code></li>
+<li><code>src/app/profile/page.tsx</code></li>
+<li><code>src/app/profile/edit/page.tsx</code></li>
+<li><code>src/app/profile/edit/ProfileEditForm.tsx</code></li>
+</ul>
+<h3 id="favorites">Favorites</h3>
+<ul>
+<li><code>src/app/actions/favorites.ts</code></li>
+<li><code>src/components/vibe/FavoriteButton.tsx</code></li>
+</ul>
+<h3 id="search--discovery">Search &amp; Discovery</h3>
+<ul>
+<li><code>src/components/ui/pagination.tsx</code></li>
+<li><code>src/components/ui/search-input.tsx</code></li>
+<li><code>src/app/tools/page.tsx</code></li>
+<li><code>src/app/prompts/page.tsx</code></li>
+</ul>
+<h3 id="content-management">Content Management</h3>
+<ul>
+<li><code>src/app/actions/content.ts</code></li>
+<li><code>src/app/tools/[id]/edit/page.tsx</code></li>
+<li><code>src/app/tools/[id]/edit/EditToolForm.tsx</code></li>
+<li><code>src/app/prompts/[id]/edit/page.tsx</code></li>
+<li><code>src/app/prompts/[id]/edit/EditPromptForm.tsx</code></li>
+<li><code>src/components/ui/alert-dialog.tsx</code></li>
+</ul>
+<h3 id="seo--performance">SEO &amp; Performance</h3>
+<ul>
+<li><code>src/app/sitemap.ts</code></li>
+<li><code>src/app/robots.ts</code></li>
+<li><code>src/app/loading.tsx</code></li>
+<li><code>src/app/tools/loading.tsx</code></li>
+<li><code>src/app/prompts/loading.tsx</code></li>
+<li><code>src/app/profile/loading.tsx</code></li>
+<li><code>public/manifest.json</code></li>
+</ul>
+<h3 id="deployment">Deployment</h3>
+<ul>
+<li><code>vercel.json</code></li>
+<li><code>.env.example</code></li>
+</ul>
+<h3 id="migrations">Migrations</h3>
+<ul>
+<li><code>supabase/migrations/20260114000000_auth_profiles.sql</code></li>
+<li><code>supabase/migrations/20260114000001_search_categories.sql</code></li>
+<li><code>supabase/migrations/20260114000002_storage_bucket.sql</code></li>
+</ul>
+<hr>
+<h2 id="-phase-6-future-enhancements-next">🚀 Phase 6: Future Enhancements (NEXT)</h2>
+<h3 id="phase-61-advanced-features">Phase 6.1: Advanced Features</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Implement voting/rating system for tools and prompts</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Add comments/reviews on tools</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Create tool comparison feature</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Add &quot;tool stacks&quot; - curated collections</li>
+</ul>
+<h3 id="phase-62-analytics--insights">Phase 6.2: Analytics &amp; Insights</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Track tool/prompt views</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> User activity dashboard</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Popular tools leaderboard</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Usage analytics with Vercel Analytics</li>
+</ul>
+<h3 id="phase-63-community-features">Phase 6.3: Community Features</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> User profiles with public pages</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Follow other vibe architects</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Activity feed</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Notifications system</li>
+</ul>
+<h3 id="phase-64-api--integrations">Phase 6.4: API &amp; Integrations</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Public API for tool data</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Webhooks for new submissions</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Integration with IDE extensions</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> RSS feed for new tools/prompts</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

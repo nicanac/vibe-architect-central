@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Supabase Database Documentation</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 18px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="supabase-database-documentation">Supabase Database Documentation</h1>
+<h2 id="overview">Overview</h2>
+<p>Vibe Architect Central uses <strong>Supabase</strong> as its backend database and authentication provider. This document covers the complete setup, schema, and usage patterns.</p>
+<hr>
+<h2 id="project-configuration">Project Configuration</h2>
+<h3 id="supabase-project-details">Supabase Project Details</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Project Reference</strong></td>
+<td><code>qlsgscizfvqbdajzqtgb</code></td>
+</tr>
+<tr>
+<td><strong>Region</strong></td>
+<td>Default (check Supabase dashboard)</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>PostgreSQL 14+</td>
+</tr>
+<tr>
+<td><strong>URL</strong></td>
+<td><code>https://qlsgscizfvqbdajzqtgb.supabase.co</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="environment-variables">Environment Variables</h3>
+<p>Create a <code>.env.local</code> file in the project root with:</p>
+<pre><code class="language-env">NEXT_PUBLIC_SUPABASE_URL=https://qlsgscizfvqbdajzqtgb.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
+</code></pre>
+<blockquote>
+<p>⚠️ <strong>Never commit <code>.env.local</code> to version control.</strong> The anon key is safe for client-side use but should still be kept private.</p>
+</blockquote>
+<hr>
+<h2 id="database-schema">Database Schema</h2>
+<h3 id="enum-types">Enum Types</h3>
+<pre><code class="language-sql"><span class="hljs-keyword">CREATE</span> TYPE vibe_level <span class="hljs-keyword">AS</span> ENUM (
+  <span class="hljs-string">&#x27;no-code&#x27;</span>,
+  <span class="hljs-string">&#x27;low-code&#x27;</span>, 
+  <span class="hljs-string">&#x27;agentic&#x27;</span>,
+  <span class="hljs-string">&#x27;pro-orchestration&#x27;</span>
+);
+</code></pre>
+<h3 id="tables">Tables</h3>
+<h4 id="tools---ai-tool-directory"><code>tools</code> - AI Tool Directory</h4>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>UUID</td>
+<td>Primary key (auto-generated)</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>VARCHAR(255)</td>
+<td>Tool name (required)</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>TEXT</td>
+<td>Tool description</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>VARCHAR(500)</td>
+<td>Official tool URL</td>
+</tr>
+<tr>
+<td><code>vibe_level</code></td>
+<td>vibe_level</td>
+<td>Skill level category</td>
+</tr>
+<tr>
+<td><code>pricing</code></td>
+<td>VARCHAR(100)</td>
+<td>Pricing model (Free, Freemium, etc.)</td>
+</tr>
+<tr>
+<td><code>image_url</code></td>
+<td>VARCHAR(500)</td>
+<td>Tool logo/image URL</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td>TIMESTAMPTZ</td>
+<td>Auto-set on creation</td>
+</tr>
+</tbody>
+</table>
+<h4 id="prompts---orchestration-prompt-library"><code>prompts</code> - Orchestration Prompt Library</h4>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>UUID</td>
+<td>Primary key (auto-generated)</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>VARCHAR(255)</td>
+<td>Prompt title (required)</td>
+</tr>
+<tr>
+<td><code>content</code></td>
+<td>TEXT</td>
+<td>Full prompt content (required)</td>
+</tr>
+<tr>
+<td><code>target_ai</code></td>
+<td>VARCHAR(100)</td>
+<td>Target AI (Claude, ChatGPT, etc.)</td>
+</tr>
+<tr>
+<td><code>technique</code></td>
+<td>VARCHAR(100)</td>
+<td>Prompting technique used</td>
+</tr>
+<tr>
+<td><code>created_by</code></td>
+<td>UUID</td>
+<td>FK to auth.users (nullable)</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td>TIMESTAMPTZ</td>
+<td>Auto-set on creation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="row-level-security-rls">Row Level Security (RLS)</h3>
+<p>Both tables have RLS enabled with the following policies:</p>
+<pre><code class="language-sql"><span class="hljs-comment">-- Anyone can read tools and prompts (public directory)</span>
+<span class="hljs-keyword">CREATE</span> POLICY &quot;Allow public read&quot; <span class="hljs-keyword">ON</span> tools <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">USING</span> (<span class="hljs-literal">true</span>);
+<span class="hljs-keyword">CREATE</span> POLICY &quot;Allow public read&quot; <span class="hljs-keyword">ON</span> prompts <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">USING</span> (<span class="hljs-literal">true</span>);
+
+<span class="hljs-comment">-- Anyone can submit new tools and prompts (MVP - open submissions)</span>
+<span class="hljs-keyword">CREATE</span> POLICY &quot;Allow public insert&quot; <span class="hljs-keyword">ON</span> tools <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CHECK</span> (<span class="hljs-literal">true</span>);
+<span class="hljs-keyword">CREATE</span> POLICY &quot;Allow public insert&quot; <span class="hljs-keyword">ON</span> prompts <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CHECK</span> (<span class="hljs-literal">true</span>);
+</code></pre>
+<blockquote>
+<p>🔒 <strong>Production Note:</strong> Tighten insert policies to require authentication for production use.</p>
+</blockquote>
+<hr>
+<h2 id="supabase-cli-usage">Supabase CLI Usage</h2>
+<h3 id="initial-setup">Initial Setup</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># Install Supabase CLI (if not installed)</span>
+npm install -g supabase
+
+<span class="hljs-comment"># Initialize Supabase in project</span>
+npx supabase init
+
+<span class="hljs-comment"># Login to Supabase (opens browser for auth)</span>
+npx supabase login
+
+<span class="hljs-comment"># Link to existing project</span>
+npx supabase <span class="hljs-built_in">link</span> --project-ref qlsgscizfvqbdajzqtgb
+</code></pre>
+<h3 id="database-migrations">Database Migrations</h3>
+<p>Migrations are stored in <code>supabase/migrations/</code> directory.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Push all migrations to remote database</span>
+npx supabase db push --include-all
+
+<span class="hljs-comment"># Create a new migration</span>
+npx supabase migration new migration_name
+
+<span class="hljs-comment"># Pull remote schema to local</span>
+npx supabase db pull
+
+<span class="hljs-comment"># Reset local database (if using local Supabase)</span>
+npx supabase db reset
+</code></pre>
+<h3 id="current-migration-file">Current Migration File</h3>
+<p>Location: <code>supabase/migrations/20260113000000_init.sql</code></p>
+<p>This migration:</p>
+<ol>
+<li>Creates the <code>vibe_level</code> enum</li>
+<li>Creates the <code>tools</code> table</li>
+<li>Creates the <code>prompts</code> table</li>
+<li>Enables RLS on both tables</li>
+<li>Creates public read/insert policies</li>
+<li>Seeds initial data (5 tools, 3 prompts)</li>
+</ol>
+<hr>
+<h2 id="nextjs-integration">Next.js Integration</h2>
+<h3 id="client-architecture">Client Architecture</h3>
+<p>The project uses the <code>@supabase/ssr</code> package for server-side rendering compatibility.</p>
+<h4 id="server-client-srclibsupabaseserverts">Server Client (<code>src/lib/supabase/server.ts</code>)</h4>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { createServerClient } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@supabase/ssr&#x27;</span>
+<span class="hljs-keyword">import</span> { cookies } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/headers&#x27;</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">createClient</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> cookieStore = <span class="hljs-keyword">await</span> <span class="hljs-title function_">cookies</span>()
+  
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">createServerClient</span>(
+    process.<span class="hljs-property">env</span>.<span class="hljs-property">NEXT_PUBLIC_SUPABASE_URL</span>!,
+    process.<span class="hljs-property">env</span>.<span class="hljs-property">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>!,
+    {
+      <span class="hljs-attr">cookies</span>: {
+        <span class="hljs-title function_">getAll</span>(<span class="hljs-params"></span>) {
+          <span class="hljs-keyword">return</span> cookieStore.<span class="hljs-title function_">getAll</span>()
+        },
+        <span class="hljs-title function_">setAll</span>(<span class="hljs-params">cookiesToSet</span>) {
+          cookiesToSet.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">{ name, value, options }</span>) =&gt;</span>
+            cookieStore.<span class="hljs-title function_">set</span>(name, value, options)
+          )
+        },
+      },
+    }
+  )
+}
+</code></pre>
+<h4 id="browser-client-srclibsupabaseclientts">Browser Client (<code>src/lib/supabase/client.ts</code>)</h4>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { createBrowserClient } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@supabase/ssr&#x27;</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">createClient</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">createBrowserClient</span>(
+    process.<span class="hljs-property">env</span>.<span class="hljs-property">NEXT_PUBLIC_SUPABASE_URL</span>!,
+    process.<span class="hljs-property">env</span>.<span class="hljs-property">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>!
+  )
+}
+</code></pre>
+<h3 id="query-functions-srclibsupabasequeriests">Query Functions (<code>src/lib/supabase/queries.ts</code>)</h3>
+<pre><code class="language-typescript"><span class="hljs-comment">// Fetch all tools</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getTools</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">Tool</span>[]&gt;
+
+<span class="hljs-comment">// Fetch all prompts  </span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getPrompts</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">Prompt</span>[]&gt;
+
+<span class="hljs-comment">// Fetch tools filtered by vibe level</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getToolsByVibeLevel</span>(<span class="hljs-params">level: VibeLevel</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">Tool</span>[]&gt;
+</code></pre>
+<h3 id="usage-in-server-components">Usage in Server Components</h3>
+<pre><code class="language-typescript"><span class="hljs-comment">// src/app/page.tsx</span>
+<span class="hljs-keyword">import</span> { getTools, getPrompts } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/lib/supabase/queries&#x27;</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">HomePage</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">const</span> [tools, prompts] = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>([
+    <span class="hljs-title function_">getTools</span>(),
+    <span class="hljs-title function_">getPrompts</span>()
+  ])
+  
+  <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">HomePageContent</span> <span class="hljs-attr">tools</span>=<span class="hljs-string">{tools}</span> <span class="hljs-attr">prompts</span>=<span class="hljs-string">{prompts}</span> /&gt;</span></span>
+}
+</code></pre>
+<h3 id="usage-in-server-actions">Usage in Server Actions</h3>
+<pre><code class="language-typescript"><span class="hljs-comment">// src/app/actions/submissions.ts</span>
+<span class="hljs-string">&#x27;use server&#x27;</span>
+
+<span class="hljs-keyword">import</span> { createClient } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/lib/supabase/server&#x27;</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">submitTool</span>(<span class="hljs-params">data: ToolSubmission</span>) {
+  <span class="hljs-keyword">const</span> supabase = <span class="hljs-keyword">await</span> <span class="hljs-title function_">createClient</span>()
+  
+  <span class="hljs-keyword">const</span> { error } = <span class="hljs-keyword">await</span> supabase
+    .<span class="hljs-title function_">from</span>(<span class="hljs-string">&#x27;tools&#x27;</span>)
+    .<span class="hljs-title function_">insert</span>({
+      <span class="hljs-attr">name</span>: data.<span class="hljs-property">name</span>,
+      <span class="hljs-attr">description</span>: data.<span class="hljs-property">description</span>,
+      <span class="hljs-attr">url</span>: data.<span class="hljs-property">url</span>,
+      <span class="hljs-attr">vibe_level</span>: data.<span class="hljs-property">vibeLevel</span>,
+      <span class="hljs-attr">pricing</span>: data.<span class="hljs-property">pricing</span>,
+    })
+    
+  <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(error.<span class="hljs-property">message</span>)
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span> }
+}
+</code></pre>
+<hr>
+<h2 id="typescript-types">TypeScript Types</h2>
+<h3 id="database-types-srclibsupabasetypests">Database Types (<code>src/lib/supabase/types.ts</code>)</h3>
+<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">VibeLevel</span> = <span class="hljs-string">&#x27;no-code&#x27;</span> | <span class="hljs-string">&#x27;low-code&#x27;</span> | <span class="hljs-string">&#x27;agentic&#x27;</span> | <span class="hljs-string">&#x27;pro-orchestration&#x27;</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Tool</span> {
+  <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">description</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  <span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  <span class="hljs-attr">vibe_level</span>: <span class="hljs-title class_">VibeLevel</span>
+  <span class="hljs-attr">pricing</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  <span class="hljs-attr">image_url</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  <span class="hljs-attr">created_at</span>: <span class="hljs-built_in">string</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Prompt</span> {
+  <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">target_ai</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  <span class="hljs-attr">technique</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  <span class="hljs-attr">created_by</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>
+  <span class="hljs-attr">created_at</span>: <span class="hljs-built_in">string</span>
+}
+</code></pre>
+<hr>
+<h2 id="seed-data">Seed Data</h2>
+<h3 id="tools-5-entries">Tools (5 entries)</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Vibe Level</th>
+<th>Pricing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cursor</td>
+<td>agentic</td>
+<td>Freemium</td>
+</tr>
+<tr>
+<td>Bolt.new</td>
+<td>no-code</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>v0.dev</td>
+<td>low-code</td>
+<td>Freemium</td>
+</tr>
+<tr>
+<td>Claude</td>
+<td>pro-orchestration</td>
+<td>Freemium</td>
+</tr>
+<tr>
+<td>Replit Agent</td>
+<td>agentic</td>
+<td>Freemium</td>
+</tr>
+</tbody>
+</table>
+<h3 id="prompts-3-entries">Prompts (3 entries)</h3>
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th>Target AI</th>
+<th>Technique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chain of Thought Reasoning</td>
+<td>Claude</td>
+<td>chain-of-thought</td>
+</tr>
+<tr>
+<td>Senior Architect System Prompt</td>
+<td>Any</td>
+<td>system-prompt</td>
+</tr>
+<tr>
+<td>ReAct Framework Implementation</td>
+<td>Claude</td>
+<td>react</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<h4 id="uuid_generate_v4-does-not-exist">&quot;uuid_generate_v4() does not exist&quot;</h4>
+<p>Supabase uses PostgreSQL 14+ which has <code>gen_random_uuid()</code> built-in. Replace:</p>
+<pre><code class="language-sql"><span class="hljs-comment">-- ❌ Old (requires pgcrypto extension)</span>
+id UUID <span class="hljs-keyword">PRIMARY</span> KEY <span class="hljs-keyword">DEFAULT</span> uuid_generate_v4()
+
+<span class="hljs-comment">-- ✅ New (built-in)</span>
+id UUID <span class="hljs-keyword">PRIMARY</span> KEY <span class="hljs-keyword">DEFAULT</span> gen_random_uuid()
+</code></pre>
+<h4 id="relation-does-not-exist">&quot;relation does not exist&quot;</h4>
+<p>Run migrations to create tables:</p>
+<pre><code class="language-bash">npx supabase db push --include-all
+</code></pre>
+<h4 id="invalid-api-key">&quot;Invalid API key&quot;</h4>
+<ol>
+<li>Check <code>.env.local</code> has correct keys</li>
+<li>Restart dev server after changing env vars</li>
+<li>Verify keys in Supabase dashboard → Settings → API</li>
+</ol>
+<h4 id="rls-blocking-queries">RLS blocking queries</h4>
+<p>If queries return empty arrays unexpectedly:</p>
+<ol>
+<li>Check RLS policies in Supabase dashboard → Table Editor → Policies</li>
+<li>For development, you can temporarily disable RLS (not recommended for production)</li>
+</ol>
+<hr>
+<h2 id="api-access-rest">API Access (REST)</h2>
+<p>Supabase provides auto-generated REST APIs. Example curl commands:</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Get all tools</span>
+curl <span class="hljs-string">&quot;https://qlsgscizfvqbdajzqtgb.supabase.co/rest/v1/tools?select=*&quot;</span> \
+  -H <span class="hljs-string">&quot;apikey: YOUR_ANON_KEY&quot;</span> \
+  -H <span class="hljs-string">&quot;Authorization: Bearer YOUR_ANON_KEY&quot;</span>
+
+<span class="hljs-comment"># Get tools by vibe level</span>
+curl <span class="hljs-string">&quot;https://qlsgscizfvqbdajzqtgb.supabase.co/rest/v1/tools?vibe_level=eq.agentic&quot;</span> \
+  -H <span class="hljs-string">&quot;apikey: YOUR_ANON_KEY&quot;</span> \
+  -H <span class="hljs-string">&quot;Authorization: Bearer YOUR_ANON_KEY&quot;</span>
+
+<span class="hljs-comment"># Insert a new prompt</span>
+curl -X POST <span class="hljs-string">&quot;https://qlsgscizfvqbdajzqtgb.supabase.co/rest/v1/prompts&quot;</span> \
+  -H <span class="hljs-string">&quot;apikey: YOUR_ANON_KEY&quot;</span> \
+  -H <span class="hljs-string">&quot;Authorization: Bearer YOUR_ANON_KEY&quot;</span> \
+  -H <span class="hljs-string">&quot;Content-Type: application/json&quot;</span> \
+  -d <span class="hljs-string">&#x27;{&quot;title&quot;: &quot;My Prompt&quot;, &quot;content&quot;: &quot;Prompt content here&quot;}&#x27;</span>
+</code></pre>
+<hr>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Add authentication for user-specific data</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Implement update/delete policies for tool owners</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Add categories/tags table for better filtering</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Set up database functions for analytics</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Configure storage bucket for tool images</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Add real-time subscriptions for live updates</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

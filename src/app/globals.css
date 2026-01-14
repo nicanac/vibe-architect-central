@@ -1,26 +1,112 @@
+/* 
+ * Vibe Architect Central - Tailwind 4.1 Style Initialization
+ * Theme: Cyber-Industrial
+ * 
+ * Since Tailwind 4.1 is CSS-first, there is no .js config file.
+ * All theme variables are defined here using the @theme directive.
+ */
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Cyber-Industrial Color Palette */
+  --color-background: #09090b;
+  --color-surface: #18181b;
+  --color-border: #27272a;
+  --color-primary-accent: #3b82f6;
+  --color-neon-success: #10b981;
+  --color-text-primary: #fafafa;
+  --color-text-muted: #a1a1aa;
+
+  /* shadcn/ui CSS Variable Mappings */
+  --color-foreground: #fafafa;
+  --color-card: #18181b;
+  --color-card-foreground: #fafafa;
+  --color-popover: #18181b;
+  --color-popover-foreground: #fafafa;
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #27272a;
+  --color-secondary-foreground: #fafafa;
+  --color-muted: #27272a;
+  --color-muted-foreground: #a1a1aa;
+  --color-accent: #27272a;
+  --color-accent-foreground: #fafafa;
+  --color-destructive: #ef4444;
+  --color-ring: #3b82f6;
+  --color-input: #27272a;
+
+  /* Industrial Sharp Corners */
+  --radius-industrial: 4px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius: 6px;
+
+  /* Typography */
+  --font-sans: "Inter", "Geist Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base Styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+/* 2026 Glassmorphism Utility */
+.vibe-glass {
+  background: rgba(24, 24, 27, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(39, 39, 42, 0.5);
+}
+
+/* Card Surface Utility */
+.vibe-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-industrial);
+}
+
+/* Neon Glow Effects */
+.glow-primary {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.glow-success {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+/* Code Block Styling */
+.code-block {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-industrial);
+  font-family: var(--font-mono);
+}
+
+/* Selection Colors */
+::selection {
+  background: var(--color-primary-accent);
+  color: var(--color-text-primary);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-industrial);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
 }
