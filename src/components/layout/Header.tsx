@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Zap, User, LogIn, Wrench, BookOpen, Wand2 } from "lucide-react";
+import { Zap, User, LogIn, Wrench, BookOpen, Wand2, FileCode2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/lib/supabase/auth";
 
@@ -34,6 +34,13 @@ export async function Header() {
           >
             <BookOpen className="w-4 h-4" />
             <span className="hidden sm:inline">Prompts</span>
+          </Link>
+          <Link
+            href="/instructions"
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <FileCode2 className="w-4 h-4" />
+            <span className="hidden sm:inline">Instructions</span>
           </Link>
           <Link
             href="/wizard"

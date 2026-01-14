@@ -212,6 +212,158 @@ Create in Supabase Dashboard → Storage:
 
 ## 🚀 Phase 6: Future Enhancements (NEXT)
 
+### Phase 6.0: Agent Instructions Hub ⭐ PRIORITY
+> New section: "Instructions" - A comprehensive directory for AI agent configurations, commands, skills, and workflows.
+> **Inspired by:** [CodeLynx Docs](https://codelynx.dev/docs/) structure
+
+#### Content Categories (like CodeLynx)
+
+| Category | Description | Example |
+|----------|-------------|---------|
+| **Commands** | Slash commands for quick tasks | `/commit`, `/create-pr`, `/review` |
+| **Agents** | Specialized AI personas for specific domains | `explore-codebase`, `code-reviewer`, `security-auditor` |
+| **Skills** | Complex multi-step workflows (SKILL.md) | APEX methodology, debugging workflow |
+| **Hooks** | Event-driven automation triggers | `pre-commit`, `post-edit`, `on-file-save` |
+| **Rules** | Project-wide instructions (.cursorrules, CLAUDE.md) | Architecture patterns, coding standards |
+| **Prompts** | System prompts & persona definitions | Expert personas, role definitions |
+
+#### Database Schema
+- [ ] Create `instructions` table in Supabase
+  ```sql
+  - id, title, slug, description, content (markdown/code)
+  - category: enum (command, agent, skill, hook, rule, prompt)
+  - agent_type: enum (copilot, claude, claude-code, chatgpt, gemini, cursor, windsurf, other)
+  - difficulty: enum (beginner, intermediate, advanced)
+  - tags: text[] (array of tags for filtering)
+  - usage_example: text (how to use it)
+  - file_format: enum (markdown, json, yaml, toml)
+  - submitted_by, created_at, updated_at, view_count
+  ```
+- [ ] Create migration file with RLS policies
+- [ ] Add full-text search with tsvector
+- [ ] Add GIN index for tags array
+
+#### Documentation-Style UI (like CodeLynx)
+- [ ] Create `/instructions` landing page
+  - Hero section with search bar
+  - Category cards (Commands, Agents, Skills, Hooks, Rules, Prompts)
+  - "Getting Started" section
+  - Featured/Popular instructions
+- [ ] Create `/instructions/[category]` pages
+  - Sidebar navigation with all items in category
+  - Grid or list view toggle
+  - Filter by agent type, difficulty, tags
+- [ ] Create `/instructions/[category]/[slug]` detail pages
+  - Full documentation view with syntax highlighting
+  - Code blocks with copy button
+  - Usage examples section
+  - Related instructions sidebar
+  - "Try it" deep links (for supported agents)
+  - Download as file button
+
+#### UI Components
+- [ ] Create `InstructionCard.tsx`
+  - Category icon/badge (Command 🔧, Agent 🤖, Skill ⚡, Hook 🪝, Rule 📏, Prompt 💬)
+  - Agent type badge (Copilot, Claude, Cursor, etc.)
+  - Difficulty indicator
+  - Tags display
+  - Copy/Download actions
+- [ ] Create `InstructionSidebar.tsx` - Category navigation
+- [ ] Create `CodeBlock.tsx` - Syntax highlighted code with copy
+- [ ] Create `UsageExample.tsx` - Interactive usage examples
+- [ ] Create `InstructionSearch.tsx` - Search with filters
+
+#### Filtering & Discovery
+- [ ] Filter by category (Commands, Agents, Skills, Hooks, Rules, Prompts)
+- [ ] Filter by agent/tool (Copilot, Claude, Claude Code, Cursor, Windsurf, ChatGPT, Gemini)
+- [ ] Filter by difficulty (Beginner, Intermediate, Advanced)
+- [ ] Filter by tags (git, testing, security, performance, etc.)
+- [ ] Full-text search across title, description, content
+- [ ] Sort by: newest, popular, alphabetical
+
+#### Submission & Management
+- [ ] Create `/submit/instruction` form
+  - Category selector with descriptions
+  - Agent type multi-select
+  - Monaco code editor for content
+  - Live preview panel
+  - Tags input with suggestions
+  - Usage example editor
+- [ ] File upload support (.md, .json, .yaml, .toml)
+- [ ] Edit/delete functionality for own submissions
+- [ ] Draft/publish workflow
+
+#### Navigation Integration
+- [ ] Add "Instructions" to Header (Tools | Prompts | **Instructions**)
+- [ ] Update home page with 3-tab layout
+- [ ] Add instruction count badge
+- [ ] CMD+K search integration
+
+#### Seed Data
+- [ ] Import `.github/skills/code-review/` → Skills category
+- [ ] Import `.github/skills/commit-message/` → Skills category
+- [ ] Create sample commands (commit, review, debug)
+- [ ] Create sample agents (codebase-explorer, security-auditor)
+- [ ] Create sample hooks (pre-commit, post-edit)
+- [ ] Create sample rules (Next.js patterns, TypeScript strict)
+
+#### Data Migration from CodeLynx
+> Migrate all existing content from https://codelynx.dev/docs/ to the new database
+
+- [ ] Create migration script `scripts/migrate-codelynx.ts`
+- [ ] Scrape/fetch all documentation pages:
+  - [ ] Claude Code Setup guide
+  - [ ] All Claude Code PRO commands (`/apex`, `/brainstorm`, `/debug`, `/clean-code`, etc.)
+  - [ ] All agents documentation
+  - [ ] All skills documentation
+  - [ ] All hooks documentation
+- [ ] Parse and transform content:
+  - [ ] Extract title, description, content (markdown)
+  - [ ] Identify category (command, agent, skill, hook, rule, prompt)
+  - [ ] Extract usage examples and code blocks
+  - [ ] Parse flags/options tables
+  - [ ] Extract related links
+- [ ] Map to new database schema:
+  - [ ] Set agent_type = 'claude-code' for Claude Code content
+  - [ ] Set appropriate difficulty levels
+  - [ ] Generate slugs from titles
+  - [ ] Create tags from content analysis
+- [ ] Insert into Supabase `instructions` table
+- [ ] Verify data integrity and completeness
+- [ ] Update view counts and metadata
+
+#### Content to Migrate from CodeLynx
+
+| Category | Items | Source URL Pattern |
+|----------|-------|-------------------|
+| Setup Guide | 1 | `/docs/claude-code-setup` |
+| Commands | 15+ | `/docs/claude-code-pro/*` |
+| - /apex | APEX methodology | `/docs/claude-code-pro/apex-skills` |
+| - /brainstorm | Deep research | `/docs/claude-code-pro/brainstorm` |
+| - /debug | Error debugging | `/docs/claude-code-pro/debug` |
+| - /clean-code | Best practices | `/docs/claude-code-pro/clean-code` |
+| - /review-code | Code review | `/docs/claude-code-pro/review-code` |
+| - /ci-experts | CI/CD debugging | `/docs/claude-code-pro/ci-experts` |
+| - /claude-memory | Memory files | `/docs/claude-code-pro/claude-memory` |
+| - /create-prompt | Prompt engineering | `/docs/claude-code-pro/create-prompt` |
+| - /create-meta-prompts | Meta prompts | `/docs/claude-code-pro/create-meta-prompts` |
+| - /create-slash-commands | Custom commands | `/docs/claude-code-pro/create-slash-commands` |
+| - /create-skills-workflow | Workflow skills | `/docs/claude-code-pro/create-skills-workflow` |
+| - /create-agent-skills | SKILL.md files | `/docs/claude-code-pro/create-agent-skills` |
+| - /create-hooks | Automation hooks | `/docs/claude-code-pro/create-hooks` |
+| - /create-subagents | Subagents | `/docs/claude-code-pro/create-subagents` |
+| Agents | 4+ | Base agents (action, explore-codebase, explore-docs, websearch) |
+| Configuration | 1 | `/docs/claude-code-configuration` |
+| Security | 1 | `/docs/claude-code-security` |
+
+#### Advanced Features (Phase 6.0.1)
+- [ ] "Collections" - Curated sets of instructions (e.g., "Full Claude Code Setup")
+- [ ] Version history for instructions
+- [ ] Fork/remix functionality
+- [ ] Installation CLI command generator
+- [ ] GitHub Gist export
+- [ ] One-click install to `~/.claude/` or `.cursor/`
+
 ### Phase 6.1: Advanced Features
 - [ ] Implement voting/rating system for tools and prompts
 - [ ] Add comments/reviews on tools
@@ -219,9 +371,9 @@ Create in Supabase Dashboard → Storage:
 - [ ] Add "tool stacks" - curated collections
 
 ### Phase 6.2: Analytics & Insights
-- [ ] Track tool/prompt views
+- [ ] Track tool/prompt/instruction views
 - [ ] User activity dashboard
-- [ ] Popular tools leaderboard
+- [ ] Popular items leaderboard
 - [ ] Usage analytics with Vercel Analytics
 
 ### Phase 6.3: Community Features
@@ -234,4 +386,4 @@ Create in Supabase Dashboard → Storage:
 - [ ] Public API for tool data
 - [ ] Webhooks for new submissions
 - [ ] Integration with IDE extensions
-- [ ] RSS feed for new tools/prompts
+- [ ] RSS feed for new tools/prompts/instructions
