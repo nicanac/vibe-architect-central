@@ -12,11 +12,13 @@ import {
     Anchor,
     Ruler,
     MessageSquare,
-    Home
+    Home,
+    Workflow // Import new icon
 } from 'lucide-react';
 
 const CATEGORY_ICONS = {
     command: Terminal,
+    workflow: Workflow,
     agent: Bot,
     skill: Zap,
     hook: Anchor,

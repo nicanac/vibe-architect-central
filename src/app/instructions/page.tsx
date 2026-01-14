@@ -4,10 +4,11 @@ import { Button } from '@/components/ui/button';
 import { getRecentInstructions } from '@/lib/supabase/queries';
 import { InstructionCard } from '@/components/vibe/InstructionCard';
 import { INSTRUCTION_CATEGORIES, InstructionCategory } from '@/lib/supabase/types';
-import { ArrowRight, Terminal, Bot, Zap, Anchor, Ruler, MessageSquare } from 'lucide-react';
+import { ArrowRight, Terminal, Bot, Zap, Anchor, Ruler, MessageSquare, Workflow } from 'lucide-react';
 
 const CATEGORY_ICONS = {
   command: Terminal,
+  workflow: Workflow,
   agent: Bot,
   skill: Zap,
   hook: Anchor,

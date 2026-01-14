@@ -62,6 +62,7 @@ export interface FavoritePrompt {
 
 export type InstructionCategory =
   | "command" // Slash commands (/commit, /review)
+  | "workflow" // Agent workflows
   | "agent" // Specialized AI personas
   | "skill" // Multi-step workflows (SKILL.md)
   | "hook" // Event-driven automation
@@ -130,6 +131,12 @@ export const INSTRUCTION_CATEGORIES: Record<
     icon: "🔧",
     description: "Slash commands for quick tasks",
     color: "text-blue-400",
+  },
+  workflow: {
+    label: "Workflows",
+    icon: "🔄",
+    description: "Multi-step agent workflows",
+    color: "text-cyan-400",
   },
   agent: {
     label: "Agents",
