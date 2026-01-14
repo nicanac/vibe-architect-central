@@ -184,6 +184,11 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ## 🔗 Phase 6.10: External Configuration Import ✅ COMPLETE
 - [x] Import `claude-code-config` from `Melvynx/aiblueprint`
 
+---
+
+## 🔗 Phase 6.11: Deployment Fixes ✅ COMPLETE
+- [x] Exclude `claude-code-config` from `tsconfig.json` to fix build error
+
 
 ---
 ## �📋 Post-Deployment Configuration
