@@ -3,7 +3,6 @@
 import { ReactNode } from 'react'
 import Link from 'next/link'
 import { Plus, Wand2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
 interface DirectoryGridProps {
   children: ReactNode
@@ -12,7 +11,7 @@ interface DirectoryGridProps {
 
 export function DirectoryGrid({ children, className = '' }: DirectoryGridProps) {
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ${className}`}>
+    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 ${className}`}>
       {children}
     </div>
   )
@@ -27,35 +26,40 @@ interface DirectoryShellProps {
 
 export function DirectoryShell({ children, title, description, searchSlot }: DirectoryShellProps) {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="vibe-glass sticky top-0 z-50 border-b border-border">
-        <div className="container mx-auto px-4 py-4">
+    <div className="min-h-screen">
+      {/* Terminal Header */}
+      <header className="sticky top-16 z-40 border-b-2 border-[var(--terminal-green)]/30 bg-[var(--terminal-bg)]">
+        <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">
+              <span className="text-[var(--terminal-purple)] font-mono text-sm uppercase mb-2 block">
+                /DIRECTORY/
+              </span>
+              <h1 className="text-2xl md:text-3xl font-bold text-[var(--terminal-green)] uppercase font-mono tracking-tight glitch-text">
                 {title}
               </h1>
               {description && (
-                <p className="text-muted-foreground mt-1">
-                  {description}
+                <p className="text-[var(--terminal-green)]/70 mt-2 font-mono text-sm">
+                  &gt; {description}
                 </p>
               )}
             </div>
             <div className="flex items-center gap-3">
               {searchSlot}
-              <Button asChild variant="outline" className="border-primary-accent/50 hover:bg-primary-accent/20">
-                <Link href="/wizard">
-                  <Wand2 className="w-4 h-4 text-primary-accent" />
-                  Wizard
-                </Link>
-              </Button>
-              <Button asChild className="bg-neon-success hover:bg-neon-success/80">
-                <Link href="/submit">
-                  <Plus className="w-4 h-4" />
-                  Submit
-                </Link>
-              </Button>
+              <Link
+                href="/wizard"
+                className="hidden sm:flex items-center gap-2 px-4 py-2 border-2 border-[var(--terminal-purple)] text-[var(--terminal-purple)] hover:bg-[var(--terminal-purple)] hover:text-white transition-all font-bold uppercase text-sm"
+              >
+                <Wand2 className="w-4 h-4" />
+                Wizard
+              </Link>
+              <Link
+                href="/submit"
+                className="flex items-center gap-2 px-4 py-2 bg-[var(--terminal-green)] text-[var(--terminal-bg)] pixel-border-sm hover:bg-white transition-colors font-bold uppercase text-sm"
+              >
+                <Plus className="w-4 h-4" />
+                <span className="hidden sm:inline">Submit</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -76,27 +80,32 @@ interface DirectoryLayoutProps {
 
 export function DirectoryLayout({ children }: DirectoryLayoutProps) {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="vibe-glass sticky top-0 z-50 border-b border-border">
+    <div className="min-h-screen">
+      {/* Terminal Header */}
+      <header className="sticky top-16 z-40 border-b-2 border-[var(--terminal-green)]/30 bg-[var(--terminal-bg)]">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold text-foreground hover:text-primary-accent transition-colors">
-              Vibe Architect Central
+            <Link
+              href="/"
+              className="text-2xl font-bold text-[var(--terminal-green)] hover:text-[var(--terminal-purple)] transition-colors uppercase font-mono tracking-tight"
+            >
+              Vibe_Architect_Central
             </Link>
             <div className="flex items-center gap-3">
-              <Button asChild variant="outline" className="border-primary-accent/50 hover:bg-primary-accent/20">
-                <Link href="/wizard">
-                  <Wand2 className="w-4 h-4 text-primary-accent" />
-                  Wizard
-                </Link>
-              </Button>
-              <Button asChild className="bg-neon-success hover:bg-neon-success/80">
-                <Link href="/submit">
-                  <Plus className="w-4 h-4" />
-                  Submit
-                </Link>
-              </Button>
+              <Link
+                href="/wizard"
+                className="hidden sm:flex items-center gap-2 px-4 py-2 border-2 border-[var(--terminal-purple)] text-[var(--terminal-purple)] hover:bg-[var(--terminal-purple)] hover:text-white transition-all font-bold uppercase text-sm"
+              >
+                <Wand2 className="w-4 h-4" />
+                Wizard
+              </Link>
+              <Link
+                href="/submit"
+                className="flex items-center gap-2 px-4 py-2 bg-[var(--terminal-green)] text-[var(--terminal-bg)] pixel-border-sm hover:bg-white transition-colors font-bold uppercase text-sm"
+              >
+                <Plus className="w-4 h-4" />
+                <span className="hidden sm:inline">Submit</span>
+              </Link>
             </div>
           </div>
         </div>

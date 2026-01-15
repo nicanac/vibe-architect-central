@@ -6,35 +6,41 @@
 ---
 
 ## Phase 4.1: Foundation & High-Speed Setup ✅ COMPLETE
+
 - [x] Initialize project: `npx create-next-app@latest . --ts --tailwind --app --src-dir` (Next.js 16.1.1 ✓)
 - [x] Install Supabase: `npm install @supabase/ssr @supabase/supabase-js` (v2.90 ✓)
 - [x] Configure Tailwind 4.1: Implemented "Cyber-Industrial" `@theme` in globals.css
 - [x] Initialize shadcn/ui 3.6: Components initialized with custom theming
 
 ## Phase 4.2: Slice 1 - Core Directory Infrastructure ✅ COMPLETE
+
 - [x] Setup Supabase Client: Created `src/lib/supabase/server.ts` and `client.ts` using @supabase/ssr pattern
 - [x] Database Sync: Created `supabase/migrations/20260113000000_init.sql` and pushed via CLI
 - [x] Build `ToolCard.tsx`: High-fidelity card with vibe level badges, pricing, external links
 - [x] Layout Shell: `DirectoryLayout.tsx` with responsive grid and `vibe-glass` utility
 
 ## Phase 4.3: Slice 2 - The Prompt Vault & Interactivity ✅ COMPLETE
+
 - [x] Build `PromptCard.tsx`: Monospace code block with syntax styling
 - [x] Implement "Copy to Clipboard": `useVibeClipboard` hook with Sonner toast notifications
 - [x] Deep Link Engine: `aiLinks.ts` utility generating Claude/ChatGPT/Gemini deep links
 - [x] Directory Filter: `VibeLevelFilter.tsx` for filtering tools by skill level
 
 ## Phase 4.4: Slice 3 - Contribution & Security ✅ COMPLETE
+
 - [x] Submission Form: `/submit` page with `ToolSubmissionForm` and `PromptSubmissionForm`
 - [x] Server Action: `submissions.ts` with Zod 4 validation and Supabase insert
 - [x] Success State: Toast notifications on successful submission
 - [x] Validation: Zod 4 schemas in `src/lib/validations/`
 
 ## Phase 4.5: Slice 4 - Orchestration Wizard (The "Vibe" Feature) ✅ COMPLETE
+
 - [x] Wizard UI: `PromptWizard.tsx` - 4-step wizard (Persona → Context → Task → Preview)
 - [x] CMD+K Search: `CommandSearch.tsx` using cmdk with keyboard shortcuts
 - [x] Final Polish: Neon button styling with `vibe-neon-*` utility classes
 
 ## Phase 4.6: Database & Deployment ✅ COMPLETE
+
 - [x] Environment Setup: `.env.local` configured with Supabase credentials
 - [x] Supabase CLI: Initialized, logged in, linked to project `qlsgscizfvqbdajzqtgb`
 - [x] Migration Pushed: Schema with `tools` and `prompts` tables + RLS policies
@@ -47,6 +53,7 @@
 ## 🚀 Phase 5: Enhancement & Production ✅ COMPLETE
 
 ### Phase 5.1: Authentication & User Features ✅ COMPLETE
+
 - [x] Implement Supabase Auth (Email/OAuth providers)
   - Created `src/middleware.ts` for route protection
   - Created `src/app/auth/callback/route.ts` for OAuth callbacks
@@ -62,6 +69,7 @@
   - Integrated into ToolCard and PromptCard
 
 ### Phase 5.2: Search & Discovery ✅ COMPLETE
+
 - [x] Implement full-text search using Supabase `textsearch`
   - Created tsvector columns and GIN indexes
   - Created `search_tools()` and `search_prompts()` functions
@@ -73,6 +81,7 @@
 - [x] Updated Header with navigation links
 
 ### Phase 5.3: Content Management ✅ COMPLETE
+
 - [x] Edit/Delete functionality for submitted content
   - Created `src/app/actions/content.ts` (updateTool, deleteTool, updatePrompt, deletePrompt)
   - Created `/tools/[id]/edit` page with form
@@ -84,6 +93,7 @@
 - [x] Added edit buttons to profile page
 
 ### Phase 5.4: Performance & SEO ✅ COMPLETE
+
 - [x] Add OpenGraph meta tags for social sharing
   - Enhanced `layout.tsx` with full Metadata config
   - Added Twitter cards, viewport, keywords
@@ -96,6 +106,7 @@
 - [x] Created `public/manifest.json` for PWA support
 
 ### Phase 5.5: Deployment ✅ COMPLETE
+
 - [x] Created `vercel.json` with headers and caching
 - [x] Created `.env.example` template
 - [x] Security headers configured
@@ -108,6 +119,7 @@
 ## 🔗 Phase 5.6: GitHub Repository Setup ✅ COMPLETE
 
 ### Connect to GitHub
+
 Repository: `https://github.com/nicanac/vibe-architect-central.git`
 
 - [x] Initialize git repository locally
@@ -116,31 +128,37 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 - [ ] Link Vercel to GitHub for automatic deployments (optional)
 
 ---
+
 ## 💡 Phase 6.0: Agent Instructions Hub ✅ COMPLETE
 
 ### 6.1 Database & Schema ✅ COMPLETE
+
 - [x] Create `instructions` table with enums (category, agent_type, difficulty, file_format)
 - [x] Implement search_vector with trigger-based text search
 - [x] Configure RLS policies for public read / authenticated write
 - [x] Create seed data with sample instructions for all 6 categories
 
 ### 6.2 Core UI Components ✅ COMPLETE
+
 - [x] `InstructionCard.tsx`: Card with category icon, agent badges, difficulty
 - [x] `CodeBlock.tsx`: Syntax-highlighted code display
 - [x] `InstructionForm.tsx`: Submission form with Monaco-style editor
 
 ### 6.3 Routing & Pages ✅ COMPLETE
+
 - [x] `/instructions`: Hub landing page with search
 - [x] `/instructions/[category]`: Filtered listing with agent filters
 - [x] `/instructions/[category]/[slug]`: Detail page with "Use this" actions
 
 ### 6.4 Features ✅ COMPLETE
+
 - [x] CRUD operations for creating, updating, deleting instructions
 - [x] Copy to clipboard functionality for instruction content
 - [x] Download as file (.md, .json, .yaml) functionality
 - [x] Full-text search and filtering by multiple agent types
 
 ### 6.5 Navigation ✅ COMPLETE
+
 - [x] Add "Instructions" link to global header
 - [x] Update submit page to include instruction submission type
 
@@ -156,6 +174,7 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ---
 
 ## 🔗 Phase 6.7: Antigravity Agent Sync ✅ COMPLETE
+
 - [x] Create `scripts/sync-antigravity.ts` to fetch instructions from Supabase
 - [x] Map categories to Antigravity structure:
   - `skill` → `.agent/skills/[slug]/SKILL.md`
@@ -166,6 +185,7 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ---
 
 ## 🔗 Phase 6.8: Claude to Antigravity Skill Converter ✅ COMPLETE
+
 - [x] Brainstorm and design converter logic
 - [x] Create `scripts/convert-claude-to-antigravity.ts`
 - [x] Implement Claude skill parsing logic
@@ -175,6 +195,7 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ---
 
 ## 🔗 Phase 6.9: Bug Fixes & UI Polish ✅ COMPLETE
+
 - [x] Fix Markdown rendering in Instructions Detail page (implemented react-markdown)
 - [x] Verify `tsx` script execution environment (user notified)
 - [x] Improve UX/UI of Instructions Detail page (widened layout, premium typography, custom components)
@@ -182,16 +203,19 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ---
 
 ## 🔗 Phase 6.10: External Configuration Import ✅ COMPLETE
+
 - [x] Import `claude-code-config` from `Melvynx/aiblueprint`
 
 ---
 
 ## 🔗 Phase 6.11: Deployment Fixes ✅ COMPLETE
+
 - [x] Exclude `claude-code-config` from `tsconfig.json` to fix build error
 
 ---
 
 ## 🔗 Phase 6.12: Migrate Claude Config to Antigravity ✅ COMPLETE
+
 - [x] Analyze and map proper types (Skills vs Workflows)
 - [x] Migrate `skills/` -> `.agent/skills/`
 - [x] Migrate `commands/` -> `.agent/workflows/`
@@ -201,12 +225,62 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ---
 
 ## 🔗 Phase 6.13: Route Protection ✅ COMPLETE
+
 - [x] Protect `/instructions` route (Middleware)
 - [x] Add Top Navigation to `/instructions` pages
 
 ---
 
+## 🎨 Phase 8.0: Terminal Theme Migration ✅ COMPLETE
+
+> **Completed:** January 15, 2026
+
+### Phase 8.1: Landing Page Components ✅ COMPLETE
+
+- [x] Create terminal theme CSS variables in `globals.css`
+- [x] Create CRT overlay and scanline effects
+- [x] Create landing page components (`TerminalNav`, `HeroSection`, `MediaPlayer`, etc.)
+- [x] Create `/landing` route with all components
+
+### Phase 8.2: App-Wide Theme Migration ✅ COMPLETE
+
+- [x] Update `layout.tsx` with Fira Code + Space Grotesk fonts
+- [x] Add `terminal-theme` class and CRT overlay
+- [x] Update `Header.tsx` with terminal navigation (bracket links)
+- [x] Update `DirectoryLayout.tsx` shell components
+- [x] Update `ToolCard.tsx` with hex IDs and terminal borders
+- [x] Update `PromptCard.tsx` with terminal code blocks
+- [x] Update `HomePageContent.tsx` with terminal-styled tabs
+
+### Phase 8.3: UI Component Updates ✅ COMPLETE
+
+- [x] Add `terminal` variant to `button.tsx`
+- [x] Update `input.tsx` with terminal styling
+- [x] Update `card.tsx` with terminal borders
+
+### Phase 8.4: Auth & Page Updates ✅ COMPLETE
+
+- [x] Update `login/page.tsx` with terminal form styling
+- [x] Update `signup/page.tsx` with terminal form styling
+- [x] Update `instructions/page.tsx` with hex IDs and terminal headers
+- [x] Update `profile/page.tsx` with terminal profile card
+- [x] Update `InstructionCard.tsx` component
+
+### Terminal Theme Features Applied
+
+| Feature         | Description                           |
+| --------------- | ------------------------------------- |
+| CRT Overlay     | Scanline animation on entire app      |
+| Pixel Borders   | 4px borders with offset shadows       |
+| Terminal Colors | Green (#00FF41) + Purple (#BC13FE)    |
+| Monospace Font  | Fira Code throughout                  |
+| Bracket Links   | `[ Navigation ]` style                |
+| Hex IDs         | Card items numbered `0x01`, `0x02`... |
+
+---
+
 ## 🔗 Phase 7.0: Dev Experience & Workflows (Current)
+
 - [x] Create Refactor/Cleanup Workflow (`/refactor`, `/cleanup`)
   - [x] Analyze latest vs previous code
   - [x] Detect reusable patterns
@@ -216,6 +290,7 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ---
 
 ## 🔗 Phase 7.1: Seed Database with .agent Content
+
 - [x] Analyze `.agent` folder structure
 - [x] Map content to `instructions` table schema
 - [x] Create/Run seed script (`scripts/seed-agent-content.ts`)
@@ -223,39 +298,48 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ---
 
 ## 🔗 Phase 7.2: UI Polish (Sidebar)
+
 - [x] Add "Workflows" to Side Navigation
 - [x] Ensure "Workflows" links to correct category
 
 ## 🐛 Bug Fixes
+
 - [x] Fix "Element type is invalid" error on /instructions/workflow page
 
-
-
 ---
+
 ## �📋 Post-Deployment Configuration
 
 ### Vercel Dashboard Setup
+
 Add environment variables in Vercel Project Settings:
+
 - `NEXT_PUBLIC_SUPABASE_URL` = `https://qlsgscizfvqbdajzqtgb.supabase.co`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` = (your anon key)
 
 ### Database Migrations Pushed
+
 Via `npx supabase db push --include-all`:
+
 1. ✅ `20260114000000_auth_profiles.sql` - Profiles & favorites tables
 2. ✅ `20260114000001_search_categories.sql` - Full-text search & categories
 3. ⚠️ `20260114000002_storage_bucket.sql` - Needs manual setup in Supabase Dashboard
 
 ### Storage Bucket Setup (Manual)
+
 Create in Supabase Dashboard → Storage:
+
 - Bucket name: `tool-logos`
 - Set as public bucket
 - Add RLS policies for authenticated uploads
 
 ### Vercel Environment Variables
+
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ### Supabase Dashboard Configuration
+
 1. Enable Email auth provider
 2. Add OAuth providers (GitHub, Google) with redirect URLs:
    - `https://your-domain.vercel.app/auth/callback`
@@ -265,18 +349,19 @@ Create in Supabase Dashboard → Storage:
 
 ## 📊 Final Stats
 
-| Metric | Count |
-|--------|-------|
-| Tools in DB | 6 |
-| Prompts in DB | 4 |
-| React Components | 20+ |
-| Server Actions | 6+ |
-| Database Migrations | 4 |
-| Pages Created | 15+ |
+| Metric              | Count |
+| ------------------- | ----- |
+| Tools in DB         | 6     |
+| Prompts in DB       | 4     |
+| React Components    | 20+   |
+| Server Actions      | 6+    |
+| Database Migrations | 4     |
+| Pages Created       | 15+   |
 
 ## 🗂️ New Files Created in Phase 5
 
 ### Authentication
+
 - `src/middleware.ts`
 - `src/app/auth/callback/route.ts`
 - `src/app/auth/error/page.tsx`
@@ -288,16 +373,19 @@ Create in Supabase Dashboard → Storage:
 - `src/app/profile/edit/ProfileEditForm.tsx`
 
 ### Favorites
+
 - `src/app/actions/favorites.ts`
 - `src/components/vibe/FavoriteButton.tsx`
 
 ### Search & Discovery
+
 - `src/components/ui/pagination.tsx`
 - `src/components/ui/search-input.tsx`
 - `src/app/tools/page.tsx`
 - `src/app/prompts/page.tsx`
 
 ### Content Management
+
 - `src/app/actions/content.ts`
 - `src/app/tools/[id]/edit/page.tsx`
 - `src/app/tools/[id]/edit/EditToolForm.tsx`
@@ -306,6 +394,7 @@ Create in Supabase Dashboard → Storage:
 - `src/components/ui/alert-dialog.tsx`
 
 ### SEO & Performance
+
 - `src/app/sitemap.ts`
 - `src/app/robots.ts`
 - `src/app/loading.tsx`
@@ -315,10 +404,12 @@ Create in Supabase Dashboard → Storage:
 - `public/manifest.json`
 
 ### Deployment
+
 - `vercel.json`
 - `.env.example`
 
 ### Migrations
+
 - `supabase/migrations/20260114000000_auth_profiles.sql`
 - `supabase/migrations/20260114000001_search_categories.sql`
 - `supabase/migrations/20260114000002_storage_bucket.sql`
@@ -328,24 +419,28 @@ Create in Supabase Dashboard → Storage:
 ## 🚀 Phase 7: Future Enhancements (NEXT)
 
 ### Phase 7.1: Advanced Features
+
 - [ ] Implement voting/rating system for tools and prompts
 - [ ] Add comments/reviews on tools
 - [ ] Create tool comparison feature
 - [ ] Add "tool stacks" - curated collections
 
 ### Phase 7.2: Analytics & Insights
+
 - [ ] Track tool/prompt/instruction views
 - [ ] User activity dashboard
 - [ ] Popular items leaderboard
 - [ ] Usage analytics with Vercel Analytics
 
 ### Phase 7.3: Community Features
+
 - [ ] User profiles with public pages
 - [ ] Follow other vibe architects
 - [ ] Activity feed
 - [ ] Notifications system
 
 ### Phase 7.4: API & Integrations
+
 - [ ] Public API for tool data
 - [ ] Webhooks for new submissions
 - [ ] Integration with IDE extensions

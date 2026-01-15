@@ -1,14 +1,23 @@
 # Project: Vibe Architect Central - Technical Blueprint (v2026)
+
 **Stack:** Next.js 16.1 (App Router), TypeScript 7.0 (tsgo), Tailwind CSS 4.1, Supabase v2.90, shadcn/ui 3.6 (MCP-Native).
 
 ## 1. 2026 Architectural Shifts
+
 - **Compiler:** Using `tsgo` (Project Corsa) for 10x faster type-checking.
-- **Styling:** Tailwind 4.1 removes `tailwind.config.js`. Theme variables move to `globals.css` using the `@theme` directive.
-- **AI-Native Components:** Utilizing shadcn/ui 3.6 with **Model Context Protocol (MCP)** support, allowing your AI Agent (Cursor/Antigravity) to fetch and install components directly.
+- **Styling:** Tailwind 4.1 removes `tailwind.config.js`. Theme variables in `globals.css` using `@theme` directive.
+- **Terminal Theme (v2):** Retro CRT aesthetic with:
+  - **Fonts:** Fira Code (monospace), Space Grotesk (headings)
+  - **Colors:** Terminal green (#00FF41), purple (#BC13FE), dark bg (#0a0a0a)
+  - **Effects:** CRT scanlines, pixel borders, glitch text
+- **AI-Native Components:** Utilizing shadcn/ui 3.6 with **Model Context Protocol (MCP)** support.
 
 ## 2. Database Schema (Supabase)
+
 ### Tables
+
 #### `tools`
+
 - `id`: uuid (pk)
 - `name`: text
 - `description`: text
@@ -19,6 +28,7 @@
 - `created_at`: timestamptz (default: now())
 
 #### `prompts`
+
 - `id`: uuid (pk)
 - `title`: text
 - `content`: text (The raw orchestration prompt)
@@ -27,6 +37,7 @@
 - `created_by`: uuid (auth.users link)
 
 #### `instructions`
+
 - `id`: uuid (pk)
 - `title`: text
 - `slug`: text (unique)
@@ -40,6 +51,7 @@
 - `search_vector`: tsvector
 
 #### `profiles`
+
 - `id`: uuid (pk, references auth.users)
 - `email`: text
 - `full_name`: text
@@ -47,6 +59,7 @@
 - `updated_at`: timestamptz
 
 #### `favorites`
+
 - `id`: uuid (pk)
 - `user_id`: uuid (references profiles)
 - `item_id`: uuid (polymorphic: tools/prompts/instructions)
@@ -54,6 +67,7 @@
 - `created_at`: timestamptz
 
 ## 3. Folder Structure (Next.js 16.1)
+
 ```text
 /
 ├── .agent/                # Antigravity Agent Skills & Workflows
