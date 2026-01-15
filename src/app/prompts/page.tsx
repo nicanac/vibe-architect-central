@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, ArrowLeft, Sparkles } from "lucide-react";
+import { BookOpen, ArrowLeft, Sparkles, Terminal } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { PromptCard } from "@/components/vibe/PromptCard";
 import { Pagination } from "@/components/ui/pagination";
@@ -53,45 +53,37 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
   return (
     <>
       <Header />
-      <main className="container mx-auto px-4 py-8 max-w-7xl">
-        {/* Header */}
-        <div className="mb-8">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </Link>
-
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 rounded-md bg-neon-success/10">
-              <BookOpen className="w-6 h-6 text-neon-success" />
-            </div>
-            <h1 className="text-3xl font-bold">Prompt Vault</h1>
-          </div>
-          <p className="text-muted-foreground">
-            Browse {result.count} orchestration prompts for AI mastery
+      <main className="container mx-auto px-4 py-8 lg:py-12 max-w-7xl">
+        {/* Header Section */}
+        <section className="mb-12 space-y-4 border-l-4 border-[var(--terminal-purple)] pl-6 py-4">
+          <span className="text-[var(--terminal-purple)] font-mono text-sm uppercase">
+            /DIRECTORY/PROMPTS/
+          </span>
+          <h1 className="text-4xl font-bold tracking-tight uppercase font-mono text-[var(--terminal-green)] glitch-text">
+            Prompt_Vault
+          </h1>
+          <p className="text-[var(--terminal-text-muted)] max-w-2xl font-mono">
+            &gt; Browse {result.count} orchestration prompts for AI mastery
           </p>
-        </div>
+        </section>
 
         {/* Filters */}
-        <div className="space-y-4 mb-8">
+        <section className="space-y-6 mb-12">
           <div className="flex-1 max-w-md">
             <SearchInput placeholder="Search prompts..." paramName="search" />
           </div>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-6">
             {/* Technique Filter */}
             <div className="space-y-2">
-              <span className="text-sm text-muted-foreground">Technique:</span>
+              <span className="text-[var(--terminal-text-muted)] font-mono text-xs uppercase">Technique:</span>
               <div className="flex gap-2 flex-wrap">
                 <Link
                   href={buildFilterUrl(undefined, targetAi)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  className={`px-3 py-1.5 border-2 text-sm font-mono uppercase transition-colors ${
                     !technique
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-muted-foreground hover:text-foreground"
+                      ? "bg-[var(--terminal-green)] text-[var(--terminal-bg)] border-[var(--terminal-green)]"
+                      : "border-[var(--terminal-border-muted)] text-[var(--terminal-text-muted)] hover:border-[var(--terminal-green)] hover:text-[var(--terminal-green)]"
                   }`}
                 >
                   All
@@ -100,10 +92,10 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
                   <Link
                     key={t}
                     href={buildFilterUrl(t, targetAi)}
-                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    className={`px-3 py-1.5 border-2 text-sm font-mono transition-colors ${
                       technique === t
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-secondary text-muted-foreground hover:text-foreground"
+                        ? "bg-[var(--terminal-green)] text-[var(--terminal-bg)] border-[var(--terminal-green)]"
+                        : "border-[var(--terminal-border-muted)] text-[var(--terminal-text-muted)] hover:border-[var(--terminal-green)] hover:text-[var(--terminal-green)]"
                     }`}
                   >
                     {t}
@@ -114,14 +106,14 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
 
             {/* Target AI Filter */}
             <div className="space-y-2">
-              <span className="text-sm text-muted-foreground">Target AI:</span>
+              <span className="text-[var(--terminal-text-muted)] font-mono text-xs uppercase">Target AI:</span>
               <div className="flex gap-2 flex-wrap">
                 <Link
                   href={buildFilterUrl(technique, undefined)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  className={`px-3 py-1.5 border-2 text-sm font-mono uppercase transition-colors ${
                     !targetAi
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-muted-foreground hover:text-foreground"
+                      ? "bg-[var(--terminal-green)] text-[var(--terminal-bg)] border-[var(--terminal-green)]"
+                      : "border-[var(--terminal-border-muted)] text-[var(--terminal-text-muted)] hover:border-[var(--terminal-green)] hover:text-[var(--terminal-green)]"
                   }`}
                 >
                   All
@@ -130,10 +122,10 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
                   <Link
                     key={ai}
                     href={buildFilterUrl(technique, ai)}
-                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    className={`px-3 py-1.5 border-2 text-sm font-mono transition-colors ${
                       targetAi === ai
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-secondary text-muted-foreground hover:text-foreground"
+                        ? "bg-[var(--terminal-green)] text-[var(--terminal-bg)] border-[var(--terminal-green)]"
+                        : "border-[var(--terminal-border-muted)] text-[var(--terminal-text-muted)] hover:border-[var(--terminal-green)] hover:text-[var(--terminal-green)]"
                     }`}
                   >
                     {ai}
@@ -142,7 +134,7 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Results */}
         {result.data.length > 0 ? (
@@ -165,17 +157,17 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
             />
           </>
         ) : (
-          <div className="vibe-card p-12 text-center">
-            <Sparkles className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-            <h2 className="text-xl font-semibold mb-2">No prompts found</h2>
-            <p className="text-muted-foreground mb-4">
+          <div className="border-2 border-[var(--terminal-green)]/30 p-12 text-center">
+            <Sparkles className="w-12 h-12 mx-auto mb-4 text-[var(--terminal-purple)]" />
+            <h2 className="text-xl font-bold mb-2 uppercase font-mono text-[var(--terminal-green)]">No prompts found</h2>
+            <p className="text-[var(--terminal-text-muted)] mb-4 font-mono">
               {search
                 ? `No results for "${search}". Try a different search term.`
                 : "No prompts match the selected filters."}
             </p>
             <Link
               href="/prompts"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--terminal-green)] text-[var(--terminal-bg)] font-bold uppercase font-mono hover:bg-[var(--terminal-hover-bg)] hover:text-[var(--terminal-hover-text)] transition-colors"
             >
               View all prompts
             </Link>

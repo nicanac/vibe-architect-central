@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Zap, Mail, Lock, User, Github, Loader2, CheckCircle } from "lucide-react";
+import { Terminal, Mail, Lock, User, Github, Loader2, CheckCircle } from "lucide-react";
 import { signUpWithEmail, signInWithOAuth } from "@/lib/supabase/auth";
 import { toast } from "sonner";
 
@@ -35,28 +35,30 @@ export default function SignUpPage() {
   if (isSuccess) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="vibe-card p-8 max-w-md w-full text-center space-y-6">
-          <div className="w-16 h-16 mx-auto rounded-full bg-neon-success/10 flex items-center justify-center">
-            <CheckCircle className="w-8 h-8 text-neon-success" />
+        <div className="border-2 border-[var(--terminal-green)] p-8 max-w-md w-full text-center space-y-6 bg-[var(--terminal-bg)]">
+          <div className="w-16 h-16 mx-auto border-2 border-[var(--terminal-green)] flex items-center justify-center">
+            <CheckCircle className="w-8 h-8 text-[var(--terminal-green)]" />
           </div>
 
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold">Check your email!</h1>
-            <p className="text-muted-foreground">
-              We&apos;ve sent a confirmation link to{" "}
-              <span className="text-foreground font-medium">{email}</span>.
+            <h1 className="text-2xl font-bold uppercase font-mono text-[var(--terminal-green)]">
+              Check_Your_Email!
+            </h1>
+            <p className="text-[var(--terminal-green)]/70 font-mono text-sm">
+              &gt; We&apos;ve sent a confirmation link to{" "}
+              <span className="text-[var(--terminal-purple)] font-bold">{email}</span>.
               Click the link to activate your account.
             </p>
           </div>
 
-          <div className="pt-4 border-t border-border">
-            <p className="text-sm text-muted-foreground">
+          <div className="pt-4 border-t-2 border-[var(--terminal-green)]/30">
+            <p className="text-sm text-[var(--terminal-green)]/70 font-mono">
               Didn&apos;t receive the email?{" "}
               <button
                 onClick={() => setIsSuccess(false)}
-                className="text-primary hover:underline"
+                className="text-[var(--terminal-purple)] hover:underline font-bold"
               >
-                Try again
+                Try_again
               </button>
             </p>
           </div>
@@ -71,29 +73,42 @@ export default function SignUpPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center gap-2 text-2xl font-bold">
-            <Zap className="w-8 h-8 text-primary" />
-            <span>Vibe Architect</span>
+            <Terminal className="w-8 h-8 text-[var(--terminal-green)]" />
+            <span className="text-[var(--terminal-green)] uppercase font-mono tracking-tighter">
+              Vibe_Coding
+            </span>
           </Link>
-          <p className="text-muted-foreground">
-            Join the community of Senior Vibe Architects
+          <p className="text-[var(--terminal-green)]/70 font-mono text-sm">
+            &gt; Join the community of Senior Vibe Architects
           </p>
         </div>
 
         {/* Signup Card */}
-        <div className="vibe-card p-8 space-y-6">
+        <div className="border-2 border-[var(--terminal-green)] p-8 space-y-6 bg-[var(--terminal-bg)]">
+          {/* Terminal Header */}
+          <div className="flex items-center justify-between border-b-2 border-[var(--terminal-green)]/30 pb-4 -mt-4 -mx-4 px-4">
+            <span className="text-[var(--terminal-purple)] font-mono text-xs uppercase">
+              REGISTER_MODULE.exe
+            </span>
+            <div className="flex gap-2">
+              <div className="w-3 h-3 border border-[var(--terminal-green)]" />
+              <div className="w-3 h-3 border border-[var(--terminal-green)]" />
+            </div>
+          </div>
+
           {/* OAuth Buttons */}
           <div className="space-y-3">
             <button
               onClick={() => handleOAuth("github")}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-secondary hover:bg-secondary/80 rounded-md font-medium transition-colors"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)] transition-all font-bold uppercase font-mono"
             >
               <Github className="w-5 h-5" />
-              Continue with GitHub
+              Continue_with_GitHub
             </button>
 
             <button
               onClick={() => handleOAuth("google")}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-secondary hover:bg-secondary/80 rounded-md font-medium transition-colors"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)] transition-all font-bold uppercase font-mono"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -113,18 +128,18 @@ export default function SignUpPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              Continue with Google
+              Continue_with_Google
             </button>
           </div>
 
           {/* Divider */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border" />
+              <div className="w-full border-t-2 border-[var(--terminal-green)]/30" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-surface px-2 text-muted-foreground">
-                Or sign up with email
+              <span className="bg-[var(--terminal-bg)] px-2 text-[var(--terminal-purple)] font-mono font-bold">
+                // OR_SIGN_UP_WITH_EMAIL //
               </span>
             </div>
           </div>
@@ -132,28 +147,28 @@ export default function SignUpPage() {
           {/* Email Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label htmlFor="displayName" className="text-sm font-medium">
-                Display Name
+              <label htmlFor="displayName" className="text-sm font-bold uppercase font-mono text-[var(--terminal-green)]">
+                Display_Name
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--terminal-green)]/50" />
                 <input
                   id="displayName"
                   type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  placeholder="Vibe Master"
-                  className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="Vibe_Master"
+                  className="w-full pl-10 pr-4 py-3 bg-[var(--terminal-bg)] border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] font-mono focus:outline-none focus:border-[var(--terminal-purple)] placeholder:text-[var(--terminal-green)]/30"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
+              <label htmlFor="email" className="text-sm font-bold uppercase font-mono text-[var(--terminal-green)]">
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--terminal-green)]/50" />
                 <input
                   id="email"
                   type="email"
@@ -161,17 +176,17 @@ export default function SignUpPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
                   required
-                  className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full pl-10 pr-4 py-3 bg-[var(--terminal-bg)] border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] font-mono focus:outline-none focus:border-[var(--terminal-purple)] placeholder:text-[var(--terminal-green)]/30"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium">
+              <label htmlFor="password" className="text-sm font-bold uppercase font-mono text-[var(--terminal-green)]">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--terminal-green)]/50" />
                 <input
                   id="password"
                   type="password"
@@ -180,44 +195,43 @@ export default function SignUpPage() {
                   placeholder="••••••••"
                   required
                   minLength={8}
-                  className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full pl-10 pr-4 py-3 bg-[var(--terminal-bg)] border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] font-mono focus:outline-none focus:border-[var(--terminal-purple)] placeholder:text-[var(--terminal-green)]/30"
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
-                At least 8 characters
+              <p className="text-xs text-[var(--terminal-green)]/50 font-mono">
+                &gt; At least 8 characters
               </p>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-[var(--terminal-purple)] text-white font-bold uppercase font-mono pixel-border-sm hover:translate-y-0.5 active:translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Creating account...
+                  CREATING_ACCOUNT...
                 </>
               ) : (
-                "Create Account"
+                "CREATE_ACCOUNT.exe"
               )}
             </button>
           </form>
 
-          <p className="text-xs text-center text-muted-foreground">
-            By creating an account, you agree to our Terms of Service and
-            Privacy Policy.
+          <p className="text-xs text-center text-[var(--terminal-green)]/50 font-mono">
+            &gt; By creating an account, you agree to our Terms of Service and Privacy Policy.
           </p>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-center text-sm text-[var(--terminal-green)]/70 font-mono">
           Already have an account?{" "}
           <Link
             href="/login"
-            className="text-primary hover:underline font-medium"
+            className="text-[var(--terminal-purple)] hover:underline font-bold"
           >
-            Sign in
+            Sign_in
           </Link>
         </p>
       </div>

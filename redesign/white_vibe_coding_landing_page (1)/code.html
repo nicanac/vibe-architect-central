@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vibe Coding | TERMINAL_v1.0.4_LIGHT_MODE</title>
+<meta content="Vibe Coding Agency - We engineer the vibes and automate the mundane." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Fira+Code:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+        :root {
+            --terminal-green: #00D337;--terminal-purple: #BC13FE;
+            --terminal-bg: #FFFFFF;
+            --terminal-text: #000000;
+            --terminal-border: #000000;
+        }
+        body {
+            background-color: var(--terminal-bg);
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.02) 50%, rgba(255, 255, 255, 0.1) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 3px 100%;
+            color: var(--terminal-text);
+        }
+        .crt-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.05) 50%), linear-gradient(90deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.02));
+            z-index: 9999;
+            pointer-events: none;
+            background-size: 100% 2px, 3px 100%;
+        }
+        .pixel-border {
+            border: 4px solid var(--terminal-border);
+            box-shadow: 6px 6px 0px var(--terminal-purple);
+        }
+        .pixel-border-sm {
+            border: 2px solid var(--terminal-border);
+            box-shadow: 3px 3px 0px var(--terminal-green);
+        }
+        .terminal-header {
+            background: var(--terminal-border);
+            color: #fff;
+        }
+        .glitch-text {
+            text-shadow: 2px 0 var(--terminal-purple), -2px 0 var(--terminal-green);
+        }
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(0, 211, 55, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+            opacity: 0.2;
+            position: absolute;
+            bottom: 100%;
+            pointer-events: none;
+        }
+        @keyframes scan {
+            from { bottom: 100%; }
+            to { bottom: -100px; }
+        }
+        .animate-scan {
+            animation: scan 8s linear infinite;
+        }
+    </style>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#00D337",
+                        accent: "#BC13FE",
+                        dark: "#000000",
+                        light: "#FFFFFF",
+                    },
+                    fontFamily: {
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                        mono: ['"Fira Code"', 'monospace'],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="font-mono selection:bg-accent selection:text-white">
+<div class="crt-overlay"></div>
+<nav class="sticky top-0 z-50 bg-white border-b-4 border-black">
+<div class="max-w-6xl mx-auto px-4">
+<div class="flex justify-between h-16 items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-black text-3xl">terminal</span>
+<span class="font-mono font-bold text-xl uppercase tracking-tighter text-black">Vibe_Coding_v1.0</span>
+</div>
+<div class="hidden md:flex items-center space-x-6 text-sm uppercase">
+<a class="hover:bg-primary hover:text-white px-2 py-1 transition-all text-black font-bold" href="#services">[ Services ]</a>
+<a class="hover:bg-primary hover:text-white px-2 py-1 transition-all text-black font-bold" href="#projects">[ Projects ]</a>
+<a class="hover:bg-primary hover:text-white px-2 py-1 transition-all text-black font-bold" href="#process">[ Process ]</a>
+<a class="bg-accent text-white px-4 py-1 pixel-border-sm hover:translate-y-0.5 active:translate-y-1 transition-all font-bold" href="#">
+                        GET_IN_TOUCH.exe
+                    </a>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-6xl mx-auto px-4 pt-16 pb-24 relative overflow-hidden">
+<div class="scanline animate-scan"></div>
+<section class="text-left mb-32 border-l-4 border-accent pl-8 py-12 bg-white/10">
+<span class="inline-block px-2 py-1 bg-primary text-white font-bold text-xs mb-6 pixel-border-sm" style="box-shadow: 2px 2px 0px black;">
+                STATUS: ONLINE // NEXT_GEN_AGENCY
+            </span>
+<h1 class="text-4xl md:text-7xl font-mono font-bold mb-8 leading-none tracking-tighter glitch-text text-black">
+                WE_ENGINEER_THE <br/>
+<span class="text-accent underline decoration-4 underline-offset-8">VIBES</span> <br/>
+                YOU_BUILD_THE_FUTURE
+            </h1>
+<p class="mt-4 max-w-2xl text-lg text-black/80 border-b-2 border-black/20 pb-8 italic">
+                &gt; A digital agency fusing algorithmic precision with artistic intuition. We code systems that feel human and scale infinitely.
+            </p>
+<div class="mt-12 flex flex-col sm:flex-row gap-6">
+<a class="pixel-border bg-primary text-white font-bold px-8 py-4 uppercase flex items-center justify-center gap-2 hover:bg-black transition-colors" href="#services">
+                    RUN_SERVICES.sh <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<a class="pixel-border border-black bg-white text-black font-bold px-8 py-4 uppercase hover:bg-accent hover:text-white transition-all" href="#">
+                    VIEW_CASE_STUDIES
+                </a>
+</div>
+</section>
+<section class="mb-32 relative">
+<div class="pixel-border p-2 bg-white">
+<div class="terminal-header h-8 flex items-center px-4 justify-between">
+<span class="text-xs font-bold uppercase tracking-widest">Media_Player.dll</span>
+<div class="flex gap-2">
+<div class="w-3 h-3 bg-white"></div>
+<div class="w-3 h-3 bg-white"></div>
+</div>
+</div>
+<div class="aspect-video relative overflow-hidden bg-gray-100 flex items-center justify-center group">
+<img alt="Abstract 3D Liquid Forms" class="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-700 contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBYtiz7V89-n0g6dtwDPxOQkOTMa7faYqakG3k0EfZHQXLYdMTbv2tP14cAkO7NHBNEhKvX0Iak4eGgvT4QFhItlVgqH-OaO8Rpx2ZA81hQkCSJA73SDy0bd60z3JqeDER3pQjhGr308d9dOZ7JHKc65jK6y7ESvlPLgzeKO_DTSGFDAXWEW8gPenMGhYyJplFMB3bLAF1w-lQQJbpMW4mC44GACSn1gQQsRYBv1HAH0Y9eA1o9zMjn0n4D8QlJfPZ5NWUoXC_SeSl"/>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--terminal-green)_0%,_transparent_100%)] opacity-10 pointer-events-none"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-accent/90 p-6 pixel-border cursor-pointer hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-white text-6xl">play_arrow</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 border-t-4 border-black" id="services">
+<div class="mb-16">
+<h2 class="text-accent font-mono text-sm uppercase mb-2">/CAPABILITIES/</h2>
+<h3 class="text-4xl font-mono font-bold text-black uppercase">Smart Vibe Automation</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
+<div class="group border-2 border-black p-8 hover:bg-primary/5 transition-all relative">
+<span class="absolute top-2 right-2 text-xs opacity-50 text-black">0x01</span>
+<div class="text-accent mb-6">
+<span class="material-symbols-outlined text-5xl">psychology</span>
+</div>
+<h4 class="text-xl font-bold mb-4 text-black uppercase tracking-tight">Prompt Engineering</h4>
+<p class="text-black/70 text-sm leading-relaxed">
+                        Crafting the perfect inputs to elicit the most creative and accurate outputs from LLMs. We speak the language of AI.
+                    </p>
+</div>
+<div class="group border-2 border-black p-8 hover:bg-primary/5 transition-all relative">
+<span class="absolute top-2 right-2 text-xs opacity-50 text-black">0x02</span>
+<div class="text-accent mb-6">
+<span class="material-symbols-outlined text-5xl">hub</span>
+</div>
+<h4 class="text-xl font-bold mb-4 text-black uppercase tracking-tight">AI System Integration</h4>
+<p class="text-black/70 text-sm leading-relaxed">
+                        Seamlessly connecting advanced AI models into your existing tech stack. From API to UI, we handle the flow.
+                    </p>
+</div>
+<div class="group border-2 border-black p-8 hover:bg-primary/5 transition-all relative">
+<span class="absolute top-2 right-2 text-xs opacity-50 text-black">0x03</span>
+<div class="text-accent mb-6">
+<span class="material-symbols-outlined text-5xl">palette</span>
+</div>
+<h4 class="text-xl font-bold mb-4 text-black uppercase tracking-tight">Algorithmic Art</h4>
+<p class="text-black/70 text-sm leading-relaxed">
+                        Generative visuals that adapt to your brand's pulse. Unique, scalable, and impossible to ignore content creation.
+                    </p>
+</div>
+<div class="group border-2 border-black p-8 hover:bg-primary/5 transition-all relative">
+<span class="absolute top-2 right-2 text-xs opacity-50 text-black">0x04</span>
+<div class="text-accent mb-6">
+<span class="material-symbols-outlined text-5xl">auto_fix_high</span>
+</div>
+<h4 class="text-xl font-bold mb-4 text-black uppercase tracking-tight">Workflow Automation</h4>
+<p class="text-black/70 text-sm leading-relaxed">
+                        Eliminating the boring stuff. We build self-healing automation pipelines that give you back your time.
+                    </p>
+</div>
+<div class="group border-2 border-black p-8 hover:bg-primary/5 transition-all relative">
+<span class="absolute top-2 right-2 text-xs opacity-50 text-black">0x05</span>
+<div class="text-accent mb-6">
+<span class="material-symbols-outlined text-5xl">code</span>
+</div>
+<h4 class="text-xl font-bold mb-4 text-black uppercase tracking-tight">No-Code Solutions</h4>
+<p class="text-black/70 text-sm leading-relaxed">
+                        Rapid prototyping and deployment using the best no-code tools, enhanced with custom code where it counts.
+                    </p>
+</div>
+<div class="group border-2 border-black p-8 hover:bg-primary/5 transition-all relative">
+<span class="absolute top-2 right-2 text-xs opacity-50 text-black">0x06</span>
+<div class="text-accent mb-6">
+<span class="material-symbols-outlined text-5xl">security</span>
+</div>
+<h4 class="text-xl font-bold mb-4 text-black uppercase tracking-tight">Ethical AI Audits</h4>
+<p class="text-black/70 text-sm leading-relaxed">
+                        Ensuring your automated systems are fair, transparent, and aligned with human values.
+                    </p>
+</div>
+</div>
+</section>
+<section class="py-24 bg-white/50 pixel-border border-accent" id="process">
+<div class="px-8">
+<div class="mb-16">
+<h2 class="text-accent font-mono text-sm uppercase mb-2">// SEQUENCE_FLOW //</h2>
+<h3 class="text-4xl font-mono font-bold text-black uppercase">Our Simple, Proven<br/>Automation Process</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="border-4 border-black p-6 bg-white relative">
+<span class="font-mono text-xs text-accent mb-4 block underline font-bold">STEP_01</span>
+<h4 class="text-lg font-bold text-black mb-4 uppercase">Vibe Check</h4>
+<p class="text-black/80 text-xs leading-relaxed uppercase font-medium">
+                            We analyze your current workflows, brand voice, and pain points to understand the 'vibe' you want to achieve.
+                        </p>
+</div>
+<div class="border-4 border-black p-6 bg-white relative">
+<span class="font-mono text-xs text-accent mb-4 block underline font-bold">STEP_02</span>
+<h4 class="text-lg font-bold text-black mb-4 uppercase">Prototype</h4>
+<p class="text-black/80 text-xs leading-relaxed uppercase font-medium">
+                            We build a rapid MVP of the automation or AI integration. You see the magic happen before full commitment.
+                        </p>
+</div>
+<div class="border-4 border-black p-6 bg-white relative">
+<span class="font-mono text-xs text-accent mb-4 block underline font-bold">STEP_03</span>
+<h4 class="text-lg font-bold text-black mb-4 uppercase">Scale</h4>
+<p class="text-black/80 text-xs leading-relaxed uppercase font-medium">
+                            Once validated, we deploy the system at scale, integrating it deeply into your infrastructure for maximum impact.
+                        </p>
+</div>
+<div class="border-4 border-black p-6 bg-white relative">
+<span class="font-mono text-xs text-accent mb-4 block underline font-bold">STEP_04</span>
+<h4 class="text-lg font-bold text-black mb-4 uppercase">Vibe Check 2.0</h4>
+<p class="text-black/80 text-xs leading-relaxed uppercase font-medium">
+                            Continuous monitoring and fine-tuning. As AI evolves, so does your system. We keep the vibes immaculate.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 text-center border-l-4 border-black mt-24">
+<span class="text-accent font-mono text-sm uppercase mb-4 block font-bold">WARNING: SYSTEM_INEFFICIENCY_DETECTED</span>
+<h2 class="text-3xl md:text-5xl font-mono font-bold text-black mb-6 uppercase tracking-tight">
+                Manual Work Is Slowing Your<br/>Business Down
+             </h2>
+<p class="text-black/60 text-lg mb-12 max-w-2xl mx-auto italic font-medium">
+                 "Growing companies lose time, money, and opportunities because their systems don't talk to each other."
+             </p>
+<div class="bg-white pixel-border border-black p-12 max-w-3xl mx-auto relative group">
+<div class="absolute -top-4 left-4 bg-primary text-white px-3 py-1 font-bold text-xs uppercase pixel-border-sm" style="box-shadow: 2px 2px 0px black;">Resolution_found</div>
+<h3 class="text-2xl font-bold text-black mb-6 uppercase">The Vibe Coding Solution</h3>
+<p class="text-black/80 leading-relaxed font-mono text-sm md:text-base font-medium">
+                    We deploy intelligent agents that handle the heavy lifting. Your team focuses on strategy and creativity, while our code handles the execution.
+                </p>
+</div>
+</section>
+</main>
+<footer class="bg-white border-t-8 border-accent pt-16 pb-8 text-xs uppercase tracking-widest">
+<div class="max-w-6xl mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<div>
+<div class="flex items-center gap-2 mb-6 text-black">
+<span class="material-symbols-outlined text-2xl">terminal</span>
+<span class="font-bold text-xl tracking-tighter">Vibe_Coding</span>
+</div>
+<p class="text-black/60 leading-loose font-bold">
+                        Automating the future, one vibe at a time. <br/>
+                        LOCATION: [ CLOUD_SERVER_01 ]
+                    </p>
+</div>
+<div>
+<h4 class="font-bold text-black mb-6 underline">DIR: /Company</h4>
+<ul class="space-y-3 text-black/70 font-bold">
+<li><a class="hover:text-accent" href="#">About_Us</a></li>
+<li><a class="hover:text-accent" href="#">Careers</a></li>
+<li><a class="hover:text-accent" href="#">Blog</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-black mb-6 underline">DIR: /Services</h4>
+<ul class="space-y-3 text-black/70 font-bold">
+<li><a class="hover:text-accent" href="#">AI_Consulting</a></li>
+<li><a class="hover:text-accent" href="#">Development</a></li>
+<li><a class="hover:text-accent" href="#">System_Audit</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-black mb-6 underline">Join_The_Network</h4>
+<form class="flex flex-col gap-3">
+<input class="bg-white border-2 border-black p-2 text-black focus:border-accent outline-none font-mono placeholder-black/30" placeholder="EMAIL_ADDRESS" type="email"/>
+<button class="bg-primary text-white font-bold py-2 pixel-border-sm hover:bg-black transition-colors">JOIN_VIBE.exe</button>
+</form>
+</div>
+</div>
+<div class="border-t-2 border-black/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-black/40 font-bold">
+<p>© 2024 Vibe Coding Agency. All bits reserved.</p>
+<div class="flex space-x-8">
+<a class="hover:text-accent text-black transition-colors" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+<a class="hover:text-accent text-black transition-colors" href="#"><span class="material-symbols-outlined">hub</span></a>
+<a class="hover:text-accent text-black transition-colors" href="#"><span class="material-symbols-outlined">data_object</span></a>
+</div>
+</div>
+</div>
+</footer>
+
+```</body></html>

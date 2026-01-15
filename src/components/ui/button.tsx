@@ -5,26 +5,27 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-bold uppercase transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[var(--terminal-green)]",
   {
     variants: {
       variant: {
-        default: "bg-primary-accent text-white shadow-[0_0_15px_rgba(59,130,246,0.5)] hover:bg-primary-accent/90 hover:shadow-[0_0_25px_rgba(59,130,246,0.7)]",
+        default: "bg-[var(--terminal-green)] text-[var(--terminal-bg)] hover:bg-white pixel-border-sm",
         destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20",
         outline:
-          "border border-white/20 bg-surface/50 shadow-xs hover:bg-surface hover:border-primary-accent/50 hover:text-primary-accent",
+          "border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] bg-transparent hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)]",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "border-2 border-[var(--terminal-purple)] text-[var(--terminal-purple)] bg-transparent hover:bg-[var(--terminal-purple)] hover:text-white",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary-accent underline-offset-4 hover:underline",
-        success: "bg-neon-success text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] hover:bg-neon-success/90 hover:shadow-[0_0_25px_rgba(16,185,129,0.7)]",
+          "text-[var(--terminal-green)] hover:bg-[var(--terminal-green)]/20",
+        link: "text-[var(--terminal-purple)] underline-offset-4 hover:underline",
+        success: "bg-[var(--terminal-green)] text-[var(--terminal-bg)] pixel-border-sm hover:bg-white",
+        terminal: "bg-[var(--terminal-purple)] text-white pixel-border-sm hover:translate-y-0.5 active:translate-y-1",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+        sm: "h-8 gap-1.5 px-3 has-[>svg]:px-2.5",
+        lg: "h-10 px-6 has-[>svg]:px-4",
         icon: "size-9",
         "icon-sm": "size-8",
         "icon-lg": "size-10",

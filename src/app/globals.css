@@ -110,3 +110,209 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-muted);
 }
+
+/* ============================================
+   Terminal Theme (Vibe Coding Landing Page)
+   ============================================ */
+
+/* Terminal Theme Variables - Dark Mode */
+.terminal-theme {
+  --terminal-green: #00ff41;
+  --terminal-purple: #bc13fe;
+  --terminal-bg: #0d0d0d;
+  --terminal-border: #333333;
+  --terminal-text: var(--terminal-green);
+}
+
+/* Terminal Theme Variables - Light Mode */
+.terminal-theme-light {
+  /* Primary colors swap: green becomes black in light mode */
+  --terminal-green: #000000;
+  --terminal-purple: #bc13fe;
+  --terminal-bg: #ffffff;
+  --terminal-border: #000000;
+  --terminal-text: #000000;
+  
+  /* Additional light mode semantic tokens */
+  --terminal-text-muted: #666666;
+  --terminal-border-muted: rgba(0, 0, 0, 0.2);
+  --terminal-hover-bg: #000000;
+  --terminal-hover-text: #ffffff;
+}
+
+/* Dark theme also gets semantic tokens for consistency */
+.terminal-theme {
+  --terminal-text-muted: rgba(0, 255, 65, 0.7);
+  --terminal-border-muted: rgba(0, 255, 65, 0.2);
+  --terminal-hover-bg: var(--terminal-green);
+  --terminal-hover-text: var(--terminal-bg);
+}
+
+/* Light Mode - Override all colors */
+.terminal-theme-light,
+.terminal-theme-light * {
+  --color-foreground: #000000 !important;
+  --color-muted-foreground: #666666 !important;
+  --color-background: #ffffff !important;
+}
+
+/* Light Mode Text Colors */
+.terminal-theme-light h1,
+.terminal-theme-light h2,
+.terminal-theme-light h3,
+.terminal-theme-light h4,
+.terminal-theme-light h5,
+.terminal-theme-light h6 {
+  color: #000000 !important;
+}
+
+.terminal-theme-light p,
+.terminal-theme-light span,
+.terminal-theme-light div {
+  color: inherit;
+}
+
+.terminal-theme-light .text-white {
+  color: #000000 !important;
+}
+
+.terminal-theme-light .text-\[var\(--terminal-green\)\] {
+  color: #000000 !important;
+}
+
+.terminal-theme-light .text-\[var\(--terminal-green\)\]\/70,
+.terminal-theme-light .text-\[var\(--terminal-green\)\]\/80 {
+  color: #666666 !important;
+}
+
+/* Light Mode Borders */
+.terminal-theme-light .border-\[var\(--terminal-green\)\] {
+  border-color: #000000 !important;
+}
+
+.terminal-theme-light .border-\[var\(--terminal-green\)\]\/30,
+.terminal-theme-light .border-\[var\(--terminal-green\)\]\/20 {
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Light Mode Backgrounds */
+.terminal-theme-light .bg-\[var\(--terminal-green\)\] {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.terminal-theme-light .bg-\[var\(--terminal-bg\)\] {
+  background-color: #ffffff !important;
+}
+
+/* Light Mode Hover States - ensure white text on black bg */
+.terminal-theme-light .hover\:bg-\[var\(--terminal-green\)\]:hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.terminal-theme-light .hover\:text-\[var\(--terminal-bg\)\]:hover {
+  color: #ffffff !important;
+}
+
+/* Light Mode - Keep purple accents */
+.terminal-theme-light .text-\[var\(--terminal-purple\)\] {
+  color: #bc13fe !important;
+}
+
+.terminal-theme-light .border-\[var\(--terminal-purple\)\] {
+  border-color: #bc13fe !important;
+}
+
+/* Light Mode Scanline Background - Clean white, no scanlines */
+.terminal-bg-light {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+/* CRT Overlay Effect */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+    linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.05),
+      rgba(0, 255, 0, 0.02),
+      rgba(0, 0, 255, 0.05)
+    );
+  z-index: 9999;
+  pointer-events: none;
+  background-size: 100% 2px, 3px 100%;
+}
+
+/* Pixel Border Utilities */
+.pixel-border {
+  border: 4px solid var(--terminal-border);
+  box-shadow: 4px 4px 0px var(--terminal-purple);
+}
+
+.pixel-border-sm {
+  border: 2px solid var(--terminal-border);
+  box-shadow: 2px 2px 0px var(--terminal-green);
+}
+
+.pixel-border-green {
+  border: 4px solid var(--terminal-border);
+  box-shadow: 4px 4px 0px var(--terminal-green);
+}
+
+/* Terminal Header Bar */
+.terminal-header {
+  background: var(--terminal-border);
+  color: #000;
+}
+
+/* Glitch Text Effect */
+.glitch-text {
+  text-shadow: 2px 0 var(--terminal-purple), -2px 0 #00ffff;
+}
+
+/* Scanline Animation */
+.scanline {
+  width: 100%;
+  height: 100px;
+  z-index: 10;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 255, 65, 0.05) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  opacity: 0.1;
+  position: absolute;
+  bottom: 100%;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  from {
+    bottom: 100%;
+  }
+  to {
+    bottom: -100px;
+  }
+}
+
+.animate-scan {
+  animation: scan 8s linear infinite;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-scan {
+    animation: none;
+    display: none;
+  }
+  .crt-overlay {
+    display: none;
+  }
+}

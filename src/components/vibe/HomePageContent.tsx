@@ -32,36 +32,36 @@ export function HomePageContent({
     <div className="space-y-6">
       {/* Tab Navigation */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-1 p-1 bg-surface rounded-industrial border border-border">
+        <div className="flex items-center gap-0 border-2 border-[var(--terminal-green)]">
           <button
             onClick={() => setActiveTab('tools')}
             className={`
-              flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-industrial transition-all
+              flex items-center gap-2 px-4 py-2 text-sm font-bold uppercase transition-all font-mono
               ${activeTab === 'tools'
-                ? 'bg-primary-accent text-white'
-                : 'text-muted-foreground hover:text-foreground hover:bg-surface/80'
+                ? 'bg-[var(--terminal-green)] text-[var(--terminal-bg)]'
+                : 'text-[var(--terminal-green)] hover:bg-[var(--terminal-green)]/20'
               }
             `}
           >
             <Wrench className="w-4 h-4" />
-            Tools Directory
-            <span className="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-background/50">
+            Tools_Directory
+            <span className="ml-1 px-1.5 py-0.5 text-xs border border-current">
               {filteredTools.length}
             </span>
           </button>
           <button
             onClick={() => setActiveTab('prompts')}
             className={`
-              flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-industrial transition-all
+              flex items-center gap-2 px-4 py-2 text-sm font-bold uppercase transition-all font-mono border-l-2 border-[var(--terminal-green)]
               ${activeTab === 'prompts'
-                ? 'bg-neon-success text-white'
-                : 'text-muted-foreground hover:text-foreground hover:bg-surface/80'
+                ? 'bg-[var(--terminal-purple)] text-white'
+                : 'text-[var(--terminal-purple)] hover:bg-[var(--terminal-purple)]/20'
               }
             `}
           >
             <BookOpen className="w-4 h-4" />
-            Prompt Vault
-            <span className="ml-1 px-1.5 py-0.5 text-xs rounded-full bg-background/50">
+            Prompt_Vault
+            <span className="ml-1 px-1.5 py-0.5 text-xs border border-current">
               {prompts.length}
             </span>
           </button>
@@ -80,30 +80,32 @@ export function HomePageContent({
       {activeTab === 'tools' ? (
         <DirectoryGrid>
           {filteredTools.length > 0 ? (
-            filteredTools.map((tool) => (
+            filteredTools.map((tool, index) => (
               <ToolCard 
                 key={tool.id} 
                 tool={tool} 
                 isFavorited={favoriteToolIds.includes(tool.id)}
+                index={index}
               />
             ))
           ) : (
-            <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
-              <Sparkles className="w-12 h-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold text-foreground">No tools found</h3>
-              <p className="text-muted-foreground mt-1">
-                Try adjusting your filter or check back later
+            <div className="col-span-full flex flex-col items-center justify-center py-12 text-center border-2 border-[var(--terminal-green)]/30">
+              <Sparkles className="w-12 h-12 text-[var(--terminal-purple)] mb-4" />
+              <h3 className="text-lg font-bold text-white uppercase font-mono">No_Tools_Found</h3>
+              <p className="text-[var(--terminal-green)]/70 mt-1 font-mono text-sm">
+                &gt; Try adjusting your filter or check back later
               </p>
             </div>
           )}
         </DirectoryGrid>
       ) : (
         <DirectoryGrid>
-          {prompts.map((prompt) => (
+          {prompts.map((prompt, index) => (
             <PromptCard 
               key={prompt.id} 
               prompt={prompt} 
               isFavorited={favoritePromptIds.includes(prompt.id)}
+              index={index}
             />
           ))}
         </DirectoryGrid>

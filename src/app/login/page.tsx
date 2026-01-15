@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Zap, Mail, Lock, Github, Loader2 } from "lucide-react";
+import { Terminal, Mail, Lock, Github, Loader2 } from "lucide-react";
 import { signInWithEmail, signInWithOAuth } from "@/lib/supabase/auth";
 import { toast } from "sonner";
 
@@ -42,29 +42,42 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center gap-2 text-2xl font-bold">
-            <Zap className="w-8 h-8 text-primary" />
-            <span>Vibe Architect</span>
+            <Terminal className="w-8 h-8 text-[var(--terminal-green)]" />
+            <span className="text-[var(--terminal-green)] uppercase font-mono tracking-tighter">
+              Vibe_Coding
+            </span>
           </Link>
-          <p className="text-muted-foreground">
-            Sign in to access your orchestration dashboard
+          <p className="text-[var(--terminal-green)]/70 font-mono text-sm">
+            &gt; Sign in to access your orchestration dashboard
           </p>
         </div>
 
         {/* Login Card */}
-        <div className="vibe-card p-8 space-y-6">
+        <div className="border-2 border-[var(--terminal-green)] p-8 space-y-6 bg-[var(--terminal-bg)]">
+          {/* Terminal Header */}
+          <div className="flex items-center justify-between border-b-2 border-[var(--terminal-green)]/30 pb-4 -mt-4 -mx-4 px-4">
+            <span className="text-[var(--terminal-purple)] font-mono text-xs uppercase">
+              AUTH_MODULE.exe
+            </span>
+            <div className="flex gap-2">
+              <div className="w-3 h-3 border border-[var(--terminal-green)]" />
+              <div className="w-3 h-3 border border-[var(--terminal-green)]" />
+            </div>
+          </div>
+
           {/* OAuth Buttons */}
           <div className="space-y-3">
             <button
               onClick={() => handleOAuth("github")}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-secondary hover:bg-secondary/80 rounded-md font-medium transition-colors"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)] transition-all font-bold uppercase font-mono"
             >
               <Github className="w-5 h-5" />
-              Continue with GitHub
+              Continue_with_GitHub
             </button>
 
             <button
               onClick={() => handleOAuth("google")}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-secondary hover:bg-secondary/80 rounded-md font-medium transition-colors"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)] transition-all font-bold uppercase font-mono"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -84,18 +97,18 @@ export default function LoginPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              Continue with Google
+              Continue_with_Google
             </button>
           </div>
 
           {/* Divider */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border" />
+              <div className="w-full border-t-2 border-[var(--terminal-green)]/30" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-surface px-2 text-muted-foreground">
-                Or continue with email
+              <span className="bg-[var(--terminal-bg)] px-2 text-[var(--terminal-purple)] font-mono font-bold">
+                // OR_CONTINUE_WITH_EMAIL //
               </span>
             </div>
           </div>
@@ -103,11 +116,11 @@ export default function LoginPage() {
           {/* Email Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
+              <label htmlFor="email" className="text-sm font-bold uppercase font-mono text-[var(--terminal-green)]">
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--terminal-green)]/50" />
                 <input
                   id="email"
                   type="email"
@@ -115,17 +128,17 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
                   required
-                  className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full pl-10 pr-4 py-3 bg-[var(--terminal-bg)] border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] font-mono focus:outline-none focus:border-[var(--terminal-purple)] placeholder:text-[var(--terminal-green)]/30"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium">
+              <label htmlFor="password" className="text-sm font-bold uppercase font-mono text-[var(--terminal-green)]">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--terminal-green)]/50" />
                 <input
                   id="password"
                   type="password"
@@ -133,7 +146,7 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full pl-10 pr-4 py-3 bg-[var(--terminal-bg)] border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] font-mono focus:outline-none focus:border-[var(--terminal-purple)] placeholder:text-[var(--terminal-green)]/30"
                 />
               </div>
             </div>
@@ -141,28 +154,28 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-[var(--terminal-purple)] text-white font-bold uppercase font-mono pixel-border-sm hover:translate-y-0.5 active:translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Signing in...
+                  AUTHENTICATING...
                 </>
               ) : (
-                "Sign In"
+                "SIGN_IN.exe"
               )}
             </button>
           </form>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-center text-sm text-[var(--terminal-green)]/70 font-mono">
           Don&apos;t have an account?{" "}
           <Link
             href="/signup"
-            className="text-primary hover:underline font-medium"
+            className="text-[var(--terminal-purple)] hover:underline font-bold"
           >
-            Create one
+            Create_one
           </Link>
         </p>
       </div>

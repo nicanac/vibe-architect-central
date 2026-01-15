@@ -1,6 +1,5 @@
 
 import { InstructionSidebar } from '@/components/vibe/InstructionSidebar';
-
 import { Header } from '@/components/layout/Header';
 
 export default function InstructionsLayout({
@@ -11,15 +10,18 @@ export default function InstructionsLayout({
     return (
         <>
             <Header />
-            <div className="container mx-auto px-4 py-8">
-                <div className="flex gap-8">
-                    <aside className="hidden md:block">
-                        <InstructionSidebar />
-                    </aside>
-                    <main className="flex-1 min-w-0">
+            <div className="flex min-h-[calc(100vh-4rem)]">
+                {/* Fixed Sidebar */}
+                <aside className="hidden md:block flex-shrink-0">
+                    <InstructionSidebar />
+                </aside>
+                
+                {/* Main Content - with proper padding */}
+                <main className="flex-1 min-w-0 p-8 lg:p-12">
+                    <div className="max-w-6xl mx-auto">
                         {children}
-                    </main>
-                </div>
+                    </div>
+                </main>
             </div>
         </>
     );

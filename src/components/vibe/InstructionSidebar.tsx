@@ -13,7 +13,7 @@ import {
     Ruler,
     MessageSquare,
     Home,
-    Workflow // Import new icon
+    Workflow
 } from 'lucide-react';
 
 const CATEGORY_ICONS = {
@@ -30,49 +30,90 @@ export function InstructionSidebar({ className }: { className?: string }) {
     const pathname = usePathname();
 
     return (
-        <nav className={cn("flex flex-col gap-2 w-64 pr-4 border-r border-border/50 h-[calc(100vh-4rem)] sticky top-16", className)}>
-            <div className="pb-4 mb-4 border-b border-border/50">
-                <Link href="/instructions">
-                    <ButtonVariant
-                        active={pathname === '/instructions'}
-                        icon={Home}
-                    >
-                        Overview
-                    </ButtonVariant>
-                </Link>
+        <nav className={cn(
+            "flex flex-col w-[200px] h-[calc(100vh-4rem)] sticky top-16 overflow-y-auto",
+            "border-r-4 border-[var(--terminal-green)] bg-[var(--terminal-bg)]",
+            className
+        )}>
+            {/* Header */}
+            <div className="p-4 mb-0 border-b-4 border-[var(--terminal-green)] bg-[var(--terminal-green)] text-[var(--terminal-bg)]">
+                <div className="flex items-center gap-2">
+                    <Terminal className="w-5 h-5" />
+                    <span className="font-bold text-xs uppercase tracking-tighter font-mono">
+                        Vibe_v1.0
+                    </span>
+                </div>
             </div>
 
-            <div className="flex flex-col gap-1">
-                <h3 className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            {/* Overview Link */}
+            <Link href="/instructions">
+                <SidebarItem
+                    active={pathname === '/instructions'}
+                    icon={Home}
+                    index={0}
+                >
+                    Overview
+                </SidebarItem>
+            </Link>
+
+            {/* Categories Section */}
+            <div className="py-2">
+                <h3 className="px-4 py-2 text-[10px] font-bold text-[var(--terminal-purple)] uppercase tracking-widest font-mono">
                     Categories
                 </h3>
-                {Object.entries(INSTRUCTION_CATEGORIES).map(([key, category]) => {
+                {Object.entries(INSTRUCTION_CATEGORIES).map(([key, category], index) => {
                     const Icon = CATEGORY_ICONS[key as InstructionCategory] || Terminal;
                     const isActive = pathname.startsWith(`/instructions/${key}`);
 
                     return (
                         <Link key={key} href={`/instructions/${key}`}>
-                            <ButtonVariant active={isActive} icon={Icon}>
+                            <SidebarItem active={isActive} icon={Icon} index={index + 1}>
                                 {category.label}
-                            </ButtonVariant>
+                            </SidebarItem>
                         </Link>
                     );
                 })}
+            </div>
+
+            {/* Status Footer */}
+            <div className="mt-auto p-4 text-[10px] text-[var(--terminal-text-muted)] border-t border-[var(--terminal-border-muted)] font-mono uppercase">
+                SYSTEM_STATUS: OK<br />
+                LATENCY: 14ms
             </div>
         </nav>
     );
 }
 
-function ButtonVariant({ children, active, icon: Icon }: { children: React.ReactNode, active: boolean, icon: any }) {
+function SidebarItem({ 
+    children, 
+    active, 
+    icon: Icon,
+    index
+}: { 
+    children: React.ReactNode; 
+    active: boolean; 
+    icon: React.ComponentType<{ className?: string }>;
+    index: number;
+}) {
+    const hexIndex = index.toString().padStart(2, '0');
+    
     return (
-        <div className={cn(
-            "flex items-center gap-3 px-4 py-2 rounded-md transition-colors text-sm font-medium",
-            active
-                ? "bg-primary/10 text-primary"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground"
-        )}>
-            <Icon className="w-4 h-4" />
-            {children}
+        <div 
+            className={cn(
+                "block py-3 px-4 border-b border-[var(--terminal-border-muted)] transition-all duration-200 text-xs font-mono uppercase cursor-pointer",
+                active
+                    ? "bg-[var(--terminal-green)] text-[var(--terminal-bg)]"
+                    : "text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)]"
+            )}
+        >
+            <div className="flex items-center gap-2">
+                <span className={cn(
+                    "opacity-50",
+                    active && "opacity-70"
+                )}>{hexIndex}.</span>
+                <Icon className="w-4 h-4" />
+                {children}
+            </div>
         </div>
-    )
+    );
 }
