@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Terminal, User, LogIn, Wrench, BookOpen, FileCode2 } from "lucide-react";
+import { Terminal, User, LogIn, Wrench, BookOpen, FileCode2, Rocket } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/lib/supabase/auth";
 
@@ -23,6 +23,13 @@ export async function Header() {
 
         {/* Navigation */}
         <nav className="flex items-center gap-2 sm:gap-4 text-sm uppercase">
+          <Link
+            href="/new-project"
+            className="flex items-center gap-1.5 px-2 py-1 text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)] transition-all font-bold"
+          >
+            <Rocket className="w-4 h-4" />
+            <span className="hidden sm:inline">[ New ]</span>
+          </Link>
           <Link
             href="/tools"
             className="flex items-center gap-1.5 px-2 py-1 text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)] transition-all font-bold"

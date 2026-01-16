@@ -43,11 +43,14 @@
 - `slug`: text (unique)
 - `description`: text
 - `content`: text
-- `category`: enum ('command', 'agent', 'skill', 'hook', 'rule', 'prompt')
-- `agent_types`: enum[] ('claude', 'cursor', etc.)
-- `difficulty`: enum ('beginner', 'intermediate', 'advanced')
-- `file_format`: enum ('markdown', 'json', 'yaml', 'toml')
+- `category`: enum (command, agent, skill, hook, rule, prompt)
+- `agent_types`: enum[] (claude, cursor, etc.)
+- `difficulty`: enum (beginner, intermediate, advanced)
+- `file_format`: enum (markdown, json, yaml, toml, text)
 - `tags`: text[]
+- `view_count`: integer
+- `copy_count`: integer
+- `submitted_by`: uuid (references auth.users)
 - `search_vector`: tsvector
 
 #### `profiles`
@@ -64,6 +67,13 @@
 - `user_id`: uuid (references profiles)
 - `item_id`: uuid (polymorphic: tools/prompts/instructions)
 - `item_type`: text ('tool', 'prompt', 'instruction')
+- `created_at`: timestamptz
+
+#### `instruction_favorites`
+
+- `id`: uuid (pk)
+- `user_id`: uuid (references auth.users)
+- `instruction_id`: uuid (references instructions)
 - `created_at`: timestamptz
 
 ## 3. Folder Structure (Next.js 16.1)

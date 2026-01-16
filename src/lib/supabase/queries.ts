@@ -219,7 +219,8 @@ export async function getInstructionsPaginated(
   category?: InstructionCategory,
   search?: string,
   agent?: string,
-  difficulty?: string
+  difficulty?: string,
+  tags?: string[]
 ): Promise<PaginatedInstructionsResult> {
   const supabase = await createClient();
   const from = (page - 1) * pageSize;
@@ -239,9 +240,13 @@ export async function getInstructionsPaginated(
     query = query.contains("agent_types", [agent]);
   }
 
+  if (tags && tags.length > 0) {
+    query = query.contains("tags", tags);
+  }
+
   if (search) {
     // Use the search_vector if available, or fallback to ilike
-    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%,content.ilike.%${search}%`);
   }
 
   const { data, error, count } = await query
