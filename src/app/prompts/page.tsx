@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { BookOpen, ArrowLeft, Sparkles, Terminal } from "lucide-react";
-import { Header } from "@/components/layout/Header";
+import { Sparkles } from "lucide-react";
 import { PromptCard } from "@/components/vibe/PromptCard";
 import { Pagination } from "@/components/ui/pagination";
 import { SearchInput } from "@/components/ui/search-input";
@@ -51,9 +50,7 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
   };
 
   return (
-    <>
-      <Header />
-      <main className="container mx-auto px-4 py-8 lg:py-12 max-w-7xl">
+    <main className="container mx-auto px-4 py-8 lg:py-12 max-w-7xl">
         {/* Header Section */}
         <section className="mb-12 space-y-4 border-l-4 border-[var(--terminal-purple)] pl-6 py-4">
           <span className="text-[var(--terminal-purple)] font-mono text-sm uppercase">
@@ -174,6 +171,5 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
           </div>
         )}
       </main>
-    </>
   );
 }

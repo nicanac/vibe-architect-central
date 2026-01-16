@@ -12,7 +12,6 @@ import {
   Pencil,
   ExternalLink,
 } from "lucide-react";
-import { Header } from "@/components/layout/Header";
 
 async function getProfileData(userId: string) {
   const supabase = await createClient();
@@ -88,11 +87,7 @@ export default async function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Shared Header */}
-      <Header />
-
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
+    <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Profile Header */}
         <div className="border-2 border-[var(--terminal-green)] p-6 mb-8">
           {/* Terminal Header */}
@@ -328,6 +323,5 @@ export default async function ProfilePage() {
           )}
         </section>
       </main>
-    </div>
   );
 }

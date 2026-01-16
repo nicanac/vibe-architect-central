@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Wrench, ArrowLeft, Sparkles } from "lucide-react";
-import { Header } from "@/components/layout/Header";
 import { ToolCard } from "@/components/vibe/ToolCard";
 import { Pagination } from "@/components/ui/pagination";
 import { SearchInput } from "@/components/ui/search-input";
@@ -40,9 +39,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
   if (search) currentParams.search = search;
 
   return (
-    <>
-      <Header />
-      <main className="container mx-auto px-4 py-8 max-w-7xl">
+    <main className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
           <Link
@@ -134,6 +131,5 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
           </div>
         )}
       </main>
-    </>
   );
 }

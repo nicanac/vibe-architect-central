@@ -445,3 +445,27 @@ Create in Supabase Dashboard → Storage:
 - [ ] Webhooks for new submissions
 - [ ] Integration with IDE extensions
 - [ ] RSS feed for new tools/prompts/instructions
+
+---
+
+## 🏗️ Phase 9.0: Layout Refactor ✅ COMPLETE
+
+> **Completed:** January 16, 2026
+
+### 9.1 Header Mutualization ✅ COMPLETE
+
+- [x] Moved Header to root `layout.tsx`
+- [x] Removed Header imports from 7 page files
+- [x] Created auth route group `(auth)` for login/signup
+- [x] Login/signup pages maintain minimal design
+
+### 9.2 Footer Creation ✅ COMPLETE
+
+- [x] Created `Footer.tsx` component
+- [x] Applied terminal theme styling
+- [x] Added navigation links, social links, copyright
+
+### 9.3 Build Verification ✅ COMPLETE
+
+- [x] `npm run build` passed with exit code 0
+- [x] All routes compiled successfully
