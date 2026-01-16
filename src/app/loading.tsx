@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { MainContainer } from "@/components/layout/main-container";
 
 export default function Loading() {
   return (
@@ -18,7 +19,7 @@ export default function Loading() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <MainContainer maxWidth="none">
         {/* Hero Skeleton */}
         <div className="text-center mb-12">
           <Skeleton className="h-12 w-3/4 mx-auto mb-4" />
@@ -71,7 +72,7 @@ export default function Loading() {
             </div>
           ))}
         </div>
-      </main>
+      </MainContainer>
     </div>
   );
 }

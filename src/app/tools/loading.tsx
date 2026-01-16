@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { MainContainer } from "@/components/layout/main-container";
 
 export default function ToolsLoading() {
   return (
@@ -17,7 +18,7 @@ export default function ToolsLoading() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <MainContainer maxWidth="none">
         {/* Page Title */}
         <div className="mb-8">
           <Skeleton className="h-10 w-48 mb-2" />
@@ -68,7 +69,7 @@ export default function ToolsLoading() {
           <Skeleton className="h-10 w-10" />
           <Skeleton className="h-10 w-10" />
         </div>
-      </main>
+      </MainContainer>
     </div>
   );
 }

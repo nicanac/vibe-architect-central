@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { MainContainer } from "@/components/layout/main-container";
 
 export default function ProfileLoading() {
   return (
@@ -17,7 +18,7 @@ export default function ProfileLoading() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
+      <MainContainer maxWidth="4xl">
         {/* Profile Header */}
         <div className="flex items-start gap-6 mb-8">
           <Skeleton className="h-24 w-24 rounded-full" />
@@ -76,7 +77,7 @@ export default function ProfileLoading() {
             </div>
           ))}
         </div>
-      </main>
+      </MainContainer>
     </div>
   );
 }

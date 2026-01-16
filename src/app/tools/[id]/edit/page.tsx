@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
-import { Header } from "@/components/layout/Header";
+import { MainContainer } from "@/components/layout/main-container";
 import { EditToolForm } from "./EditToolForm";
 
 export const metadata: Metadata = {
@@ -43,10 +43,7 @@ export default async function EditToolPage({ params }: EditToolPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
+    <MainContainer maxWidth="2xl">
         <div className="mb-8">
           <h1 className="text-3xl font-bold tracking-tight mb-2">Edit Tool</h1>
           <p className="text-muted-foreground">
@@ -55,7 +52,6 @@ export default async function EditToolPage({ params }: EditToolPageProps) {
         </div>
 
         <EditToolForm tool={tool} />
-      </main>
-    </div>
+    </MainContainer>
   );
 }
