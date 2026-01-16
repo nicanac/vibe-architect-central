@@ -8,9 +8,9 @@ export function Footer() {
     <footer className="border-t-4 border-[var(--terminal-green)] bg-[var(--terminal-bg)] mt-auto">
       <div className="container mx-auto px-4 py-8">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
           {/* Brand Section */}
-          <div className="space-y-4">
+          <div className="space-y-4 max-w-sm">
             <Link href="/" className="flex items-center gap-2 text-lg font-bold">
               <Terminal className="w-5 h-5 text-[var(--terminal-green)]" />
               <span className="text-[var(--terminal-green)] uppercase tracking-tighter font-mono">
@@ -27,7 +27,7 @@ export function Footer() {
             <h3 className="text-[var(--terminal-purple)] font-mono font-bold uppercase text-sm">
               {"// Navigation"}
             </h3>
-            <nav className="grid grid-cols-2 gap-2 text-sm font-mono">
+            <nav className="grid grid-cols-3 gap-x-8 gap-y-2 text-sm font-mono">
               <Link
                 href="/tools"
                 className="text-[var(--terminal-green)]/70 hover:text-[var(--terminal-green)] transition-colors"
@@ -68,11 +68,11 @@ export function Footer() {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:text-left">
             <h3 className="text-[var(--terminal-purple)] font-mono font-bold uppercase text-sm">
               {"// Connect"}
             </h3>
-            <div className="flex gap-4">
+            <div className="flex gap-4 md:justify-start">
               <a
                 href="https://github.com/nicanac/vibe-architect-central"
                 target="_blank"

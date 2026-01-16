@@ -46,6 +46,9 @@
   /* Typography */
   --font-sans: "Inter", "Geist Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+
+  /* Layout */
+  --max-width-8xl: 90rem;
 }
 
 /* Base Styles */

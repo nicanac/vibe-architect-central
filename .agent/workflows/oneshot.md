@@ -3,14 +3,18 @@ description: Ultra-fast feature implementation - Explore then Code then Test
 argument-hint: <feature-description>
 ---
 
-<objective>
+// turbo-all
+
+## Objective
+
 Implement #$ARGUMENTS at maximum speed using the OneShot methodology.
 
 This workflow prioritizes rapid delivery through surgical exploration, immediate implementation, and focused validation. Speed over completeness - ship fast, iterate later.
-</objective>
 
-<process>
+## Process
+
 1. **EXPLORE** (5-10 min max):
+
    - Launch 1-2 parallel subagents maximum to find relevant files
    - Use `explore-codebase` for codebase search
    - Use `explore-docs` ONLY if library-specific knowledge needed
@@ -19,6 +23,7 @@ This workflow prioritizes rapid delivery through surgical exploration, immediate
    - NO PLANNING PHASE - gather context and move to coding
 
 2. **CODE** (implement immediately):
+
    - Start coding as soon as basic context available
    - Follow existing codebase patterns and style
    - Prefer clear variable/method names over comments
@@ -34,10 +39,11 @@ This workflow prioritizes rapid delivery through surgical exploration, immediate
    - If checks fail: fix errors immediately and re-run
    - Stay in scope - don't run full test suite unless requested
    - For major changes only: run relevant tests with `npm test -- <pattern>`
-     </process>
 
-<rules>
+## Rules
+
 **Critical constraints:**
+
 - SPEED IS PRIORITY: Move fast, break nothing
 - NO PLANNING: Trust exploration and code directly
 - PARALLEL AGENTS: Max 2 agents during explore phase
@@ -45,13 +51,11 @@ This workflow prioritizes rapid delivery through surgical exploration, immediate
 - STAY FOCUSED: Implement exactly what's requested, nothing more
 - ULTRA THINK: Always engage deep reasoning for optimal solutions
 - If stuck or uncertain: ask user immediately instead of over-exploring
-</rules>
 
-<success_criteria>
+## Success Criteria
 
 - Feature implemented following existing codebase patterns
 - Code passes linting and type checking
 - Implementation stays strictly within requested scope
 - No unnecessary comments or refactoring
 - Autoformatting applied where available
-  </success_criteria>

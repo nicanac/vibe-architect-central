@@ -11,7 +11,7 @@ interface TerminalFooterProps {
 export function TerminalFooter({ theme = "dark" }: TerminalFooterProps) {
   return (
     <footer className="border-t-8 border-[var(--terminal-purple)] pt-16 pb-8 text-xs uppercase tracking-widest bg-[var(--terminal-bg)]">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-8xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Logo & Tagline */}
           <div>

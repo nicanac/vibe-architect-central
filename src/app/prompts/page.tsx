@@ -50,7 +50,7 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
   };
 
   return (
-    <main className="container mx-auto px-4 py-8 lg:py-12 max-w-7xl">
+    <main className="container mx-auto px-4 py-8 lg:py-12 max-w-8xl">
         {/* Header Section */}
         <section className="mb-12 space-y-4 border-l-4 border-[var(--terminal-purple)] pl-6 py-4">
           <span className="text-[var(--terminal-purple)] font-mono text-sm uppercase">

@@ -176,6 +176,13 @@ Repository: `https://github.com/nicanac/vibe-architect-central.git`
 ## 🔗 Phase 6.7: Antigravity Agent Sync ✅ COMPLETE
 
 - [x] Create `scripts/sync-antigravity.ts` to fetch instructions from Supabase
+- [x] [Format Converter] Create Antigravity workflow
+
+## Phase 11: Instructions UI Unification
+
+- [ ] [UI] Create `TerminalPageHeader` component
+- [ ] [UI] Refactor Instructions Hub to use `TerminalPageHeader`
+- [ ] [UI] Refactor Instruction Detail to use `TerminalPageHeader`
 - [x] Map categories to Antigravity structure:
   - `skill` → `.agent/skills/[slug]/SKILL.md`
   - `command` → `.agent/workflows/[slug].md`
@@ -469,3 +476,29 @@ Create in Supabase Dashboard → Storage:
 
 - [x] `npm run build` passed with exit code 0
 - [x] All routes compiled successfully
+
+## 🛠️ Phase 10.0: Skill Converter (Claude <-> Antigravity)
+
+> **Goal:** Create a bidirectional converter for AI instructions that works as both a CLI script and a UI feature.
+
+### 10.1 Core Logic & Utility
+
+- [x] Create `src/lib/utils/format-converter.ts` (Shared logic)
+- [x] Implement `detectFormat()`, `convertToAntigravity()`, `convertToClaude()`
+- [x] Add unit tests or verification steps
+
+### 10.2 Command Line Interface
+
+- [x] Create `scripts/convert-format.ts` for local bulk operations
+- [x] Register in `package.json` scripts
+
+### 10.3 UI Integration
+
+- [x] Create `FormatExportButton.tsx` component (Client Component)
+- [x] Integrate into `src/app/instructions/[category]/[slug]/page.tsx`
+- [x] Add "Export as Claude" / "Export as Antigravity" actions
+
+### 10.4 Antigravity Workflow
+
+- [x] Create `.agent/workflows/convert-format-claude-anti.md`
+- [x] Document usage in `AI_USAGE_GUIDE.md`

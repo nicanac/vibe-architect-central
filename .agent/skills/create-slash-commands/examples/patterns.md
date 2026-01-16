@@ -1,4 +1,4 @@
-# Workflow Patterns Reference
+# Command Patterns Reference
 
 Verified patterns from official Antigravity documentation.
 
@@ -10,7 +10,7 @@ Verified patterns from official Antigravity documentation.
 
 ```markdown
 ---
-allowed-tools: run_command(git add:*), run_command(git status:*), run_command(git commit:*)
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*)
 description: Create a git commit
 ---
 
@@ -49,7 +49,7 @@ Create a git commit for current changes following repository conventions.
 
 ```markdown
 ---
-allowed-tools: run_command(git add:*), run_command(git status:*), run_command(git commit:*)
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*)
 description: Create a git commit
 ---
 
@@ -78,7 +78,7 @@ Current changes: ! `git status`
 
 **Source**: Official Antigravity documentation
 
-**File**: `.agent/workflows/optimize.md`
+**File**: `.agent/commands/optimize.md`
 
 ```markdown
 ---
@@ -112,7 +112,7 @@ Antigravity analyzes code in the current conversation context.
 
 ### Pattern: Security Review
 
-**File**: `.agent/workflows/security-review.md`
+**File**: `.agent/commands/security-review.md`
 
 ```markdown
 ---
@@ -351,7 +351,7 @@ This helps understand changes and identify important variations between files.
 ```markdown
 ---
 description: Analyze problem from first principles
-allowed-tools: plan_mode
+allowed-tools: SequentialThinking
 ---
 
 ## Objective
@@ -376,14 +376,14 @@ This helps discover optimal solutions by stripping away assumptions and rebuildi
 - Novel insights discovered
 ```
 
-Tool restriction ensures Antigravity only uses planning mode.
+Tool restriction ensures Antigravity only uses SequentialThinking.
 
 ### Pattern: Strategic Planning
 
 ```markdown
 ---
 description: Plan implementation strategy
-allowed-tools: plan_mode
+allowed-tools: SequentialThinking
 argument-hint: [task description]
 ---
 
@@ -454,7 +454,7 @@ Multiple bash commands load environment state.
 ```markdown
 ---
 description: Deploy if tests pass
-allowed-tools: run_command(npm test:*), run_command(npm run deploy:*)
+allowed-tools: Bash(npm test:*), Bash(npm run deploy:*)
 ---
 
 ## Objective
@@ -581,16 +581,16 @@ Before completing:
 - No regressions introduced
 ```
 
-Sequential steps in single workflow.
+Sequential steps in single command.
 
 ## Tool Restriction Patterns
 
-### Pattern: Git-Only Workflow
+### Pattern: Git-Only Command
 
 ```markdown
 ---
-allowed-tools: run_command(git add:*), run_command(git status:*), run_command(git diff:*), run_command(git commit:*)
-description: Git workflow
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git diff:*), Bash(git commit:*)
+description: Git workflow command
 ---
 
 ## Objective
@@ -622,7 +622,7 @@ Prevents running non-git bash commands.
 
 ```markdown
 ---
-allowed-tools: [view_file, grep_search, find_by_name]
+allowed-tools: [Read, Grep, Glob]
 description: Analyze codebase
 argument-hint: [search pattern]
 ---
@@ -635,7 +635,7 @@ This provides safe codebase analysis without modification or execution permissio
 
 ## Process
 
-1. Use grep to search for pattern across codebase
+1. Use Grep to search for pattern across codebase
 2. Analyze findings
 3. Identify relevant files and code sections
 4. Provide summary of results
@@ -654,7 +654,7 @@ No write or execution permissions.
 
 ```markdown
 ---
-allowed-tools: run_command(npm test:*), run_command(npm run lint:*)
+allowed-tools: Bash(npm test:*), Bash(npm run lint:*)
 description: Run project checks
 ---
 
@@ -693,13 +693,13 @@ Only allows specific npm scripts.
 
 ```yaml
 # Git commands
-allowed-tools: run_command(git add:*), run_command(git status:*)
+allowed-tools: Bash(git add:*), Bash(git status:*)
 
 # Analysis only
-allowed-tools: [view_file, grep_search, find_by_name]
+allowed-tools: [Read, Grep, Glob]
 
 # Thinking only
-allowed-tools: plan_mode
+allowed-tools: SequentialThinking
 ```
 
 ### 2. Load Dynamic Context When Needed
@@ -716,7 +716,7 @@ Review @ package.json for dependencies
 Check @ src/config/\* for settings
 ```
 
-### 4. Structure Complex Workflows
+### 4. Structure Complex Commands
 
 ```markdown
 ## Step 1: Analysis
@@ -750,7 +750,7 @@ Analyze @ #$ARGUMENTS
 
 ## Subagent Patterns
 
-Workflows can instruct Antigravity to use subagents for specialized work. This is powerful for delegating complex tasks to focused agents.
+Slash commands can instruct Antigravity to use the Task tool to launch subagents for specialized work. This is powerful for delegating complex tasks to focused agents.
 
 ### Pattern: Launch Subagent for Analysis
 
@@ -766,7 +766,7 @@ Perform comprehensive security analysis on #$ARGUMENTS using specialized securit
 
 ## Process
 
-1. Use the browser_subagent or relevant subagent tool to launch the `security-scanner` subagent
+1. Use the Task tool to launch the `security-scanner` subagent
 2. Pass the target path #$ARGUMENTS to the subagent
 3. Wait for subagent to complete analysis
 4. Present findings to user with severity ratings

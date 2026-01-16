@@ -4,17 +4,7 @@ import { Button } from '@/components/ui/button';
 import { getInstructionsPaginated } from '@/lib/supabase/queries';
 import { InstructionCard } from '@/components/vibe/InstructionCard';
 import { INSTRUCTION_CATEGORIES, InstructionCategory } from '@/lib/supabase/types';
-import { Terminal, Bot, Zap, Anchor, Ruler, MessageSquare, Workflow } from 'lucide-react';
 
-const CATEGORY_ICONS = {
-  command: Terminal,
-  workflow: Workflow, // Add this
-  agent: Bot,
-  skill: Zap,
-  hook: Anchor,
-  rule: Ruler,
-  prompt: MessageSquare,
-};
 
 interface CategoryPageProps {
   params: Promise<{
@@ -39,7 +29,6 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   const categoryKey = categorySlug as InstructionCategory;
   const categoryInfo = INSTRUCTION_CATEGORIES[categoryKey];
-  const Icon = CATEGORY_ICONS[categoryKey];
 
   const currentPage = parseInt(page);
   const { data: instructions, totalPages } = await getInstructionsPaginated(
@@ -50,16 +39,22 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   );
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center gap-4 mb-8">
-        <div className={`p-4 rounded-xl flex items-center justify-center text-3xl bg-background border border-border/50 ${categoryInfo.color.replace('text-', 'text-')}`}>
-          <Icon className="w-8 h-8" />
-        </div>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">{categoryInfo.label}</h1>
-          <p className="text-muted-foreground">{categoryInfo.description}</p>
-        </div>
-      </div>
+    <section className="space-y-16">
+      {/* Header Section */}
+      <section className="space-y-4 border-l-4 border-[var(--terminal-purple)] pl-6 py-4">
+        <span className="text-[var(--terminal-purple)] font-mono text-sm uppercase">
+          /DIRECTORY/INSTRUCTIONS/{categoryKey.toUpperCase()}/
+        </span>
+        <h1 className="text-4xl font-bold tracking-tight uppercase font-mono text-[var(--terminal-green)] glitch-text">
+          {categoryInfo.label}
+        </h1>
+        <p className="text-[var(--terminal-text-muted)] max-w-2xl font-mono">
+          &gt; {categoryInfo.description}
+        </p>
+      </section>
+
+      {/* Category Content */}
+      <section className="space-y-8">
 
       {/* Grid */}
       {instructions.length > 0 ? (
@@ -86,6 +81,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           <Button disabled={currentPage >= totalPages} variant="outline">Next</Button>
         </div>
       )}
-    </div>
+      </section>
+    </section>
   );
 }
