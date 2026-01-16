@@ -18,7 +18,7 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const AGENT_DIR = path.join(process.cwd(), '.agent');
+const AGENT_DIR = process.argv[2] ? path.resolve(process.argv[2]) : path.join(process.cwd(), '.agent');
 
 async function processDirectory(dirPath: string, category: string) {
   if (!fs.existsSync(dirPath)) {

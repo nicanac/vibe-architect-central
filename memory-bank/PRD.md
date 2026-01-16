@@ -44,6 +44,13 @@ A high-performance directory and orchestration library for "Senior Vibe Architec
   - "Use this" actions: Copy to clipboard, Download as file.
   - Integration with Antigravity via automated sync scripts.
 
+### E. Project Setup Wizard (The Blueprint Engine)
+
+- **Goal:** Create a custom "Brain" for new projects.
+- **Inputs:** Project Name, Description, Custom Tech Stack, Workflow Selection.
+- **Outputs:** A ZIP file containing a `.agent` folder with curated Rules and Workflows, plus a `memory-bank` with auto-generated PRD and TASKS.
+- **Vibe:** Terminal Green aesthetic, step-by-step wizard.
+
 ## 4. User Experience (The "Vibe")
 
 - **Efficiency First:** Minimalist, keyboard-centric navigation.

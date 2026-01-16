@@ -289,6 +289,16 @@
 - [ ] **Logic**: Update Supabase query to search `content` column (full-text)
 - [ ] **Filters**: Implement "Best Selling" (Popular) and "Last 30 Days" (Recent) filters if applicable (or map to existing sorts)
 
+### 12.2 Feature: Project Setup Wizard (Blueprint Engine)
+
+- [ ] **Backend**: Install `archiver` and create API route `src/app/api/project/generate/route.ts` for ZIP streaming.
+- [ ] **Backend**: Create `src/app/api/resources/route.ts` to serve available stacks and workflow files.
+- [ ] **Frontend**: Create `/new-project` route with `ProjectWizard` component.
+- [ ] **UI Component**: Implement 4-step wizard (Info -> Stack -> Workflows -> Review) with "Terminal Green" theme.
+- [ ] **Logic**: Implement `BlueprintService` to generate VFS (Virtual File System) for `.agent` and `memory-bank`.
+- [ ] **Content**: Implement context injection for `PRD.md` based on user description.
+- [ ] **Refactor UI**: Use `MainContainer` and global headers
+
 ---
 
 ## 🚀 Phase 13: Future Roadmap

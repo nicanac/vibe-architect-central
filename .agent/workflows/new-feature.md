@@ -17,7 +17,7 @@ Target: Implement feature "$1" @#$ARGUMENTS.
 
 1. **Task Tracking**:
 
-   - Read `TASKS.md`.
+   - Read `./mermory-bank/TASKS.md`.
    - Add "Phase X: Feature - $1" to `TASKS.md` using `multi_replace_file_content`.
 
 2. **Requirement Gathering**:
