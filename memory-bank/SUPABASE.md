@@ -72,19 +72,48 @@ CREATE TYPE vibe_level AS ENUM (
 
 #### `instructions` - Agent Instructions Hub
 
-| Column          | Type     | Description                               |
-| --------------- | -------- | ----------------------------------------- |
-| `id`            | UUID     | Primary key                               |
-| `title`         | TEXT     | Instruction title                         |
-| `slug`          | TEXT     | URL-friendly slug (unique)                |
-| `description`   | TEXT     | Short description                         |
-| `content`       | TEXT     | The instruction content (markdown)        |
-| `category`      | ENUM     | command, agent, skill, hook, rule, prompt |
-| `agent_types`   | ENUM[]   | Supported agents (claude, cursor, etc.)   |
-| `difficulty`    | ENUM     | beginner, intermediate, advanced          |
-| `file_format`   | ENUM     | markdown, json, yaml, toml                |
-| `tags`          | TEXT[]   | Search tags                               |
-| `search_vector` | TSVECTOR | Full-text search index                    |
+| Column          | Type                     | Description                               |
+| --------------- | ------------------------ | ----------------------------------------- |
+| `id`            | UUID                     | Primary key (gen_random_uuid())           |
+| `title`         | TEXT                     | Instruction title                         |
+| `slug`          | TEXT                     | URL-friendly slug (unique)                |
+| `description`   | TEXT                     | Short description                         |
+| `content`       | TEXT                     | The actual instruction content            |
+| `category`      | instruction_category     | command, agent, skill, hook, rule, prompt |
+| `agent_types`   | instruction_agent_type[] | Supported agents (claude, cursor, etc.)   |
+| `difficulty`    | instruction_difficulty   | beginner, intermediate, advanced          |
+| `file_format`   | instruction_file_format  | markdown, json, yaml, toml, text          |
+| `tags`          | TEXT[]                   | Search tags                               |
+| `view_count`    | INTEGER                  | Number of views                           |
+| `copy_count`    | INTEGER                  | Number of copies                          |
+| `submitted_by`  | UUID                     | FK to auth.users                          |
+| `created_at`    | TIMESTAMPTZ              | Creation timestamp                        |
+| `updated_at`    | TIMESTAMPTZ              | Last update timestamp                     |
+| `search_vector` | TSVECTOR                 | Full-text search index                    |
+
+#### `instruction_favorites` - User Favorites for Instructions
+
+| Column           | Type        | Description        |
+| ---------------- | ----------- | ------------------ |
+| `id`             | UUID        | PK                 |
+| `user_id`        | UUID        | FK to auth.users   |
+| `instruction_id` | UUID        | FK to instructions |
+| `created_at`     | TIMESTAMPTZ | Creation timestamp |
+
+### Custom Types (Enums)
+
+```sql
+TYPE instruction_category = ('command', 'agent', 'skill', 'hook', 'rule', 'prompt');
+TYPE instruction_agent_type = ('copilot', 'claude', 'claude-code', 'chatgpt', 'gemini', 'cursor', 'windsurf', 'other');
+TYPE instruction_difficulty = ('beginner', 'intermediate', 'advanced');
+TYPE instruction_file_format = ('markdown', 'json', 'yaml', 'toml', 'text');
+```
+
+### Database Functions
+
+- `search_instructions(search_query TEXT)`: Returns instructions matching the full-text search query.
+- `increment_instruction_view(instruction_id UUID)`: Atomically increments view count.
+- `increment_instruction_copy(instruction_id UUID)`: Atomically increments copy count.
 
 #### `profiles` - User Profiles
 

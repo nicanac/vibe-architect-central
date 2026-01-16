@@ -246,7 +246,7 @@ export async function getInstructionsPaginated(
 
   if (search) {
     // Use the search_vector if available, or fallback to ilike
-    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%,content.ilike.%${search}%`);
   }
 
   const { data, error, count } = await query

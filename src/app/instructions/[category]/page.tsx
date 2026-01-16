@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getInstructionsPaginated } from '@/lib/supabase/queries';
 import { InstructionCard } from '@/components/vibe/InstructionCard';
+import { InstructionSearchFilters } from '@/components/vibe/InstructionSearchFilters';
 import { INSTRUCTION_CATEGORIES, InstructionCategory } from '@/lib/supabase/types';
 
 
@@ -56,6 +57,9 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
       {/* Category Content */}
       <section className="space-y-8">
+
+      {/* Search & Filters */}
+      <InstructionSearchFilters />
 
       {/* Grid */}
       {instructions.length > 0 ? (

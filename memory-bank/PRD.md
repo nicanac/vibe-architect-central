@@ -31,8 +31,18 @@ A high-performance directory and orchestration library for "Senior Vibe Architec
 
 ### C. Submission & Curation
 
-- **Public Submission:** Users can submit tools or prompt techniques.
-- **Admin Moderation:** Curated approval workflow to maintain "Senior-level" quality.
+- [x] Public Submission: Users can submit tools or prompt techniques.
+- [x] Admin Moderation: Curated approval workflow to maintain "Senior-level" quality.
+
+### D. Agent Instructions Hub
+
+- **Unified Registry:** Central repository for .cursorrules, Antigravity Skills, and Agent System Prompts.
+- **Format Agnostic:** Supports Markdown, JSON, YAML, and TOML.
+- **Conversion Engine:** Bidirectional conversion between Claude, Cursor, and Antigravity formats.
+- **Hub Features:**
+  - Search & Filtering by categorization (Command, Skill, Rule).
+  - "Use this" actions: Copy to clipboard, Download as file.
+  - Integration with Antigravity via automated sync scripts.
 
 ## 4. User Experience (The "Vibe")
 
