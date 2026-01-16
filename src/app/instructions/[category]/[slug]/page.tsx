@@ -224,6 +224,19 @@ export default async function InstructionDetailPage({ params }: InstructionDetai
                   <dt className="text-[var(--terminal-green)]/70">Agents</dt>
                   <dd className="text-right max-w-[150px] truncate text-[var(--terminal-purple)]">{instruction.agent_types.join(', ')}</dd>
                 </div>
+                
+                {instruction.tags && instruction.tags.length > 0 && (
+                  <div className="pt-3 border-t border-[var(--terminal-green)]/20 mt-3">
+                    <dt className="text-[var(--terminal-green)]/70 mb-2 text-xs uppercase tracking-wider">Tags</dt>
+                    <dd className="flex flex-wrap gap-2">
+                      {instruction.tags.map((tag) => (
+                        <span key={tag} className="text-[10px] bg-[var(--terminal-green)]/5 border border-[var(--terminal-green)]/40 px-1.5 py-0.5 text-[var(--terminal-green)]/90 uppercase font-mono hover:bg-[var(--terminal-green)]/20 transition-colors cursor-default">
+                          {tag}
+                        </span>
+                      ))}
+                    </dd>
+                  </div>
+                )}
               </dl>
             </div>
 

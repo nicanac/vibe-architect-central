@@ -502,3 +502,30 @@ Create in Supabase Dashboard → Storage:
 
 - [x] Create `.agent/workflows/convert-format-claude-anti.md`
 - [x] Document usage in `AI_USAGE_GUIDE.md`
+
+---
+
+## 🔗 Phase 11: Cursor Directory Rules Scraper (Current)
+
+> **Goal:** Scrape all rules from [cursor.directory/rules](https://cursor.directory/rules) and import into the `instructions` database.
+
+### 11.1 Planning & Analysis
+
+- [x] Analyze cursor.directory/rules website structure
+- [x] Map data to existing `Instruction` schema
+- [x] Create implementation plan
+- [ ] User approval
+
+### 11.2 Implementation
+
+- [x] Install `cheerio` (Switched to local parser)
+- [x] Create `scripts/scrape-cursor-rules.ts`
+- [x] Implement local TypeScript parser
+- [x] Add upsert logic (slug-based dedup)
+- [x] Add `tags` filtering to `queries.ts`
+
+### 11.3 Verification
+
+- [x] Run scraper script (116 rules imported)
+- [x] Verify data in Supabase Dashboard
+- [x] Test `/instructions/rule` page in browser (Fixed navigation bug with InstructionCard)

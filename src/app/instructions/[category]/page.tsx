@@ -1,5 +1,6 @@
 
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getInstructionsPaginated } from '@/lib/supabase/queries';
 import { InstructionCard } from '@/components/vibe/InstructionCard';
@@ -74,11 +75,35 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
       {/* Pagination (Simple) */}
       {totalPages > 1 && (
         <div className="flex justify-center gap-2 mt-8">
-          <Button disabled={currentPage <= 1} variant="outline">Previous</Button>
-          <span className="flex items-center px-4 text-sm text-muted-foreground">
+          {currentPage > 1 ? (
+            <Button variant="outline" asChild>
+              <Link href={`/instructions/${categoryKey}?${new URLSearchParams({
+                ...(search ? { search } : {}),
+                page: (currentPage - 1).toString()
+              }).toString()}`}>
+                Previous
+              </Link>
+            </Button>
+          ) : (
+            <Button variant="outline" disabled>Previous</Button>
+          )}
+          
+          <span className="flex items-center px-4 text-sm text-muted-foreground font-mono">
             Page {currentPage} of {totalPages}
           </span>
-          <Button disabled={currentPage >= totalPages} variant="outline">Next</Button>
+          
+          {currentPage < totalPages ? (
+            <Button variant="outline" asChild>
+              <Link href={`/instructions/${categoryKey}?${new URLSearchParams({
+                ...(search ? { search } : {}),
+                page: (currentPage + 1).toString()
+              }).toString()}`}>
+                Next
+              </Link>
+            </Button>
+          ) : (
+            <Button variant="outline" disabled>Next</Button>
+          )}
         </div>
       )}
       </section>

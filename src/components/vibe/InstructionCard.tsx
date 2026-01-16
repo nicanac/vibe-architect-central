@@ -61,8 +61,13 @@ export function InstructionCard({ instruction, className, index = 0 }: Instructi
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-bold group-hover:text-[var(--terminal-green)] transition-colors line-clamp-2 uppercase font-mono text-white mb-4">
-        {instruction.title}
+      <h3 className="text-xl font-bold mb-4">
+        <Link 
+          href={`/instructions/${instruction.category}/${instruction.slug}`}
+          className="group-hover:text-[var(--terminal-green)] transition-colors line-clamp-2 uppercase font-mono text-white hover:underline decoration-2 underline-offset-4"
+        >
+          {instruction.title}
+        </Link>
       </h3>
 
       {/* Description */}
@@ -95,11 +100,9 @@ export function InstructionCard({ instruction, className, index = 0 }: Instructi
       <div className="border-t-2 border-[var(--terminal-green)]/30 pt-4 mt-auto">
         <Link
           href={`/instructions/${instruction.category}/${instruction.slug}`}
-          className="w-full"
+          className="w-full flex items-center justify-center gap-2 py-2 border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)] transition-all text-sm font-bold uppercase font-mono"
         >
-          <button className="w-full flex items-center justify-center gap-2 py-2 border-2 border-[var(--terminal-green)] text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)] transition-all text-sm font-bold uppercase font-mono">
-            View_Instructions <ArrowRight className="w-4 h-4" />
-          </button>
+          View_Instructions <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
     </div>
