@@ -55,7 +55,7 @@
 body {
   background: var(--color-background);
   color: var(--color-text-primary);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
 }
 
 /* 2026 Glassmorphism Utility */
@@ -136,9 +136,9 @@ body {
   --terminal-border: #000000;
   --terminal-text: #000000;
   
-  /* Additional light mode semantic tokens */
-  --terminal-text-muted: #666666;
-  --terminal-border-muted: rgba(0, 0, 0, 0.2);
+  /* Additional light mode semantic tokens - darker for better contrast (WCAG AAA) */
+  --terminal-text-muted: #4a4a4a;
+  --terminal-border-muted: rgba(0, 0, 0, 0.25);
   --terminal-hover-bg: #000000;
   --terminal-hover-text: #ffffff;
 }
@@ -155,7 +155,7 @@ body {
 .terminal-theme-light,
 .terminal-theme-light * {
   --color-foreground: #000000 !important;
-  --color-muted-foreground: #666666 !important;
+  --color-muted-foreground: #4a4a4a !important;
   --color-background: #ffffff !important;
 }
 
@@ -169,12 +169,6 @@ body {
   color: #000000 !important;
 }
 
-.terminal-theme-light p,
-.terminal-theme-light span,
-.terminal-theme-light div {
-  color: inherit;
-}
-
 .terminal-theme-light .text-white {
   color: #000000 !important;
 }
@@ -185,7 +179,7 @@ body {
 
 .terminal-theme-light .text-\[var\(--terminal-green\)\]\/70,
 .terminal-theme-light .text-\[var\(--terminal-green\)\]\/80 {
-  color: #666666 !important;
+  color: #4a4a4a !important;
 }
 
 /* Light Mode Borders */

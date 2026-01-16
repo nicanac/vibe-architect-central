@@ -6,7 +6,6 @@ import { getInstructionBySlug } from '@/lib/supabase/queries';
 import { CodeBlock } from '@/components/vibe/CodeBlock';
 import { CopyInstructionButton } from '@/components/vibe/CopyInstructionButton';
 import { ShareInstructionButton } from '@/components/vibe/ShareInstructionButton';
-import { FormatExportButton } from '@/components/vibe/FormatExportButton';
 import { INSTRUCTION_CATEGORIES, InstructionCategory } from '@/lib/supabase/types';
 import { Calendar, FileText, Clock, Hash } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -41,30 +40,25 @@ export default async function InstructionDetailPage({ params }: InstructionDetai
   const categoryLabel = INSTRUCTION_CATEGORIES[category as InstructionCategory]?.label || category;
 
   return (
-    <section className="space-y-16">
-      {/* Header Section */}
-      <section className="space-y-4 border-l-4 border-[var(--terminal-purple)] pl-6 py-4">
-        <span className="text-[var(--terminal-purple)] font-mono text-sm uppercase">
+    <div className="max-w-8xl mx-auto relative">
+      {/* Terminal Breadcrumb */}
+      <header className="h-10 border-b-2 border-[var(--terminal-green)] mb-8 flex items-center">
+        <span className="text-xs text-[var(--terminal-green)]/60 tracking-widest uppercase font-mono">
           <Link href="/instructions" className="hover:text-[var(--terminal-green)] transition-colors">
-            /DIRECTORY/INSTRUCTIONS
+            Instructions
           </Link>
-          /<Link href={`/instructions/${category}`} className="hover:text-[var(--terminal-green)] transition-colors">
-            {category.toUpperCase()}
-          </Link>/
+          <span className="mx-2">/</span>
+          <Link href={`/instructions/${category}`} className="hover:text-[var(--terminal-green)] transition-colors capitalize">
+            {categoryLabel}
+          </Link>
+          <span className="mx-2">/</span>
+          <span className="text-[var(--terminal-green)]">{instruction.title}</span>
         </span>
-        <h1 className="text-4xl font-bold tracking-tight uppercase font-mono text-[var(--terminal-green)] glitch-text">
-          {instruction.title}
-        </h1>
-        <p className="text-[var(--terminal-text-muted)] max-w-2xl font-mono">
-          &gt; {instruction.description}
-        </p>
-      </section>
+      </header>
 
-      {/* Content Section */}
-      <section className="space-y-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Main Content Column */}
-          <div className="lg:col-span-8 space-y-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        {/* Main Content Column */}
+        <div className="lg:col-span-8 space-y-10">
 
           {/* Header Section */}
           <div className="space-y-6 pb-8 border-b-2 border-[var(--terminal-green)]/30">
@@ -211,16 +205,6 @@ export default async function InstructionDetailPage({ params }: InstructionDetai
                   description={instruction.description}
                   className="w-full py-4 text-sm font-bold uppercase font-mono bg-[var(--terminal-purple)] text-white pixel-border-sm hover:translate-y-0.5 transition-all"
                 />
-                
-                {instruction.file_format === 'markdown' && (
-                  <div className="pt-4 border-t border-[var(--terminal-green)]/30">
-                    <p className="text-xs text-[var(--terminal-green)]/50 mb-2 font-mono uppercase">Format Conversion</p>
-                    <FormatExportButton 
-                      title={instruction.title} 
-                      content={instruction.content} 
-                    />
-                  </div>
-                )}
               </div>
             </div>
 
@@ -245,8 +229,7 @@ export default async function InstructionDetailPage({ params }: InstructionDetai
 
           </div>
         </div>
-        </div>
-      </section>
-    </section>
+      </div>
+    </div>
   );
 }

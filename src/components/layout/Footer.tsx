@@ -47,12 +47,6 @@ export function Footer() {
                 [ Instructions ]
               </Link>
               <Link
-                href="/wizard"
-                className="text-[var(--terminal-green)]/70 hover:text-[var(--terminal-green)] transition-colors"
-              >
-                [ Wizard ]
-              </Link>
-              <Link
                 href="/submit"
                 className="text-[var(--terminal-green)]/70 hover:text-[var(--terminal-green)] transition-colors"
               >
