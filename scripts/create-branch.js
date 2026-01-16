@@ -119,12 +119,12 @@ function getDefaultBranch () {
             encoding: 'utf8',
             shell: true
         }).trim();
-        return result || 'main';
+        return result || 'master';
     } catch {
         // Check if main or master exists
         try {
-            execSync('git rev-parse --verify main', { encoding: 'utf8', stdio: 'pipe' });
-            return 'main';
+            execSync('git rev-parse --verify master', { encoding: 'utf8', stdio: 'pipe' });
+            return 'master';
         } catch {
             return 'master';
         }
@@ -174,7 +174,7 @@ function printNextSteps (branchName, branchType) {
     print(`   git push -u origin ${branchName}`, 'cyan');
     console.log('\n');
 
-    print('5. Create a Pull Request to merge into main', 'dim');
+    print('5. Create a Pull Request to merge into master', 'dim');
     console.log('\n');
 
     print('─────────────────────────────────────────────────────────', 'dim');
@@ -279,7 +279,7 @@ async function main () {
     console.log('\n');
     print('🔄 Setting up branch...', 'yellow');
 
-    // Step 1: Checkout to main/master
+    // Step 1: Checkout to master
     if (currentBranch !== defaultBranch) {
         print(`\n📍 Switching to ${defaultBranch} branch...`, 'dim');
         const checkoutResult = exec(`git checkout ${defaultBranch}`, true);
