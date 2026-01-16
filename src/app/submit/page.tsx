@@ -7,6 +7,7 @@ import { ArrowLeft, Wrench, BookOpen, FileCode2 } from 'lucide-react'
 import { ToolSubmissionForm } from '@/components/vibe/ToolSubmissionForm'
 import { PromptSubmissionForm } from '@/components/vibe/PromptSubmissionForm'
 import { InstructionForm } from '@/components/vibe/InstructionForm'
+import { MainContainer } from '@/components/layout/main-container'
 
 type SubmissionType = 'tool' | 'prompt' | 'instruction'
 
@@ -45,7 +46,7 @@ export default function SubmitPage() {
       </div>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 max-w-12xl">
+      <MainContainer>
         {/* Type Selector */}
         <div className="flex items-center gap-2 p-1 bg-surface rounded-industrial border border-border mb-8">
           <button
@@ -134,7 +135,7 @@ export default function SubmitPage() {
             <li>• Focus on tools and prompts relevant to AI-assisted development</li>
           </ul>
         </div>
-      </main>
+      </MainContainer>
     </div>
   )
 }

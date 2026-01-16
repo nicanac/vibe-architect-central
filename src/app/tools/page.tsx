@@ -6,6 +6,7 @@ import { SearchInput } from "@/components/ui/search-input";
 import { getToolsPaginated } from "@/lib/supabase/queries";
 import { getUserFavorites } from "@/app/actions/favorites";
 import type { VibeLevel } from "@/lib/supabase/types";
+import { MainContainer } from "@/components/layout/main-container";
 
 interface ToolsPageProps {
   searchParams: Promise<{
@@ -39,7 +40,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
   if (search) currentParams.search = search;
 
   return (
-    <main className="container mx-auto px-4 py-8 max-w-8xl">
+    <MainContainer maxWidth="8xl">
         {/* Header */}
         <div className="mb-8">
           <Link
@@ -130,6 +131,6 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
             </Link>
           </div>
         )}
-      </main>
+      </MainContainer>
   );
 }
