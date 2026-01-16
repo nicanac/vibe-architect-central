@@ -45,7 +45,7 @@ export default function SubmitPage() {
       </div>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
+      <main className="container mx-auto px-4 py-8 max-w-12xl">
         {/* Type Selector */}
         <div className="flex items-center gap-2 p-1 bg-surface rounded-industrial border border-border mb-8">
           <button

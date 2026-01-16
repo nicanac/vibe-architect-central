@@ -90,10 +90,6 @@ export function CommandSearch({ tools, prompts }: CommandSearchProps) {
               <Plus className="mr-2 h-4 w-4 text-neon-success" />
               <span>Submit New Tool or Prompt</span>
             </CommandItem>
-            <CommandItem onSelect={() => handleNavigate("/wizard")}>
-              <Sparkles className="mr-2 h-4 w-4 text-primary-accent" />
-              <span>Open Prompt Wizard</span>
-            </CommandItem>
           </CommandGroup>
 
           <CommandSeparator />

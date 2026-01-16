@@ -87,7 +87,7 @@ export default async function ProfilePage() {
   };
 
   return (
-    <main className="container mx-auto px-4 py-8 max-w-4xl">
+    <main className="container mx-auto px-4 py-8 max-w-12xl">
         {/* Profile Header */}
         <div className="border-2 border-[var(--terminal-green)] p-6 mb-8">
           {/* Terminal Header */}

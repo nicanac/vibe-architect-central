@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react'
 import Link from 'next/link'
-import { Plus, Wand2 } from 'lucide-react'
+import { Plus } from 'lucide-react'
 
 interface DirectoryGridProps {
   children: ReactNode
@@ -47,13 +47,6 @@ export function DirectoryShell({ children, title, description, searchSlot }: Dir
             <div className="flex items-center gap-3">
               {searchSlot}
               <Link
-                href="/wizard"
-                className="hidden sm:flex items-center gap-2 px-4 py-2 border-2 border-[var(--terminal-purple)] text-[var(--terminal-purple)] hover:bg-[var(--terminal-purple)] hover:text-white transition-all font-bold uppercase text-sm"
-              >
-                <Wand2 className="w-4 h-4" />
-                Wizard
-              </Link>
-              <Link
                 href="/submit"
                 className="flex items-center gap-2 px-4 py-2 bg-[var(--terminal-green)] text-[var(--terminal-bg)] pixel-border-sm hover:bg-white transition-colors font-bold uppercase text-sm"
               >
@@ -92,13 +85,6 @@ export function DirectoryLayout({ children }: DirectoryLayoutProps) {
               Vibe_Architect_Central
             </Link>
             <div className="flex items-center gap-3">
-              <Link
-                href="/wizard"
-                className="hidden sm:flex items-center gap-2 px-4 py-2 border-2 border-[var(--terminal-purple)] text-[var(--terminal-purple)] hover:bg-[var(--terminal-purple)] hover:text-white transition-all font-bold uppercase text-sm"
-              >
-                <Wand2 className="w-4 h-4" />
-                Wizard
-              </Link>
               <Link
                 href="/submit"
                 className="flex items-center gap-2 px-4 py-2 bg-[var(--terminal-green)] text-[var(--terminal-bg)] pixel-border-sm hover:bg-white transition-colors font-bold uppercase text-sm"
