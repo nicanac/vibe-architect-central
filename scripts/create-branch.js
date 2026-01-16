@@ -114,28 +114,19 @@ function getCurrentBranch () {
 
 function getDefaultBranch () {
     try {
-        // Try to get the default branch from remote HEAD (cross-platform)
-        // This requires 'git remote set-head origin -a' to be run at least once or clone to have set it
-        const headRef = execSync('git symbolic-ref refs/remotes/origin/HEAD', { encoding: 'utf8', stdio: 'pipe' }).trim();
-        // format: refs/remotes/origin/main or refs/remotes/origin/master
-        const branch = headRef.split('/').pop();
-        if (branch) return branch;
+        // Try to get the default branch from remote
+        const result = execSync('git remote show origin 2>/dev/null | grep "HEAD branch" | cut -d: -f2', {
+            encoding: 'utf8',
+            shell: true
+        }).trim();
+        return result || 'main';
     } catch {
-        // Ignore error
-    }
-
-    // Fallback: Check local branches
-    try {
-        // Check if master exists locally
-        execSync('git rev-parse --verify master', { encoding: 'utf8', stdio: 'pipe' });
-        return 'master';
-    } catch {
+        // Check if main or master exists
         try {
-            // Check if main exists locally
             execSync('git rev-parse --verify main', { encoding: 'utf8', stdio: 'pipe' });
             return 'main';
         } catch {
-            return 'master'; // Ultimate fallback
+            return 'master';
         }
     }
 }
@@ -150,7 +141,7 @@ function slugify (text) {
         .substring(0, 50);             // Limit length
 }
 
-function printNextSteps (branchName, branchType, defaultBranch = 'master') {
+function printNextSteps (branchName, branchType) {
     console.log('\n');
     print('╔════════════════════════════════════════════════════════╗', 'green');
     print('║                 ✅ Branch Created!                     ║', 'green');
@@ -183,7 +174,7 @@ function printNextSteps (branchName, branchType, defaultBranch = 'master') {
     print(`   git push -u origin ${branchName}`, 'cyan');
     console.log('\n');
 
-    print(`5. Create a Pull Request to merge into ${defaultBranch}`, 'dim');
+    print('5. Create a Pull Request to merge into main', 'dim');
     console.log('\n');
 
     print('─────────────────────────────────────────────────────────', 'dim');
@@ -320,7 +311,7 @@ async function main () {
     print('   ✓ Branch created and checked out', 'green');
 
     // Print next steps
-    printNextSteps(branchName, selectedType.type, defaultBranch);
+    printNextSteps(branchName, selectedType.type);
 
     rl.close();
 }

@@ -55,7 +55,7 @@ export default function LandingPage() {
       <TerminalNav theme={theme} />
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 pt-16 pb-24 relative overflow-hidden">
+      <main className="max-w-8xl mx-auto px-4 pt-16 pb-24 relative overflow-hidden">
         {/* Scanline Animation */}
         <div className="scanline animate-scan" />
 

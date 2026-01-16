@@ -39,7 +39,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
   if (search) currentParams.search = search;
 
   return (
-    <main className="container mx-auto px-4 py-8 max-w-7xl">
+    <main className="container mx-auto px-4 py-8 max-w-8xl">
         {/* Header */}
         <div className="mb-8">
           <Link

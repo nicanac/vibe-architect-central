@@ -35,16 +35,6 @@ export function InstructionSidebar({ className }: { className?: string }) {
             "border-r-4 border-[var(--terminal-green)] bg-[var(--terminal-bg)]",
             className
         )}>
-            {/* Header */}
-            <div className="p-4 mb-0 border-b-4 border-[var(--terminal-green)] bg-[var(--terminal-green)] text-[var(--terminal-bg)]">
-                <div className="flex items-center gap-2">
-                    <Terminal className="w-5 h-5" />
-                    <span className="font-bold text-xs uppercase tracking-tighter font-mono">
-                        Vibe_v1.0
-                    </span>
-                </div>
-            </div>
-
             {/* Overview Link */}
             <Link href="/instructions">
                 <SidebarItem

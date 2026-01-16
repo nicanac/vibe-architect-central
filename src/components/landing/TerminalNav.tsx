@@ -13,7 +13,7 @@ export function TerminalNav({ theme = "dark" }: TerminalNavProps) {
     <nav
       className="sticky top-0 z-50 border-b-4 bg-[var(--terminal-bg)] border-[var(--terminal-green)]"
     >
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-8xl mx-auto px-4">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <div className="flex items-center gap-2">
