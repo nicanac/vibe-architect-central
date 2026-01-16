@@ -75,10 +75,14 @@
 ├── supabase/              # SQL Migrations & Seed data
 ├── src/
 │   ├── app/               # App Router with "use cache" directives
+│   │   ├── (auth)/        # Route group for login/signup (no Header)
+│   │   │   ├── login/
+│   │   │   └── signup/
 │   │   ├── (directory)/   # Tools & Prompts routes
-│   │   ├── auth/          # Authentication routes
-│   │   └── instructions/  # Instructions Hub
+│   │   ├── auth/          # OAuth callback routes
+│   │   └── instructions/  # Instructions Hub with sidebar layout
 │   ├── components/
+│   │   ├── layout/        # Global layout components (Header, Footer)
 │   │   ├── ui/            # shadcn components (v3.6)
 │   │   └── vibe/          # Custom Architect components
 │   ├── lib/
@@ -89,3 +93,12 @@
 │       └── globals.css    # Tailwind 4.1 @theme configurations
 └── next.config.ts         # Native TypeScript config
 ```
+
+## 4. Layout Architecture
+
+- **Root Layout** (`app/layout.tsx`): Contains global Header and Footer
+- **Route Groups**: Use `(groupName)` to share layout without affecting URL
+  - `(auth)` group: Contains `login` and `signup` pages. Allows them to have a distinct layout (hidden Header) while keeping clean URLs (`/login` instead of `/auth/login`).
+- **Standard Routes**:
+  - `auth` directory: Contains functional authentication routes like `/auth/callback` and `/auth/error` used by Supabase Auth flow.
+- **Nested Layouts**: Feature-specific layouts (e.g., `instructions/layout.tsx` with sidebar)

@@ -24,27 +24,25 @@ export default function SubmitPage() {
   }, [searchParams])
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="vibe-glass sticky top-0 z-50 border-b border-border">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Link 
-              href="/"
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Directory
-            </Link>
-          </div>
-          <h1 className="text-2xl font-bold text-foreground mt-4">
-            Submit to Vibe Architect Central
+    <div className="min-h-screen">
+      {/* Page Header */}
+      <div className="border-b-2 border-[var(--terminal-green)]/30">
+        <div className="container mx-auto px-4 py-6">
+          <Link 
+            href="/"
+            className="flex items-center gap-2 text-[var(--terminal-green)]/70 hover:text-[var(--terminal-green)] transition-colors font-mono text-sm mb-4"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Directory
+          </Link>
+          <h1 className="text-2xl font-bold text-[var(--terminal-green)] uppercase font-mono">
+            Submit_to_Vibe_Architect_Central
           </h1>
-          <p className="text-muted-foreground mt-1">
-            Share your favorite tools, prompts, or agent instructions with the community
+          <p className="text-[var(--terminal-green)]/70 mt-1 font-mono text-sm">
+            &gt; Share your favorite tools, prompts, or agent instructions with the community
           </p>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 max-w-2xl">

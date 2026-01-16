@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Fira_Code, Space_Grotesk } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
 const firaCode = Fira_Code({
@@ -95,7 +97,11 @@ export default function RootLayout({
         <ThemeProvider>
           {/* CRT Overlay Effect */}
           <div className="crt-overlay" aria-hidden="true" />
-          {children}
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
           <Toaster position="bottom-right" />
         </ThemeProvider>
       </body>

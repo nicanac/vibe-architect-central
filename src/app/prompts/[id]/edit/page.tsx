@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
-import { Header } from "@/components/layout/Header";
 import { EditPromptForm } from "./EditPromptForm";
 
 export const metadata: Metadata = {
@@ -43,19 +42,15 @@ export default async function EditPromptPage({ params }: EditPromptPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <main className="container mx-auto px-4 py-8 max-w-2xl">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Edit Prompt</h1>
+        <p className="text-muted-foreground">
+          Update your prompt submission details.
+        </p>
+      </div>
 
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight mb-2">Edit Prompt</h1>
-          <p className="text-muted-foreground">
-            Update your prompt submission details.
-          </p>
-        </div>
-
-        <EditPromptForm prompt={prompt} />
-      </main>
-    </div>
+      <EditPromptForm prompt={prompt} />
+    </main>
   );
 }
