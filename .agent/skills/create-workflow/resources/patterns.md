@@ -1,0 +1,779 @@
+# Workflow Patterns Reference
+
+Verified patterns from official Antigravity documentation.
+
+## Git Workflow Patterns
+
+### Pattern: Commit with Full Context
+
+**Source**: Official Antigravity documentation
+
+```markdown
+---
+allowed-tools: run_command(git add:*), run_command(git status:*), run_command(git commit:*)
+description: Create a git commit
+---
+
+## Objective
+
+Create a git commit for current changes following repository conventions.
+
+## Context
+
+- Current git status: ! `git status`
+- Current git diff (staged and unstaged changes): ! `git diff HEAD`
+- Current branch: ! `git branch --show-current`
+- Recent commits: ! `git log --oneline -10`
+
+## Process
+
+1. Review staged and unstaged changes
+2. Stage relevant files with git add
+3. Write commit message following recent commit style
+4. Create commit
+
+## Assessment
+
+- All relevant changes staged
+- Commit message follows repository conventions
+- Commit created successfully
+```
+
+**Key features**:
+
+- Tool restrictions prevent running arbitrary bash commands
+- Dynamic context loaded via the exclamation mark prefix before backticks
+- Git state injected before prompt execution
+
+### Pattern: Simple Git Commit
+
+```markdown
+---
+allowed-tools: run_command(git add:*), run_command(git status:*), run_command(git commit:*)
+description: Create a git commit
+---
+
+## Objective
+
+Create a commit for current changes.
+
+## Context
+
+Current changes: ! `git status`
+
+## Process
+
+1. Review changes
+2. Stage files
+3. Create commit
+
+## Assessment
+
+- Changes committed successfully
+```
+
+## Code Analysis Patterns
+
+### Pattern: Performance Optimization
+
+**Source**: Official Antigravity documentation
+
+**File**: `.agent/workflows/optimize.md`
+
+```markdown
+---
+description: Analyze the performance of this code and suggest three specific optimizations
+---
+
+## Objective
+
+Analyze code performance and suggest three specific optimizations.
+
+This helps improve application performance through targeted improvements.
+
+## Process
+
+1. Review code in current conversation context
+2. Identify bottlenecks and inefficiencies
+3. Suggest three specific optimizations with rationale
+4. Estimate performance impact of each
+
+## Assessment
+
+- Performance issues clearly identified
+- Three concrete optimizations suggested
+- Implementation guidance provided
+- Performance impact estimated
+```
+
+**Usage**: `/optimize`
+
+Antigravity analyzes code in the current conversation context.
+
+### Pattern: Security Review
+
+**File**: `.agent/workflows/security-review.md`
+
+```markdown
+---
+description: Review this code for security vulnerabilities
+---
+
+## Objective
+
+Review code for security vulnerabilities and suggest fixes.
+
+## Process
+
+1. Scan code for common vulnerabilities (XSS, SQL injection, CSRF, etc.)
+2. Identify specific issues with line numbers
+3. Assess severity of each vulnerability
+4. Suggest remediation for each issue
+
+## Assessment
+
+- All major vulnerability types checked
+- Specific issues identified with locations
+- Severity levels assigned
+- Actionable fixes provided
+```
+
+**Usage**: `/security-review`
+
+### Pattern: File-Specific Analysis
+
+```markdown
+---
+description: Optimize specific file
+argument-hint: [file-path]
+---
+
+## Objective
+
+Analyze performance of @ #$ARGUMENTS and suggest three specific optimizations.
+
+This helps improve application performance through targeted file improvements.
+
+## Process
+
+1. Review code in @ #$ARGUMENTS for performance issues
+2. Identify bottlenecks and inefficiencies
+3. Suggest three specific optimizations with rationale
+4. Estimate performance impact of each
+
+## Assessment
+
+- File analyzed thoroughly
+- Performance issues identified
+- Three concrete optimizations suggested
+- Implementation guidance provided
+```
+
+**Usage**: `/optimize src/utils/helpers.js`
+
+References the specified file.
+
+## Issue Tracking Patterns
+
+### Pattern: Fix Issue with Workflow
+
+**Source**: Official Antigravity documentation
+
+```markdown
+---
+description: Find and fix issue following workflow
+argument-hint: [issue-number]
+---
+
+## Objective
+
+Find and fix issue #$ARGUMENTS following project workflow.
+
+This ensures bugs are resolved systematically with proper testing and documentation.
+
+## Process
+
+1. Understand the issue described in ticket #$ARGUMENTS
+2. Locate the relevant code in codebase
+3. Implement a solution that addresses the root cause
+4. Add appropriate tests
+5. Prepare a concise PR description
+
+## Assessment
+
+- Issue fully understood and addressed
+- Solution addresses root cause
+- Tests added and passing
+- PR description clearly explains fix
+```
+
+**Usage**: `/fix-issue 123`
+
+### Pattern: PR Review with Context
+
+```markdown
+---
+description: Review PR with priority and assignment
+argument-hint: <pr-number> <priority> <assignee>
+---
+
+## Objective
+
+Review PR #$1 with priority $2 and assign to $3.
+
+This ensures PRs are reviewed systematically with proper prioritization and assignment.
+
+## Process
+
+1. Fetch PR #$1 details
+2. Review code changes
+3. Assess based on priority $2
+4. Provide feedback
+5. Assign to $3
+
+## Assessment
+
+- PR reviewed thoroughly
+- Priority considered in review depth
+- Constructive feedback provided
+- Assigned to correct person
+```
+
+**Usage**: `/review-pr 456 high alice`
+
+Uses positional arguments for structured input.
+
+## File Operation Patterns
+
+### Pattern: File Reference
+
+**Source**: Official Antigravity documentation
+
+```markdown
+---
+description: Review implementation
+---
+
+## Objective
+
+Review the implementation in @ src/utils/helpers.js.
+
+This ensures code quality and identifies potential improvements.
+
+## Process
+
+1. Read @ src/utils/helpers.js
+2. Analyze code structure and patterns
+3. Check for best practices
+4. Identify potential improvements
+5. Suggest specific changes
+
+## Assessment
+
+- File reviewed thoroughly
+- Code quality assessed
+- Specific improvements identified
+- Actionable suggestions provided
+```
+
+Uses `@` prefix to reference specific files.
+
+### Pattern: Dynamic File Reference
+
+```markdown
+---
+description: Review specific file
+argument-hint: [file-path]
+---
+
+## Objective
+
+Review the implementation in @ #$ARGUMENTS.
+
+This allows flexible file review based on user specification.
+
+## Process
+
+1. Read @ #$ARGUMENTS
+2. Analyze code structure and patterns
+3. Check for best practices
+4. Identify potential improvements
+5. Suggest specific changes
+
+## Assessment
+
+- File reviewed thoroughly
+- Code quality assessed
+- Specific improvements identified
+- Actionable suggestions provided
+```
+
+**Usage**: `/review src/app.js`
+
+File path comes from argument.
+
+### Pattern: Multi-File Analysis
+
+```markdown
+---
+description: Compare two files
+argument-hint: <file1> <file2>
+---
+
+## Objective
+
+Compare @ $1 with @ $2 and highlight key differences.
+
+This helps understand changes and identify important variations between files.
+
+## Process
+
+1. Read @ $1 and @ $2
+2. Identify structural differences
+3. Compare functionality and logic
+4. Highlight key changes
+5. Assess impact of differences
+
+## Assessment
+
+- Both files analyzed
+- Key differences identified
+- Impact of changes assessed
+- Clear comparison provided
+```
+
+**Usage**: `/compare src/old.js src/new.js`
+
+## Thinking-Only Patterns
+
+### Pattern: Deep Analysis
+
+```markdown
+---
+description: Analyze problem from first principles
+allowed-tools: plan_mode
+---
+
+## Objective
+
+Analyze the current problem from first principles.
+
+This helps discover optimal solutions by stripping away assumptions and rebuilding from fundamental truths.
+
+## Process
+
+1. Identify the core problem
+2. Strip away all assumptions
+3. Identify fundamental truths and constraints
+4. Rebuild solution from first principles
+5. Compare with current approach
+
+## Assessment
+
+- Problem analyzed from ground up
+- Assumptions identified and questioned
+- Solution rebuilt from fundamentals
+- Novel insights discovered
+```
+
+Tool restriction ensures Antigravity only uses planning mode.
+
+### Pattern: Strategic Planning
+
+```markdown
+---
+description: Plan implementation strategy
+allowed-tools: plan_mode
+argument-hint: [task description]
+---
+
+## Objective
+
+Create a detailed implementation strategy for: #$ARGUMENTS
+
+This ensures complex tasks are approached systematically with proper planning.
+
+## Process
+
+1. Break down task into phases
+2. Identify dependencies between phases
+3. Estimate complexity for each phase
+4. Suggest optimal approach
+5. Identify potential risks
+
+## Assessment
+
+- Task broken into clear phases
+- Dependencies mapped
+- Complexity estimated
+- Optimal approach identified
+- Risks and mitigations outlined
+```
+
+## Bash Execution Patterns
+
+### Pattern: Dynamic Environment Loading
+
+```markdown
+---
+description: Check project status
+---
+
+## Objective
+
+Provide a comprehensive project health summary.
+
+This helps understand current project state across git, dependencies, and tests.
+
+## Context
+
+- Git: ! `git status --short`
+- Node: ! `npm list --depth=0 2>/dev/null | head -20`
+- Tests: ! `npm test -- --listTests 2>/dev/null | wc -l`
+
+## Process
+
+1. Analyze git status for uncommitted changes
+2. Review npm dependencies for issues
+3. Check test coverage
+4. Identify potential problems
+5. Provide actionable recommendations
+
+## Assessment
+
+- All metrics checked
+- Current state clearly described
+- Issues identified
+- Recommendations provided
+```
+
+Multiple bash commands load environment state.
+
+### Pattern: Conditional Execution
+
+```markdown
+---
+description: Deploy if tests pass
+allowed-tools: run_command(npm test:*), run_command(npm run deploy:*)
+---
+
+## Objective
+
+Deploy to production only if all tests pass.
+
+This ensures deployment safety through automated testing gates.
+
+## Context
+
+Test results: ! `npm test`
+
+## Process
+
+1. Review test results
+2. If all tests passed, proceed to deployment
+3. If any tests failed, report failures and abort
+4. Monitor deployment process
+5. Confirm successful deployment
+
+## Assessment
+
+- All tests verified passing
+- Deployment executed only on test success
+- Deployment confirmed successful
+- Or deployment aborted with clear failure reasons
+```
+
+## Multi-Step Workflow Patterns
+
+### Pattern: Structured Workflow
+
+```markdown
+---
+description: Complete feature development workflow
+argument-hint: [feature description]
+---
+
+## Objective
+
+Complete full feature development workflow for: #$ARGUMENTS
+
+This ensures features are developed systematically with proper planning, implementation, testing, and documentation.
+
+## Process
+
+1. **Planning**
+
+   - Review requirements
+   - Design approach
+   - Identify files to modify
+
+2. **Implementation**
+
+   - Write code
+   - Add tests
+   - Update documentation
+
+3. **Review**
+
+   - Run tests: ! `npm test`
+   - Check lint: ! `npm run lint`
+   - Verify changes: ! `git diff`
+
+4. **Completion**
+   - Create commit
+   - Write PR description
+
+## Verification
+
+Before completing:
+
+- All tests passing
+- No lint errors
+- Documentation updated
+- Changes verified with git diff
+
+## Assessment
+
+- Feature fully implemented
+- Tests added and passing
+- Code passes linting
+- Documentation updated
+- Commit created
+- PR description written
+```
+
+## Command Chaining Patterns
+
+### Pattern: Analysis → Action
+
+```markdown
+---
+description: Analyze and fix performance issues
+argument-hint: [file-path]
+---
+
+## Objective
+
+Analyze and fix performance issues in @ #$ARGUMENTS.
+
+This provides end-to-end performance improvement from analysis through verification.
+
+## Process
+
+1. Analyze @ #$ARGUMENTS for performance issues
+2. Identify top 3 most impactful optimizations
+3. Implement the optimizations
+4. Verify improvements with benchmarks
+
+## Verification
+
+Before completing:
+
+- Benchmarks run showing performance improvement
+- No functionality regressions
+- Code quality maintained
+
+## Assessment
+
+- Performance issues identified and fixed
+- Measurable performance improvement
+- Benchmarks confirm gains
+- No regressions introduced
+```
+
+Sequential steps in single workflow.
+
+## Tool Restriction Patterns
+
+### Pattern: Git-Only Workflow
+
+```markdown
+---
+allowed-tools: run_command(git add:*), run_command(git status:*), run_command(git diff:*), run_command(git commit:*)
+description: Git workflow
+---
+
+## Objective
+
+Perform git operations safely with tool restrictions.
+
+This prevents running arbitrary bash commands while allowing necessary git operations.
+
+## Context
+
+Current git state: ! `git status`
+
+## Process
+
+1. Review git status
+2. Perform git operations
+3. Verify changes
+
+## Assessment
+
+- Git operations completed successfully
+- No arbitrary commands executed
+- Repository state as expected
+```
+
+Prevents running non-git bash commands.
+
+### Pattern: Read-Only Analysis
+
+```markdown
+---
+allowed-tools: [view_file, grep_search, find_by_name]
+description: Analyze codebase
+argument-hint: [search pattern]
+---
+
+## Objective
+
+Search codebase for pattern: #$ARGUMENTS
+
+This provides safe codebase analysis without modification or execution permissions.
+
+## Process
+
+1. Use grep to search for pattern across codebase
+2. Analyze findings
+3. Identify relevant files and code sections
+4. Provide summary of results
+
+## Assessment
+
+- Pattern search completed
+- All matches identified
+- Relevant context provided
+- No files modified
+```
+
+No write or execution permissions.
+
+### Pattern: Specific Bash Commands
+
+```markdown
+---
+allowed-tools: run_command(npm test:*), run_command(npm run lint:*)
+description: Run project checks
+---
+
+## Objective
+
+Run project quality checks (tests and linting).
+
+This ensures code quality while restricting to specific npm scripts.
+
+## Testing
+
+Tests: ! `npm test`
+Lint: ! `npm run lint`
+
+## Process
+
+1. Run tests and capture results
+2. Run linting and capture results
+3. Analyze both outputs
+4. Report on pass/fail status
+5. Provide specific failure details if any
+
+## Assessment
+
+- All tests passing
+- No lint errors
+- Clear report of results
+- Or specific failures identified with details
+```
+
+Only allows specific npm scripts.
+
+## Best Practices
+
+### 1. Use Tool Restrictions for Safety
+
+```yaml
+# Git commands
+allowed-tools: run_command(git add:*), run_command(git status:*)
+
+# Analysis only
+allowed-tools: [view_file, grep_search, find_by_name]
+
+# Thinking only
+allowed-tools: plan_mode
+```
+
+### 2. Load Dynamic Context When Needed
+
+```markdown
+Current state: ! `git status`
+Recent activity: ! `git log --oneline -5`
+```
+
+### 3. Reference Files Explicitly
+
+```markdown
+Review @ package.json for dependencies
+Check @ src/config/\* for settings
+```
+
+### 4. Structure Complex Workflows
+
+```markdown
+## Step 1: Analysis
+
+[analysis prompt]
+
+## Step 2: Implementation
+
+[implementation prompt]
+
+## Step 3: Verification
+
+[verification prompt]
+```
+
+### 5. Use Arguments for Flexibility
+
+```markdown
+# Simple
+
+Fix issue #$ARGUMENTS
+
+# Positional
+
+Review PR #$1 with priority $2
+
+# File reference
+
+Analyze @ #$ARGUMENTS
+```
+
+## Subagent Patterns
+
+Workflows can instruct Antigravity to use subagents for specialized work. This is powerful for delegating complex tasks to focused agents.
+
+### Pattern: Launch Subagent for Analysis
+
+```markdown
+---
+description: Deep security analysis with subagent
+argument-hint: [file-path or directory]
+---
+
+## Objective
+
+Perform comprehensive security analysis on #$ARGUMENTS using specialized security subagent.
+
+## Process
+
+1. Use the browser_subagent or relevant subagent tool to launch the `security-scanner` subagent
+2. Pass the target path #$ARGUMENTS to the subagent
+3. Wait for subagent to complete analysis
+4. Present findings to user with severity ratings
+
+## Assessment
+
+- Security subagent completed analysis
+- All findings reported with severity
+- Remediation suggestions provided
+```
