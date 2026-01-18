@@ -2,6 +2,18 @@
 description: Analyze codebase and generate a complete AI-ready project blueprint folder
 ---
 
+## Important: For Interactive Blueprint Creation
+
+If you are starting a **new project from scratch**, use the `/blueprint-init` workflow instead. It will:
+- Ask at least 5 questions to understand your project
+- Validate latest tech versions via Context7 MCP
+- Generate fully customized, dynamic blueprints
+- Suggest additional tools and MCP servers
+
+This workflow (`/generate-project-blueprint`) is for **extracting blueprints from existing codebases**.
+
+---
+
 ## Objective
 
 Analyze the entire codebase to extract all architectural patterns, conventions, and AI context, then generate a comprehensive `blueprint/` folder containing everything needed to quickly initialize similar projects with full AI agent support.
