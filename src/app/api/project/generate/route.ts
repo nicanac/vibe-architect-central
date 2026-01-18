@@ -54,10 +54,12 @@ function generateSetupCommands(stack: string[]): string {
   const usesPnpm = normalizedStack.some(s => s.includes('pnpm'));
   const usesYarn = normalizedStack.some(s => s.includes('yarn'));
   const pm = usesPnpm ? 'pnpm' : usesYarn ? 'yarn' : 'npm';
+  const usesTailwind = normalizedStack.some(s => s.includes('tailwind'));
 
   // Framework-specific commands
   if (normalizedStack.some(s => s.includes('next'))) {
-    commands.push(`npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir`);
+    const tailwindFlag = usesTailwind ? ' --tailwind' : ' --no-tailwind';
+    commands.push(`npx create-next-app@latest . --typescript${tailwindFlag} --eslint --app --src-dir`);
   } else if (normalizedStack.some(s => s.includes('vite') || s.includes('react'))) {
     commands.push(`${pm} create vite@latest . -- --template react-ts`);
   } else if (normalizedStack.some(s => s.includes('expo'))) {
@@ -469,7 +471,7 @@ class BlueprintService {
       try {
         const content = await fs.readFile(path.join(workflowsDir, `${flow}.md`), 'utf-8');
         vfs[`.agent/workflows/${flow}.md`] = content;
-      } catch {
+      } catch (_error) {
         console.error(`Missing workflow: ${flow}`);
       }
     }
