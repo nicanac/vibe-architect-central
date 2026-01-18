@@ -271,42 +271,43 @@
 
 ## 🔗 Phase 12: Maintenance & Optimization (Current)
 
-- [/] Audit and update Memory Bank documentation
-  - [x] Review code structure
-  - [x] Update SUPABASE.md with latest schema
-  - [x] Update TSD.md with current tech stack & db
-  - [x] Update PRD.md with Instructions Hub feature
-  - [x] Update TASKS.md to be chronologically sorted
-- [ ] Optimization of search queries
-- [ ] Accessibility audit of new components
-- [ ] [UI] Create `TerminalPageHeader` component (Unified Header)
+### 12.0 Iteration: GitHub Integration ✅ COMPLETE
+
+- [x] **GitHub CLI Setup**: Verified installation and authenticated user.
+- [x] **Repo Sync**: Updated metadata and synced all pending tasks to GitHub Issues.
+- [x] **Workflow Automation**:
+  - [x] Created `scripts/sync-tasks-github.ts` (Auto-sync script)
+  - [x] Created `.agent/workflows/sync-github.md` (Antigravity Workflow)
+  - [x] Added `sync:github` to `package.json`
+
+### 12.1 Iteration: Search & Discovery (Next Priority)
+
+- [ ] **Feature: Instruction Search Filters** (Issue #25)
+  - [ ] **UI Component**: Create `InstructionSearchFilters` (Green/Neon theme)
+  - [ ] **Placement**: Insert above grid in `instructions/[category]/page.tsx`
+  - [ ] **Logic**: Full-text search on `content` column
+  - [ ] **Filters**: Implement "Best Selling" and "Recent"
+
+- [ ] **Verification: AI Docs Search** (Issue #27)
+  - [ ] **Test**: Verify Pinecone search with sample queries
+  - [ ] **Fix**: Resolve any middleware/Supabase config blockers
+
+- [ ] **Optimization: Search Queries** (Issue #22)
+  - [ ] **Perf**: Optimize db queries for lower latency
+  - [ ] **UX**: Add debounce and loading states
+
+### 12.2 Iteration: Project Blueprint Engine
+
+- [ ] **Feature: Project Setup Wizard** (Issue #26)
+  - [ ] **Backend**: API route for ZIP streaming (`archiver`)
+  - [ ] **Frontend**: Wizard UI (`/new-project`)
+  - [ ] **Logic**: `BlueprintService` for VFS generation
+
+### 12.3 backlog & Polish
+
+- [ ] **Accessibility Audit** (Issue #24)
+- [ ] **UI**: Unified Terminal Header (`TerminalPageHeader`) (Issue #23)
 - [ ] [UI] Refactor Instructions Hub to use `TerminalPageHeader`
-
-### 12.1 Feature: Instruction Search & Filters
-
-- [ ] **UI Component**: Create `InstructionSearchFilters` component matching the requested design (Green/Neon)
-- [ ] **Placement**: Insert above grid in `instructions/[category]/page.tsx`
-- [ ] **Logic**: Update Supabase query to search `content` column (full-text)
-- [ ] **Filters**: Implement "Best Selling" (Popular) and "Last 30 Days" (Recent) filters if applicable (or map to existing sorts)
-
-### 12.2 Feature: Project Setup Wizard (Blueprint Engine)
-
-- [ ] **Backend**: Install `archiver` and create API route `src/app/api/project/generate/route.ts` for ZIP streaming.
-- [ ] **Backend**: Create `src/app/api/resources/route.ts` to serve available stacks and workflow files.
-- [ ] **Frontend**: Create `/new-project` route with `ProjectWizard` component.
-- [ ] **UI Component**: Implement 4-step wizard (Info -> Stack -> Workflows -> Review) with "Terminal Green" theme.
-- [ ] **Logic**: Implement `BlueprintService` to generate VFS (Virtual File System) for `.agent` and `memory-bank`.
-- [ ] **Content**: Implement context injection for `PRD.md` based on user description.
-- [ ] **Refactor UI**: Use `MainContainer` and global headers
-
-### 12.3 Feature: AI Docs Search (Pinecone Integration)
-
-- [x] **Index Created**: Pinecone index `vibe-architect-ai-tools` with 18 documents (skills, workflows, rules)
-- [x] **Backend**: Create `src/app/api/ai-docs/search/route.ts` API route for Pinecone search
-- [x] **Frontend**: Create `AIDocsSearch.tsx` component with terminal theme
-- [x] **Page**: Create `/instructions/ai-docs` page with search interface
-- [x] **Navigation**: Add "AI Docs" entry to `InstructionSidebar.tsx`
-- [ ] **Verification**: Test search with sample queries (blocked by Supabase middleware config)
 
 ---
 
