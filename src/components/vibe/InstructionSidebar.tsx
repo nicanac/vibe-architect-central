@@ -13,7 +13,8 @@ import {
     Ruler,
     MessageSquare,
     Home,
-    Workflow
+    Workflow,
+    Brain
 } from 'lucide-react';
 
 const CATEGORY_ICONS = {
@@ -46,6 +47,17 @@ export function InstructionSidebar({ className }: { className?: string }) {
                 </SidebarItem>
             </Link>
 
+            {/* AI Docs Search Link */}
+            <Link href="/instructions/ai-docs">
+                <SidebarItem
+                    active={pathname === '/instructions/ai-docs'}
+                    icon={Brain}
+                    index={-1}
+                >
+                    AI Docs
+                </SidebarItem>
+            </Link>
+
             {/* Categories Section */}
             <div className="py-2">
                 <h3 className="px-4 py-2 text-[10px] font-bold text-[var(--terminal-purple)] uppercase tracking-widest font-mono">
@@ -74,21 +86,21 @@ export function InstructionSidebar({ className }: { className?: string }) {
     );
 }
 
-function SidebarItem({ 
-    children, 
-    active, 
+function SidebarItem({
+    children,
+    active,
     icon: Icon,
     index
-}: { 
-    children: React.ReactNode; 
-    active: boolean; 
+}: {
+    children: React.ReactNode;
+    active: boolean;
     icon: React.ComponentType<{ className?: string }>;
     index: number;
 }) {
     const hexIndex = index.toString().padStart(2, '0');
-    
+
     return (
-        <div 
+        <div
             className={cn(
                 "block py-3 px-4 border-b border-[var(--terminal-border-muted)] transition-all duration-200 text-xs font-mono uppercase cursor-pointer",
                 active

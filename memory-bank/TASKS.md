@@ -299,6 +299,15 @@
 - [ ] **Content**: Implement context injection for `PRD.md` based on user description.
 - [ ] **Refactor UI**: Use `MainContainer` and global headers
 
+### 12.3 Feature: AI Docs Search (Pinecone Integration)
+
+- [x] **Index Created**: Pinecone index `vibe-architect-ai-tools` with 18 documents (skills, workflows, rules)
+- [x] **Backend**: Create `src/app/api/ai-docs/search/route.ts` API route for Pinecone search
+- [x] **Frontend**: Create `AIDocsSearch.tsx` component with terminal theme
+- [x] **Page**: Create `/instructions/ai-docs` page with search interface
+- [x] **Navigation**: Add "AI Docs" entry to `InstructionSidebar.tsx`
+- [ ] **Verification**: Test search with sample queries (blocked by Supabase middleware config)
+
 ---
 
 ## 🚀 Phase 13: Future Roadmap
