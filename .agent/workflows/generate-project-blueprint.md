@@ -1,33 +1,107 @@
 ---
-description: Analyze codebase and generate a complete AI-ready project blueprint folder
+description: Interactive project blueprint generator with discovery, design inspiration, and tech research phases
 ---
 
 ## Objective
 
-Analyze the entire codebase to extract all architectural patterns, conventions, and AI context, then generate a comprehensive `blueprint/` folder containing everything needed to quickly initialize similar projects with full AI agent support.
-
-This blueprint can be used to create GitHub template repositories for rapid project setup.
+Guide the user through a structured discovery process, gather design inspiration, research the best tech stack using brainstorm and Context7, then generate a customized AI-ready project blueprint.
 
 ## Process
 
-### Step 1: Initialize Blueprint Structure
+### Phase 1: Discovery Questions
 
-Create the blueprint directory structure:
+Before generating any technical blueprint, ask the user at least 5 discovery questions. Present them clearly and wait for answers.
+
+**Required Questions:**
+
+1.  **Project Purpose**: What is the core goal of this project?
+    - Options: SaaS product, Internal tool, Marketing/Landing page, E-commerce, Portfolio, API/Backend service, Mobile app, Other
+2.  **Target Users**: Who are the primary users?
+    - Options: Developers, Consumers/General public, Internal team, B2B clients, Other
+3.  **Key Features**: What are the 3 most important features or pages?
+    - Free-form answer.
+4.  **Data Requirements**: What kind of data persistence is needed?
+    - Options: Relational DB (PostgreSQL), NoSQL (MongoDB), File-based, No database, Unsure
+5.  **AI Agent Usage**: Will AI coding assistants (Antigravity, Cursor, etc.) be used?
+    - Options: Yes (heavily), Yes (occasionally), No, Unsure
+
+**Optional but Recommended:**
+- **Aesthetic/Vibe**: What visual style are you going for? (e.g., Minimalist, Brutalist, Corporate, Playful, Cyber-Industrial)
+- **Deployment**: Where will this be deployed? (e.g., Vercel, AWS, Self-hosted)
+
+Wait for the user to answer before proceeding.
+
+---
+
+### Phase 2: Design Inspiration
+
+After gathering answers, create a `design-inspiration/` folder.
+
+```bash
+mkdir -p design-inspiration
+```
+
+**Prompt the user:**
+
+> 🎨 **Design Inspiration Needed**
+>
+> Please add any design references, screenshots, mockups, or UI inspiration images to the `design-inspiration/` folder.
+>
+> This will help inform the visual direction and may influence the tech stack choice (e.g., animation-heavy designs may favor certain frameworks).
+>
+> **Let me know when you're ready to continue.**
+
+Wait for the user to confirm they have added files (or confirm they want to skip).
+
+If design references are provided:
+- Analyze the images for common patterns (color schemes, layout styles, component types): create a json containing ann the relevant info for the design
+- Note if the designs suggest specific needs (e.g., complex animations → might need Framer Motion, heavy data tables → might need TanStack Table).
+
+---
+
+### Phase 3: Tech Stack Research (Brainstorm + Context7)
+
+Based on the discovery answers and design inspiration analysis, launch a `/brainstorm` session.
+
+**Synthesize a research question:**
+
+```
+/brainstorm What is the best tech stack for a [Project Purpose] targeting [Target Users] with [Data Requirements]? Consider the design style: [Aesthetic from Phase 1/2].
+```
+
+The brainstorm workflow will:
+1. Explore multiple technology options.
+2. Challenge assumptions.
+3. Provide multi-perspective analysis.
+4. Recommend a stack with confidence levels.
+
+**Context7 Validation:**
+
+For each major technology recommended:
+1. Use `mcp_context7_resolve-library-id` to find the library.
+2. Use `mcp_context7_query-docs` to fetch current best practices.
+3. Document key patterns and setup requirements.
+
+---
+
+### Phase 4: Blueprint Generation
+
+Generate the `blueprint/` folder structure based on the researched and validated tech stack.
 
 ```
 blueprint/
 ├── .agent/
-│   ├── rules/           # Coding rules and conventions
+│   ├── rules/           # Coding rules tailored to chosen stack
 │   ├── workflows/       # Reusable workflows
 │   └── AI_USAGE_GUIDE.md
 ├── memory-bank/
-│   ├── PRD.md          # Project template
-│   ├── TSD.md          # Technical template
-│   └── TASKS.md        # Task template
-├── templates/
-│   ├── components/     # Component templates
-│   ├── api/           # API route templates
-│   └── configs/       # Configuration templates
+│   ├── PRD.md          # Filled with discovery answers
+│   ├── TSD.md          # Filled with brainstorm research
+│   └── TASKS.md        # Initial task breakdown
+├── design-inspiration/  # Copied from Phase 2
+├── app/ or src/         # Framework-specific structure (see below)
+├── components/          # UI components
+├── lib/                 # Utilities
 ├── docs/
 │   ├── ARCHITECTURE.md
 │   ├── SETUP.md
@@ -36,287 +110,128 @@ blueprint/
     └── init-project.sh
 ```
 
-### Step 2: Analyze Codebase Architecture
+### 🚨 CRITICAL: Project Structure Validation with Context7
 
-Scan and document the following:
+**BEFORE creating the project structure**, you MUST query Context7 for the framework's conventions.
 
-**Technology Stack:**
-- Framework versions (Next.js, React, etc.)
-- Database and ORM
-- State management
-- UI libraries
-- Testing frameworks
-- Build tools
+#### Step 1: Identify the Framework/Language
+Based on discovery, determine the primary framework or language:
+- **Frontend**: Expo Router, Next.js, Remix, Vue, Svelte
+- **Backend**: FastAPI, Django, Express, NestJS, Go Fiber, Rust Axum
+- **Mobile**: Expo, React Native CLI, Flutter, Swift, Kotlin
+- **CLI/Scripts**: Python, Node.js, Go, Rust
 
-**Directory Structure:**
-- Map all key directories
-- Document purpose of each directory
-- Identify naming conventions
-
-**Patterns & Conventions:**
-- Component patterns
-- API route patterns
-- Data fetching patterns
-- Error handling patterns
-- Form handling
-- Authentication patterns
-
-### Step 3: Extract AI Context
-
-**From `.agent/` directory:**
-- Copy all reusable rules to `blueprint/.agent/rules/`
-- Copy generic workflows to `blueprint/.agent/workflows/`
-- Create AI_USAGE_GUIDE.md with:
-  - How to use workflows
-  - Common commands
-  - Best practices for AI assistance
-
-**From `memory-bank/`:**
-- Create template versions of PRD.md, TSD.md, TASKS.md
-- Include placeholders for project-specific content
-- Add instructions for filling templates
-
-### Step 4: Generate Documentation
-
-Create comprehensive docs:
-
-**ARCHITECTURE.md:**
-```markdown
-# Architecture Overview
-
-## Tech Stack
-[List all technologies with versions]
-
-## Directory Structure
-[Documented tree structure]
-
-## Key Patterns
-[Document recurring patterns]
-
-## Data Flow
-[How data moves through the application]
-
-## State Management
-[How state is managed]
+#### Step 2: Query Context7 for Project Structure
+```
+mcp_context7_resolve-library-id({ libraryName: "[framework]", query: "project structure" })
+mcp_context7_query-docs({ libraryId: "[resolved-id]", query: "folder structure layout setup" })
 ```
 
-**SETUP.md:**
-```markdown
-# Project Setup Guide
+#### Step 3: Apply Framework-Specific Patterns
 
-## Prerequisites
-[Required software/tools]
+**Frontend (File-based Routing)**:
+| Framework | Root Layout | Route Groups | Dynamic Routes |
+|-----------|-------------|--------------|----------------|
+| Expo Router | `app/_layout.tsx` | `app/(group)/` | `app/[id].tsx` |
+| Next.js | `app/layout.tsx` | `app/(group)/` | `app/[slug]/page.tsx` |
+| Remix | `app/root.tsx` | - | `app/routes/$id.tsx` |
 
-## Installation Steps
-1. Clone repository
-2. Install dependencies
-3. Configure environment
-4. Run database migrations
-5. Start development server
-
-## Environment Variables
-[List all required env vars]
-
-## Development Workflow
-[Step-by-step development process]
+**Backend (Python)**:
+```
+src/
+├── main.py              # Entry point
+├── api/
+│   └── routes/          # Endpoint modules
+├── models/              # Database models
+├── services/            # Business logic
+└── tests/
 ```
 
-**CONVENTIONS.md:**
-```markdown
-# Coding Conventions
-
-## File Naming
-[Rules for naming files]
-
-## Component Structure
-[How to structure components]
-
-## API Routes
-[How to create API endpoints]
-
-## Database Queries
-[Query patterns and conventions]
-
-## Testing
-[Testing conventions]
-
-## Git Workflow
-[Branch naming, commit messages]
+**Backend (Node.js/Express)**:
+```
+src/
+├── index.ts             # Entry point
+├── routes/              # API routes
+├── controllers/         # Request handlers
+├── services/            # Business logic
+└── models/              # Data models
 ```
 
-### Step 5: Create Code Templates
-
-Extract reusable code templates:
-
-**Component Templates:**
-- Server component template
-- Client component template
-- Layout component template
-- Form component template
-
-**API Templates:**
-- GET route template
-- POST route template
-- Protected route template
-- Error handling template
-
-**Configuration Templates:**
-- TypeScript config
-- ESLint config
-- Tailwind config
-- Environment template
-
-### Step 6: Generate Setup Scripts
-
-Create `scripts/init-project.sh`:
-
-```bash
-#!/bin/bash
-# Project initialization script
-
-echo "🚀 Initializing new project from blueprint..."
-
-# Get project details
-read -p "Project name: " PROJECT_NAME
-read -p "Project description: " PROJECT_DESC
-
-# Copy blueprint structure
-cp -r blueprint/.agent ./
-cp -r blueprint/memory-bank ./
-
-# Initialize memory bank
-sed -i "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" memory-bank/PRD.md
-sed -i "s/{{PROJECT_DESC}}/$PROJECT_DESC/g" memory-bank/PRD.md
-
-# Initialize git
-git init
-git add .
-git commit -m "chore: initialize project from blueprint"
-
-echo "✅ Project initialized successfully!"
-echo "📝 Next steps:"
-echo "   1. Review and update memory-bank/PRD.md"
-echo "   2. Configure environment variables"
-echo "   3. Run setup commands"
+**Backend (Go)**:
+```
+cmd/
+├── api/
+│   └── main.go          # Entry point
+internal/
+├── handlers/            # HTTP handlers
+├── services/            # Business logic
+└── models/              # Data structures
 ```
 
-### Step 7: Create Blueprint Index
-
-Create `blueprint/README.md`:
-
-```markdown
-# Project Blueprint
-
-This blueprint contains everything needed to quickly start a new project with full AI agent support.
-
-## What's Included
-
-- **/.agent/** - AI agent rules and workflows
-- **/memory-bank/** - Project documentation templates
-- **/templates/** - Reusable code templates
-- **/docs/** - Architecture and setup documentation
-- **/scripts/** - Initialization scripts
-
-## Quick Start
-
-### Option 1: Use as GitHub Template
-1. Click "Use this template" on GitHub
-2. Clone your new repository
-3. Run `./scripts/init-project.sh`
-
-### Option 2: Manual Setup
-1. Copy blueprint contents to new project
-2. Update memory-bank templates
-3. Configure environment variables
-4. Install dependencies
-
-## AI Agent Usage
-
-This blueprint is optimized for AI coding assistants:
-
-- Use workflows with `/workflow-name` commands
-- Check `.agent/AI_USAGE_GUIDE.md` for all available commands
-- Review `.agent/rules/` for coding conventions
-
-## Customization
-
-- Update `.agent/rules/` for project-specific conventions
-- Add workflows to `.agent/workflows/`
-- Modify templates in `/templates/`
-- Update documentation in `/docs/`
+**Mobile (Flutter)**:
+```
+lib/
+├── main.dart            # Entry point
+├── screens/             # UI screens
+├── widgets/             # Reusable widgets
+├── services/            # API/DB services
+└── models/              # Data models
 ```
 
-### Step 8: Package for GitHub
+#### Step 4: Verify with Context7
+After generating the structure, **double-check** critical files exist:
+- Entry point file (main.py, index.ts, main.go, etc.)
+- Configuration files (requirements.txt, package.json, go.mod, etc.)
+- Root layout/router (for frontend frameworks)
 
-Create instructions for creating a GitHub template repository:
+**DO NOT skip this validation step. Missing entry points or misstructured projects will fail.**
 
-**blueprint/GITHUB_TEMPLATE_SETUP.md:**
-```markdown
-# Creating a GitHub Template Repository
+## Workflows  rules skills 
+Universal Workflows (ALWAYS INCLUDE) - Now explicitly lists 9 workflows:
+/brainstorm, /commit-fast-conventional, /create-branch, /debug, /explore, /new-feature, /oneshot, /rebase-master, /review-code
 
-## Steps
+Design/UI Workflows - For frontend projects:
+/ux-ui-fix, /vision-ux-ui
+**Stack-Specific - Create new ones:**
+Mobile: /expo-build
+Next.js: /nextjs-deploy
+API: /test-endpoints
+**ADAPTATION REQUIRED** - Added explicit reminder to:
+Update commands for package manager
+Update framework-specific commands
+Update directory paths
 
-1. **Create new repository on GitHub**
-   - Name: `[your-project]-template`
-   - Description: "Blueprint template for [project type] projects"
-   - Check "Template repository" option
 
-2. **Push blueprint contents**
-   ```bash
-   cd blueprint
-   git init
-   git add .
-   git commit -m "feat: initial blueprint"
-   git remote add origin [your-repo-url]
-   git push -u origin main
-   ```
+**Content Generation Guidelines:**
+- `PRD.md`: Pre-fill with project purpose, target users, and key features from Phase 1.
+- `TSD.md`: Document the chosen tech stack with versions from Context7 research.
+- `ARCHITECTURE.md`: Summarize the brainstorm conclusions and design decisions.
+- Templates: Generate code templates matching the chosen framework (e.g., React vs Vue components).
 
-3. **Configure repository**
-   - Add topics: `template`, `blueprint`, `ai-ready`
-   - Create detailed README
-   - Add LICENSE
+---
 
-4. **Test template**
-   - Click "Use this template"
-   - Follow quick start guide
-   - Verify all files copied correctly
+### Phase 5: Finalization
 
-## Using the Template
+1. Create `blueprint/README.md` with quick start instructions.
+2. Create `blueprint/GITHUB_TEMPLATE_SETUP.md` for publishing as a template.
+3. Copy `design-inspiration/` contents into `blueprint/design-inspiration/`.
 
-Anyone can now:
-1. Click "Use this template" on your repository
-2. Create a new repository from the template
-3. Run initialization script
-4. Start coding immediately with AI support
-```  
+---
 
-### Assessment
+## Assessment Checklist
 
 Verify the blueprint contains:
 
+- ✅ Discovery answers documented in PRD.md
+- ✅ Design inspiration folder included
+- ✅ Tech stack researched via brainstorm
+- ✅ Stack validated with Context7 documentation
 - ✅ Complete `.agent/` configuration
-- ✅ Memory bank templates
+- ✅ Memory bank templates pre-filled
+- ✅ Framework-specific code templates
 - ✅ Comprehensive documentation
-- ✅ Reusable code templates
 - ✅ Setup scripts
-- ✅ GitHub template instructions
-- ✅ All conventions documented
-- ✅ All patterns extracted
-- ✅ Tech stack fully documented
-- ✅ AI usage guide included
 
 ## Output
 
-The workflow creates a `blueprint/` folder in the project root containing:
-- All AI agent configuration
-- Complete documentation
-- Reusable templates
-- Setup automation
-- GitHub template creation guide
-
-This blueprint can then be used to:
-1. Create GitHub template repositories
-2. Quickly initialize new projects
-3. Share project patterns with team
-4. Onboard AI agents instantly
-5. Maintain consistency across projects
+A `blueprint/` folder containing a fully customized, AI-ready project scaffold tailored to the user's specific needs and design vision.

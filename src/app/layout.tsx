@@ -93,6 +93,7 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={`${firaCode.variable} ${spaceGrotesk.variable} font-mono antialiased terminal-theme terminal-bg text-[var(--terminal-green)] selection:bg-[var(--terminal-purple)] selection:text-white`}
+        suppressHydrationWarning
       >
         <ThemeProvider>
           {/* CRT Overlay Effect */}
