@@ -1,0 +1,169 @@
+{
+    "meta": {
+        "name": "Vibe Architect Central",
+        "version": "0.1.0",
+        "generatedAt": "2026-01-18",
+        "description": "Central hub for Vibe Architects to manage tools, prompts, and instructions."
+    },
+    "techStack": {
+        "framework": {
+            "name": "Next.js",
+            "version": "16.1.1"
+        },
+        "language": {
+            "name": "TypeScript",
+            "version": "5.x"
+        },
+        "styling": {
+            "name": "Tailwind CSS",
+            "version": "4.0"
+        },
+        "database": {
+            "name": "Supabase",
+            "version": "v2.x"
+        },
+        "ui": {
+            "name": "shadcn/ui",
+            "style": "Lyra/Sharp"
+        },
+        "dependencies": [
+            {
+                "name": "next",
+                "version": "16.1.1",
+                "purpose": "React Framework"
+            },
+            {
+                "name": "react",
+                "version": "19.2.3",
+                "purpose": "UI Library"
+            },
+            {
+                "name": "lucide-react",
+                "version": "^0.562.0",
+                "purpose": "Icons"
+            },
+            {
+                "name": "@supabase/supabase-js",
+                "version": "^2.90.1",
+                "purpose": "Database Client"
+            },
+            {
+                "name": "framer-motion",
+                "version": "^12.26.2",
+                "purpose": "Animations"
+            },
+            {
+                "name": "zod",
+                "version": "^4.3.5",
+                "purpose": "Schema Validation"
+            },
+            {
+                "name": "react-hook-form",
+                "version": "^7.71.1",
+                "purpose": "Form Handling"
+            }
+        ],
+        "devDependencies": [
+            {
+                "name": "typescript",
+                "version": "^5",
+                "purpose": "Type Checking"
+            },
+            {
+                "name": "tailwindcss",
+                "version": "^4",
+                "purpose": "Styling Engine"
+            },
+            {
+                "name": "@tailwindcss/postcss",
+                "version": "^4",
+                "purpose": "CSS Processing"
+            }
+        ]
+    },
+    "designSystem": {
+        "colors": {
+            "background": {
+                "value": "#09090b",
+                "variable": "--color-background"
+            },
+            "surface": {
+                "value": "#18181b",
+                "variable": "--color-surface"
+            },
+            "border": {
+                "value": "#27272a",
+                "variable": "--color-border"
+            },
+            "primary": {
+                "value": "#3b82f6",
+                "variable": "--color-primary-accent"
+            },
+            "success": {
+                "value": "#10b981",
+                "variable": "--color-neon-success"
+            },
+            "text": {
+                "value": "#fafafa",
+                "variable": "--color-text-primary"
+            },
+            "muted": {
+                "value": "#a1a1aa",
+                "variable": "--color-text-muted"
+            }
+        },
+        "typography": {
+            "fontFamily": {
+                "sans": "Inter, Geist Sans, system-ui, sans-serif",
+                "mono": "JetBrains Mono, monospace"
+            }
+        },
+        "borderRadius": {
+            "industrial": "4px",
+            "md": "6px",
+            "lg": "8px"
+        }
+    },
+    "architecture": {
+        "directories": {
+            "src/app": "App Router pages and API routes",
+            "src/components/ui": "shadcn/ui primitives",
+            "src/components/vibe": "Custom Vibe components",
+            "src/components/layout": "Layout components (Header, Footer)",
+            "src/lib/supabase": "Supabase client and queries"
+        },
+        "pages": [
+            {
+                "path": "/",
+                "file": "src/app/page.tsx",
+                "description": "Home Landing"
+            },
+            {
+                "path": "/instructions",
+                "file": "src/app/instructions/page.tsx",
+                "description": "Instructions Hub"
+            },
+            {
+                "path": "/tools",
+                "file": "src/app/tools/page.tsx",
+                "description": "Tools Directory"
+            },
+            {
+                "path": "/prompts",
+                "file": "src/app/prompts/page.tsx",
+                "description": "Prompt Library"
+            },
+            {
+                "path": "/new-project",
+                "file": "src/app/new-project/page.tsx",
+                "description": "Project Wizard"
+            }
+        ],
+        "apiRoutes": [
+            {
+                "path": "/api/*",
+                "description": "Backend API routes"
+            }
+        ]
+    }
+}

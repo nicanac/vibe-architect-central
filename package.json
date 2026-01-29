@@ -12,6 +12,7 @@
     "lint": "eslint",
     "branch": "node scripts/create-branch.js",
     "sync:ai": "tsx scripts/sync-ai-folder.ts",
+    "sync:github": "tsx scripts/sync-tasks-github.ts",
     "convert:skills": "tsx scripts/convert-claude-to-antigravity.ts"
   },
   "dependencies": {
